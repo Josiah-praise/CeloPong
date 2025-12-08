@@ -21,7 +21,6 @@ celo_alfajores = "https://alfajores-forno.celo-testnet.org"
 
 # Etherscan/Blockscout configuration
 [etherscan]
-lisk_sepolia = { key = "${LISK_API_KEY}", url = "${LISK_VERIFIER_URL}" }
 celo = { key = "", url = "https://api.celoscan.io/api" }
 celo_alfajores = { key = "", url = "https://api-alfajores.celoscan.io/api" }
 
