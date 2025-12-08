@@ -16,9 +16,13 @@ lisk_sepolia = "${LISK_RPC_URL}"
 sepolia = "${SEPOLIA_RPC_URL}"
 polygon = "${POLYGON_RPC_URL}"
 base = "${BASE_RPC_URL}"
+celo = "https://forno.celo.org"
+celo_alfajores = "https://alfajores-forno.celo-testnet.org"
 
-# Etherscan configuration
+# Etherscan/Blockscout configuration
 [etherscan]
 lisk_sepolia = { key = "${LISK_API_KEY}", url = "${LISK_VERIFIER_URL}" }
+celo = { key = "", url = "https://api.celoscan.io/api" }
+celo_alfajores = { key = "", url = "https://api-alfajores.celoscan.io/api" }
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options
