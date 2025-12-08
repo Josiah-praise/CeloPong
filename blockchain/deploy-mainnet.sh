@@ -36,6 +36,7 @@ else
     echo "Please create a .env file with:"
     echo "  PRIVATE_KEY=your_private_key"
     echo "  BACKEND_ORACLE_ADDRESS=0x..."
+    echo "  CELO_MAINNET_RPC_URL=https://... (optional)"
     exit 1
 fi
 
@@ -50,13 +51,17 @@ if [ -z "$BACKEND_ORACLE_ADDRESS" ]; then
     exit 1
 fi
 
+# Use custom RPC URL if provided, otherwise use default
+RPC_URL="${CELO_MAINNET:-https://forno.celo.org}"
+echo "🌐 RPC URL: $RPC_URL"
+
 # Get deployer address
 DEPLOYER_ADDRESS=$(cast wallet address --private-key $PRIVATE_KEY)
 echo "📍 Deployer Address: $DEPLOYER_ADDRESS"
 
 # Check balance
 echo "💰 Checking balance..."
-BALANCE=$(cast balance $DEPLOYER_ADDRESS --rpc-url https://forno.celo.org)
+BALANCE=$(cast balance $DEPLOYER_ADDRESS --rpc-url "$RPC_URL")
 BALANCE_ETH=$(cast from-wei $BALANCE)
 echo "   Balance: $BALANCE_ETH CELO"
 
@@ -80,7 +85,7 @@ fi
 # Deploy contract
 echo "📦 Deploying contract..."
 DEPLOY_OUTPUT=$(forge script script/Deploy.s.sol:DeployScript \
-    --rpc-url https://forno.celo.org \
+    --rpc-url "$RPC_URL" \
     --broadcast \
     --verify \
     --verifier blockscout \
