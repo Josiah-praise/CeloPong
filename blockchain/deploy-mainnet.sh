@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Deploy PongEscrow to Celo Mainnet
+# Deploy PongEscrow to Celo L2 Mainnet (OP Stack)
 # ==================================================
 # ⚠️  WARNING: This deploys to MAINNET with REAL CELO!
 # ==================================================
 # Prerequisites:
 #   - Foundry installed (forge, cast)
-#   - .env file with PRIVATE_KEY and BACKEND_ORACLE_ADDRESS
+#   - .env file with PRIVATE_KEY, BACKEND_ORACLE_ADDRESS, and CELO_MAINNET
 #   - REAL CELO in your wallet
 
 set -e  # Exit on any error
@@ -15,7 +15,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 echo "=========================================="
-echo "🚀 Deploying PongEscrow to Celo MAINNET"
+echo "🚀 Deploying PongEscrow to Celo L2 MAINNET"
 echo "=========================================="
 echo ""
 echo "⚠️  WARNING: This will deploy to MAINNET!"
@@ -36,7 +36,7 @@ else
     echo "Please create a .env file with:"
     echo "  PRIVATE_KEY=your_private_key"
     echo "  BACKEND_ORACLE_ADDRESS=0x..."
-    echo "  CELO_MAINNET_RPC_URL=https://... (optional)"
+    echo "  CELO_MAINNET=https://..."
     exit 1
 fi
 
@@ -51,8 +51,12 @@ if [ -z "$BACKEND_ORACLE_ADDRESS" ]; then
     exit 1
 fi
 
-# Use custom RPC URL if provided, otherwise use default
-RPC_URL="${CELO_MAINNET:-https://forno.celo.org}"
+if [ -z "$CELO_MAINNET" ]; then
+    echo "❌ Error: CELO_MAINNET RPC URL not set in .env"
+    exit 1
+fi
+
+RPC_URL="$CELO_MAINNET"
 echo "🌐 RPC URL: $RPC_URL"
 
 # Get deployer address
@@ -89,7 +93,7 @@ DEPLOY_OUTPUT=$(forge script script/Deploy.s.sol:DeployScript \
     --broadcast \
     --verify \
     --verifier blockscout \
-    --verifier-url https://explorer.celo.org/mainnet/api \
+    --verifier-url https://celo.blockscout.com/api \
     -vvvv 2>&1)
 
 echo "$DEPLOY_OUTPUT"
@@ -103,12 +107,12 @@ if [ -n "$CONTRACT_ADDRESS" ]; then
     echo "✅ MAINNET Deployment Successful!"
     echo "=========================================="
     echo "📄 Contract Address: $CONTRACT_ADDRESS"
-    echo "🔍 View on Explorer: https://celoscan.io/address/$CONTRACT_ADDRESS"
+    echo "🔍 View on Explorer: https://celo.blockscout.com/address/$CONTRACT_ADDRESS"
     echo ""
     echo "💡 If verification failed, you can verify manually:"
     echo "forge verify-contract $CONTRACT_ADDRESS src/PongEscrow.sol:PongEscrow \\"
     echo "    --verifier blockscout \\"
-    echo "    --verifier-url https://explorer.celo.org/mainnet/api \\"
+    echo "    --verifier-url https://celo.blockscout.com/api \\"
     echo "    --constructor-args \$(cast abi-encode \"constructor(address)\" $BACKEND_ORACLE_ADDRESS)"
 else
     echo ""
