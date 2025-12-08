@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Deploy PongEscrow to Celo Alfajores Testnet
+# Deploy PongEscrow to Celo L2 Sepolia Testnet (OP Stack)
 # ==================================================
 # Prerequisites:
 #   - Foundry installed (forge, cast)
-#   - .env file with PRIVATE_KEY and BACKEND_ORACLE_ADDRESS
-#   - Test CELO in your wallet (get from https://faucet.celo.org/alfajores)
+#   - .env file with PRIVATE_KEY, BACKEND_ORACLE_ADDRESS, and CELO_SEPOLIA
+#   - Test CELO in your wallet
 
 set -e  # Exit on any error
 
@@ -13,7 +13,7 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
 echo "=========================================="
-echo "🚀 Deploying PongEscrow to Celo Alfajores"
+echo "🚀 Deploying PongEscrow to Celo L2 Sepolia"
 echo "=========================================="
 
 # Load environment variables
@@ -24,7 +24,7 @@ else
     echo "Please create a .env file with:"
     echo "  PRIVATE_KEY=your_private_key"
     echo "  BACKEND_ORACLE_ADDRESS=0x..."
-    echo "  CELO_ALFAJORES_RPC_URL=https://... (optional)"
+    echo "  CELO_SEPOLIA=https://..."
     exit 1
 fi
 
@@ -39,8 +39,12 @@ if [ -z "$BACKEND_ORACLE_ADDRESS" ]; then
     exit 1
 fi
 
-# Use custom RPC URL if provided, otherwise use default
-RPC_URL="${CELO_SEPOLIA:-https://alfajores-forno.celo-testnet.org}"
+if [ -z "$CELO_SEPOLIA" ]; then
+    echo "❌ Error: CELO_SEPOLIA RPC URL not set in .env"
+    exit 1
+fi
+
+RPC_URL="$CELO_SEPOLIA"
 echo "🌐 RPC URL: $RPC_URL"
 
 # Get deployer address
@@ -53,7 +57,7 @@ BALANCE=$(cast balance $DEPLOYER_ADDRESS --rpc-url "$RPC_URL")
 echo "   Balance: $BALANCE wei"
 
 if [ "$BALANCE" = "0" ]; then
-    echo "❌ Error: No CELO balance! Get test CELO from https://faucet.celo.org/alfajores"
+    echo "❌ Error: No CELO balance!"
     exit 1
 fi
 
@@ -68,7 +72,7 @@ DEPLOY_OUTPUT=$(forge script script/Deploy.s.sol:DeployScript \
     --broadcast \
     --verify \
     --verifier blockscout \
-    --verifier-url https://explorer.celo.org/alfajores/api \
+    --verifier-url https://celo-sepolia.blockscout.com/api \
     -vvvv 2>&1)
 
 echo "$DEPLOY_OUTPUT"
@@ -82,12 +86,12 @@ if [ -n "$CONTRACT_ADDRESS" ]; then
     echo "✅ Deployment Successful!"
     echo "=========================================="
     echo "📄 Contract Address: $CONTRACT_ADDRESS"
-    echo "🔍 View on Explorer: https://alfajores.celoscan.io/address/$CONTRACT_ADDRESS"
+    echo "🔍 View on Explorer: https://celo-sepolia.blockscout.com/address/$CONTRACT_ADDRESS"
     echo ""
     echo "💡 If verification failed, you can verify manually:"
     echo "forge verify-contract $CONTRACT_ADDRESS src/PongEscrow.sol:PongEscrow \\"
     echo "    --verifier blockscout \\"
-    echo "    --verifier-url https://explorer.celo.org/alfajores/api \\"
+    echo "    --verifier-url https://celo-sepolia.blockscout.com/api \\"
     echo "    --constructor-args \$(cast abi-encode \"constructor(address)\" $BACKEND_ORACLE_ADDRESS)"
 else
     echo ""
