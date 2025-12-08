@@ -44,7 +44,7 @@ echo "📍 Deployer Address: $DEPLOYER_ADDRESS"
 
 # Check balance
 echo "💰 Checking balance..."
-BALANCE=$(cast balance $DEPLOYER_ADDRESS --rpc-url https://alfajores-forno.celo-testnet.org)
+BALANCE=$(cast balance $DEPLOYER_ADDRESS --rpc-url https://celo-alfajores.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161)
 echo "   Balance: $BALANCE wei"
 
 if [ "$BALANCE" = "0" ]; then
@@ -59,7 +59,7 @@ echo ""
 # Deploy contract
 echo "📦 Deploying contract..."
 DEPLOY_OUTPUT=$(forge script script/Deploy.s.sol:DeployScript \
-    --rpc-url https://alfajores-forno.celo-testnet.org \
+    --rpc-url https://celo-alfajores.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161 \
     --broadcast \
     --verify \
     --verifier blockscout \
