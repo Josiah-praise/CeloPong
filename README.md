@@ -245,6 +245,7 @@ networks:
 - Optional: set `REACT_APP_SHOW_BACKEND_URL_BANNER=false` to hide the development banner that explains which backend URL/source is in use.
 - Backend counterpart: set `FRONTEND_URL` (preferred) or `FRONTEND_URL_FALLBACK` to restrict allowed origins; otherwise localhost defaults are used for development.
 - Emergency mode: `FRONTEND_URL_ALLOW_ALL=true` sets a wildcard (development only, logs warnings).
+- See `.env.example` for backend environment variables set during development.
 
 **Backend URL Troubleshooting**
 - Open the browser console to view the backend banner and confirm which origin/source is active.
