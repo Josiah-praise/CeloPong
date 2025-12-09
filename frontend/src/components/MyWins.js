@@ -23,6 +23,8 @@ const MyWins = () => {
   const [pagination, setPagination] = useState(createPaginationState(20));
   const [showClaimableOnly, setShowClaimableOnly] = useState(false);
   const [copiedRoom, setCopiedRoom] = useState(null);
+  const displayedCount = wins.length;
+  const remainingWins = Math.max(pagination.total - displayedCount, 0);
 
   const {
     claimPrize,
@@ -467,14 +469,14 @@ const MyWins = () => {
                   disabled={loading}
                   data-testid="wins-load-more"
                 >
-                  {loading ? 'Loading...' : 'Load More'}
+                  {loading ? 'Loading...' : `Load More (${remainingWins} left)`}
                 </button>
                 <p className="pagination-info">
-                  Showing {wins.length} of {pagination.total} wins
+                  Showing {displayedCount} of {pagination.total} wins
                 </p>
               </div>
             ) : (
-              <p className="pagination-info">All wins loaded.</p>
+              <p className="pagination-info">All {displayedCount} wins loaded.</p>
             )}
           </>
         )}
