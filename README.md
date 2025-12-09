@@ -53,7 +53,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 **Key Files:**
 - `components/Welcome.js` - Home screen with game mode buttons and leaderboard
 - `hooks/useLeaderboardSubscription.js` - Consolidates HTTP + WebSocket leaderboard data
-- `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync
+- `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync and now sources `BACKEND_URL` via a resolver that falls back to localhost during development.
 - `components/MultiplayerGame.js` - Real-time multiplayer game logic
 - `App.js` - React Router setup and username management
 
