@@ -383,6 +383,7 @@
   transition: all 0.3s ease;
   font-family: 'Press Start 2P', monospace;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .load-more-button:hover:not(:disabled) {
