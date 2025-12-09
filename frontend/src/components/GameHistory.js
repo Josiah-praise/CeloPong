@@ -50,7 +50,7 @@ const GameHistory = ({ savedUsername }) => {
       }
 
       const data = await response.json();
-      setGames(prev => shouldReset ? data.games : mergePages(prev, data.games));
+      setGames(prev => shouldReset ? data.games : mergePages(prev, data.games, '_id', { comparator: sortByEndedAtDesc }));
       if (shouldReset) {
         setStats(data.stats);
       }
