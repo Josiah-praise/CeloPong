@@ -18,9 +18,9 @@ function deriveFromLocation() {
   return `${safeProtocol}//${safeHost}:${DEFAULT_PORT}`;
 }
 
-function warnDefault(url) {
+function warnDefault(url, source) {
   if (typeof console !== 'undefined') {
-    console.warn('[BACKEND_URL] Falling back to', url);
+    console.warn(`[BACKEND_URL] Falling back via ${source} to`, url);
   }
 }
 
@@ -48,19 +48,23 @@ function isValidUrl(candidate) {
   }
 }
 
-export function resolveBackendUrl() {
+export function resolveBackendUrlWithSource() {
   const envUrl = sanitizeUrl(process.env.REACT_APP_BACKEND_URL);
   if (envUrl) {
-    return envUrl;
+    return { url: envUrl, source: BACKEND_URL_SOURCES.ENV };
   }
 
   const locationUrl = sanitizeUrl(deriveFromLocation());
   if (locationUrl) {
-    warnDefault(locationUrl);
-    return locationUrl;
+    warnDefault(locationUrl, BACKEND_URL_SOURCES.LOCATION);
+    return { url: locationUrl, source: BACKEND_URL_SOURCES.LOCATION };
   }
 
   const fallback = sanitizeUrl(`http://localhost:${DEFAULT_PORT}`);
-  warnDefault(fallback);
-  return fallback;
+  warnDefault(fallback, BACKEND_URL_SOURCES.FALLBACK);
+  return { url: fallback, source: BACKEND_URL_SOURCES.FALLBACK };
+}
+
+export function resolveBackendUrl() {
+  return resolveBackendUrlWithSource().url;
 }
