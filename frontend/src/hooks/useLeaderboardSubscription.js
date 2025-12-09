@@ -72,7 +72,7 @@ export default function useLeaderboardSubscription() {
 
   return {
     leaderboard,
-    setLeaderboard,
+    isLoading,
     socket,
   };
 }
