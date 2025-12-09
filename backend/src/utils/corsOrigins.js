@@ -54,4 +54,5 @@ function getCorsOrigins(
 module.exports = {
   ORIGIN_SOURCES,
   getCorsOrigins,
+  normalizeUrl,
 };
