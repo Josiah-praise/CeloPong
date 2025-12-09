@@ -18,6 +18,10 @@ export function mergePages(existingItems, newItems, key = '_id', options = {}) {
     }
   }
 
+  if (typeof options.comparator === 'function') {
+    merged.sort(options.comparator);
+  }
+
   return merged;
 }
 
