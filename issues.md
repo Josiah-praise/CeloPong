@@ -16,7 +16,7 @@
 - [ ] **Staked match winners never receive claim signatures** – The multiplayer flow updates `Game` records without calling `signatureService`, leaving `winnerSignature` empty and wins unclaimable. _(Label: Bug)_
 - [ ] **“Load more” on My Wins discards previous results** – Pagination overwrites the `wins` array instead of appending, so users can’t scroll past the first page. _(Label: Bug)_
 - [ ] **Game History pagination has the same overwrite problem** – History fetches replace the `games` state each time, preventing users from viewing older matches. _(Label: Bug)_
-- [ ] **Prize amount shown is only half the real payout** – My Wins displays `stakeAmount` rather than 2× stake, underreporting rewards. _(Label: Bug)_
+- [x] **Prize amount shown is only half the real payout** – My Wins displays `stakeAmount` rather than 2× stake, underreporting rewards. _(Label: Bug)_
 - [ ] **Earnings stat ignores unclaimed wins and halves values** – `/games/player/:name/history` sums raw stakes and only counted when `claimed`, so statistics are inaccurate. _(Label: Bug)_
 - [ ] **Anyone can mark someone else’s win as claimed** – `POST /games/:id/claimed` accepts any `gameId` without verifying caller or on-chain tx, letting attackers disable another user’s claim. _(Label: Security)_
 - [ ] **Escrow room codes can never be reused** – `PongEscrow` never deletes match entries, so every six-character code is permanently burned, increasing collisions. _(Label: Bug)_

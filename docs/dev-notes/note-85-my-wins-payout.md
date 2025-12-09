@@ -14,6 +14,7 @@
 - Surface aggregate claimable/claimed totals so the benefit is obvious at a glance.
 - Provide helper utilities (`computePrizeFromStake`, `sumWei`) for future payout work.
 - Keep `PRIZE_MULTIPLIER` defined in `frontend/src/constants.js` in sync with backend economics.
+- Helpers now expose the multiplier so UI labels automatically match configuration.
 
 ## Proposed Steps
 
