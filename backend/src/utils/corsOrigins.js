@@ -3,7 +3,16 @@ const DEFAULT_DEV_ORIGINS = [
   'http://127.0.0.1:3000',
 ];
 
-function getCorsOrigins() {
+function normalizeUrl(url) {
+  return url?.replace(/\/$/, '') || null;
+}
+
+function getCorsOrigins(envUrl = process.env.FRONTEND_URL) {
+  const normalized = normalizeUrl(envUrl);
+  if (normalized) {
+    return [normalized];
+  }
+
   return DEFAULT_DEV_ORIGINS;
 }
 
