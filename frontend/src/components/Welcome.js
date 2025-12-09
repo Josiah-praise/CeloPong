@@ -8,6 +8,7 @@ import { BACKEND_URL } from '../constants';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer1, useStakeAsPlayer2, useGetMatch } from '../hooks/useContract';
 import { STAKE_AMOUNTS } from '../contracts/PongEscrow';
+import useLeaderboardSubscription from '../hooks/useLeaderboardSubscription';
 
 const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const [rankings, setRankings] = useState([]);
