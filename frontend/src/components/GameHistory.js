@@ -23,6 +23,8 @@ const GameHistory = ({ savedUsername }) => {
       setLoading(true);
       setError(null);
 
+      const shouldReset = shouldResetPagination(pagination.offset);
+
       const params = new URLSearchParams({
         filter: activeFilter,
         limit: pagination.limit,
@@ -42,7 +44,7 @@ const GameHistory = ({ savedUsername }) => {
       }
 
       const data = await response.json();
-      setGames(data.games);
+      setGames(prev => shouldReset ? data.games : mergePages(prev, data.games));
       setStats(data.stats);
       setPagination(data.pagination);
     } catch (err) {
