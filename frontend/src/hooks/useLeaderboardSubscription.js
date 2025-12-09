@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import io from 'socket.io-client';
-import { BACKEND_URL, SOCKET_EVENTS } from '../constants';
+import { BACKEND_URL, SOCKET_EVENTS, LEADERBOARD_LIMIT } from '../constants';
 
 // Subscribes to leaderboard updates via WebSocket while providing initial HTTP data
 export default function useLeaderboardSubscription() {
@@ -41,7 +41,7 @@ export default function useLeaderboardSubscription() {
 
     async function fetchInitialLeaderboard() {
       try {
-        const response = await fetch(`${BACKEND_URL}/api/rankings/top?limit=10`, {
+        const response = await fetch(`${BACKEND_URL}/api/rankings/top?limit=${LEADERBOARD_LIMIT}`, {
           method: 'GET',
           credentials: 'include',
           headers: { 'Content-Type': 'application/json' },
