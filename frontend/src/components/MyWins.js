@@ -25,6 +25,7 @@ const MyWins = () => {
   const [copiedRoom, setCopiedRoom] = useState(null);
   const displayedCount = wins.length;
   const remainingWins = Math.max(pagination.total - displayedCount, 0);
+  const isLoadMoreDisabled = loading || !pagination.hasMore;
 
   const {
     claimPrize,
@@ -77,7 +78,7 @@ const MyWins = () => {
   }, [address, pagination.limit, pagination.offset]);
 
   const loadMore = () => {
-    if (loading || !pagination.hasMore) {
+    if (isLoadMoreDisabled) {
       return;
     }
     setPagination(prev => ({
@@ -466,7 +467,7 @@ const MyWins = () => {
                 <button
                   onClick={loadMore}
                   className="load-more-button"
-                  disabled={loading}
+                  disabled={isLoadMoreDisabled}
                   data-testid="wins-load-more"
                 >
                   {loading ? 'Loading...' : `Load More (${remainingWins} left)`}
