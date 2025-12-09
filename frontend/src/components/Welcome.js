@@ -7,7 +7,7 @@ import { BACKEND_URL } from '../constants';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer1, useStakeAsPlayer2, useGetMatch } from '../hooks/useContract';
 import { STAKE_AMOUNTS } from '../contracts/PongEscrow';
-import useLeaderboardSubscription from '../hooks/useLeaderboardSubscription';
+import { useLeaderboardSubscription } from '../hooks';
 
 const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const [activeGames, setActiveGames] = useState([]);
