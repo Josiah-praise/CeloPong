@@ -34,6 +34,11 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - Summary cards highlight total claimable, claimed, and overall winnings calculated at 2× stakes.
 - Toggle between all wins vs. claimable-only and copy room codes for support tickets.
 
+### Game History Experience
+- Filter by result or match type while Load More now appends older games instead of replacing them.
+- Remaining game counts and tooltips make it easy to see how many matches are left.
+- Staked games display stake + payout details so rewards are transparent.
+
 ## Architecture Overview
 
 ### System Components
