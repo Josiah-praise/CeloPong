@@ -611,6 +611,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
         </div>
 
         {SHOW_BACKEND_URL_BANNER && (
+          // Developer helper: quickly see which backend URL is active
           <div className="backend-url-banner" data-testid="backend-url-banner">
             Backend: <span>{backendUrl}</span> <em>({backendUrlSource})</em>
           </div>
