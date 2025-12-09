@@ -27,6 +27,11 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - My Wins cards include a quick “Copy Room” action for support/debugging
 - Game History and My Wins leverage shared ETH helpers to prevent rounding mistakes
 
+### My Wins Experience
+- Claim prizes directly via Wagmi hooks and see transaction updates inside a modal overlay.
+- Summary cards highlight total claimable, claimed, and overall winnings calculated at 2× stakes.
+- Toggle between all wins vs. claimable-only and copy room codes for support tickets.
+
 ## Architecture Overview
 
 ### System Components
