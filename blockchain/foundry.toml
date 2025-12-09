@@ -12,13 +12,17 @@ remappings = [
 
 # RPC endpoints
 [rpc_endpoints]
-lisk_sepolia = "${LISK_RPC_URL}"
 sepolia = "${SEPOLIA_RPC_URL}"
 polygon = "${POLYGON_RPC_URL}"
 base = "${BASE_RPC_URL}"
+# Celo L2 (OP Stack)
+celo = "${CELO_MAINNET}"
+celo_sepolia = "${CELO_SEPOLIA}"
 
-# Etherscan configuration
+# Etherscan/Blockscout configuration
 [etherscan]
-lisk_sepolia = { key = "${LISK_API_KEY}", url = "${LISK_VERIFIER_URL}" }
+# Celo L2 uses Blockscout
+celo = { key = "", url = "https://celo.blockscout.com/api" }
+celo_sepolia = { key = "", url = "https://celo-sepolia.blockscout.com/api" }
 
 # See more config options https://github.com/foundry-rs/foundry/blob/master/crates/config/README.md#all-options

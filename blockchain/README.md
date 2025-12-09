@@ -9,6 +9,15 @@ Foundry consists of:
 - **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
 - **Chisel**: Fast, utilitarian, and verbose solidity REPL.
 
+## Deployed Contracts
+
+### PongEscrow
+
+| Network | Chain ID | Contract Address | Explorer |
+|---------|----------|------------------|----------|
+| **Celo L2 Mainnet** | 42220 | `0xE6f51532302eA8FF479D419e1a7B5F88eC864997` | [View on Blockscout](https://celo.blockscout.com/address/0xE6f51532302eA8FF479D419e1a7B5F88eC864997) |
+| **Celo L2 Sepolia** (testnet) | 11142220 | `0xed6526b64cd5572beef66eef2ae1ff5b106299e4` | [View on Blockscout](https://celo-sepolia.blockscout.com/address/0xed6526b64cd5572beef66eef2ae1ff5b106299e4) |
+
 ## Documentation
 
 https://book.getfoundry.sh/
