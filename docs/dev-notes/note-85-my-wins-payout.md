@@ -27,3 +27,4 @@
 
 - Backfill historical wins with explicit `payoutAmount` to avoid recomputing from `stakeAmount`.
 - Localize the new `stake ×2` label for non-English builds.
+- Wire payout totals into analytics to understand total ETH pending claims.
