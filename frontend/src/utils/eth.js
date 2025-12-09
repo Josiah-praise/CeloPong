@@ -3,6 +3,7 @@ import { formatEther, parseEther } from 'viem';
 const ZERO = 0n;
 const TWO = 2n;
 
+// Safely parse text/number ETH inputs into wei
 function safeParseEther(value) {
   if (value === undefined || value === null || value === '') {
     return ZERO;
@@ -15,6 +16,7 @@ function safeParseEther(value) {
   }
 }
 
+// Consumes a stake amount and derives stake/payout info in wei + ETH strings
 export function computePrizeFromStake(stakeAmount) {
   const stakeWei = safeParseEther(stakeAmount);
   const payoutWei = stakeWei * TWO;
@@ -27,6 +29,7 @@ export function computePrizeFromStake(stakeAmount) {
   };
 }
 
+// Helper to trim formatted ETH decimals without trailing zeros
 function trimDecimals(value, digits = 4) {
   if (!value.includes('.')) {
     return value;
