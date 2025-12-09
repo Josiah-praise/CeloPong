@@ -1,4 +1,5 @@
 export function mergePages(existingItems, newItems, key = '_id') {
+  // Accept partial data and avoid mutating original arrays
   const merged = Array.isArray(existingItems) ? [...existingItems] : [];
   if (!Array.isArray(newItems) || newItems.length === 0) {
     return merged;
