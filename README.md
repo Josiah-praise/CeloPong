@@ -574,5 +574,5 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Original Pong game by Atari (1972)
 - Socket.IO for real-time communication
 - Docker for containerization
-- Run `node backend/scripts/showCorsConfig.js` to verify the backend CORS configuration without starting the server.
-- Run `node backend/scripts/testCorsOrigins.js` to see how different env combinations resolve.
+- Run `pnpm run show:cors` (or `npm run show:cors`) to verify the backend CORS configuration without starting the server.
+- Run `pnpm run test:cors` to see how different env combinations resolve.
