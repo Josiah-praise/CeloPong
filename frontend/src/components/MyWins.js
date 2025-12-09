@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
-import { BACKEND_URL } from '../constants';
+import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
 import { computePrizeFromStake, formatWeiToEth, sumWei } from '../utils/eth';
 import '../styles/MyWins.css';
 
@@ -234,7 +234,7 @@ const MyWins = () => {
         </div>
       </div>
       <p className="summary-note">
-        Totals reflect 2× stake payouts. {claimableCount > 0 ? `${claimableCount} win(s) ready to claim.` : 'All wins have been claimed.'}
+        Totals reflect {PRIZE_MULTIPLIER}× stake payouts. {claimableCount > 0 ? `${claimableCount} win(s) ready to claim.` : 'All wins have been claimed.'}
       </p>
 
       {/* Transaction Progress Modal */}
