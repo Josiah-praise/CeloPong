@@ -23,6 +23,9 @@ function parseDevOrigins(value) {
   return value.split(',').map(normalizeUrl).filter(Boolean);
 }
 
+/**
+ * Returns the effective CORS configuration.
+ */
 function getCorsOrigins(
   envUrl = process.env.FRONTEND_URL,
   fallbackUrl = process.env.FRONTEND_URL_FALLBACK,
