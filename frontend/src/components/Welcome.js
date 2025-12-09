@@ -23,6 +23,9 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const navigate = useNavigate();
   const socketRef = useRef(null);
   const { leaderboard, setLeaderboard, socket } = useLeaderboardSubscription();
+  useEffect(() => {
+    setRankings(leaderboard);
+  }, [leaderboard]);
 
   // Web3 hooks
   const { open } = useAppKit();
