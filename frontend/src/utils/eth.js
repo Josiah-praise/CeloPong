@@ -28,6 +28,7 @@ export function computePrizeFromStake(stakeAmount, multiplier = 2n) {
   return {
     stakeWei,
     payoutWei,
+    multiplier: multiplierWei,
     formattedStake: formatEther(stakeWei),
     formattedPayout: formatEther(payoutWei),
   };
