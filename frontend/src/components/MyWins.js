@@ -445,7 +445,7 @@ const MyWins = () => {
               })}
             </div>
 
-            {pagination.hasMore && (
+            {pagination.hasMore ? (
               <div className="load-more-section">
                 <button
                   onClick={loadMore}
@@ -458,6 +458,8 @@ const MyWins = () => {
                   Showing {Math.min(pagination.offset + wins.length, pagination.total)} of {pagination.total} wins
                 </p>
               </div>
+            ) : (
+              <p className="pagination-info">All wins loaded.</p>
             )}
           </>
         )}
