@@ -5,6 +5,7 @@ export const BACKEND_URL_SOURCES = {
   ENV: 'env',
   LOCATION: 'location',
   FALLBACK: 'fallback',
+  FALLBACK_ENV: 'fallback-env',
 };
 
 function deriveFromLocation() {
