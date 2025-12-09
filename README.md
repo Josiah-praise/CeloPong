@@ -576,3 +576,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Docker for containerization
 - Run `pnpm run show:cors` (or `npm run show:cors`) to verify the backend CORS configuration without starting the server.
 - Run `pnpm run test:cors` to see how different env combinations resolve.
+- See `docs/dev-notes/note-91-cors-debugging.md` for more context.
