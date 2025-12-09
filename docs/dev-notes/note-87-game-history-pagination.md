@@ -14,3 +14,7 @@
 1. Introduce a helper to merge new pages into existing state by `_id`.
 2. Update `GameHistory` to replace results when `offset === 0`, append otherwise.
 3. Keep `stats` derived from first page to avoid drift.
+
+## Observability
+- Log the page size + offset while in development to confirm increments.
+- Consider instrumenting a metric for “history_load_more” to detect failures.
