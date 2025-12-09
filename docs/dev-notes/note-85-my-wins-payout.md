@@ -11,3 +11,9 @@
 - Display the full payout (2× stake) everywhere the UI references prize totals.
 - Introduce a formatter that can safely double numeric strings without floating-point loss.
 - Document the logic so future contributors avoid repeating the bug.
+
+## Proposed Steps
+
+1. Add a helper that accepts `stakeAmount` (string/number) and returns `{stakeAmount, payout, formatted}`.
+2. Update `MyWins` to use the helper for the “Prize Amount” row.
+3. Extend documentation (README + CSS note) to reflect the payout logic.
