@@ -70,7 +70,11 @@ const GameHistory = ({ savedUsername }) => {
       }
       setPagination(data.pagination);
     } catch (err) {
-      console.error('Error fetching game history:', err);
+      console.error('Error fetching game history:', {
+        error: err,
+        offset: pagination.offset,
+        limit: pagination.limit
+      });
       setError('Failed to load game history. Please try again.');
     } finally {
       setLoading(false);
