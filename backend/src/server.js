@@ -88,7 +88,11 @@ app.get('/health', (req, res) => {
     status: 'ok', 
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-    frontend_url: FRONTEND_URL || 'not set'
+    frontend_url: FRONTEND_URL || 'not set',
+    cors: {
+      origins: corsOrigins.origins,
+      source: corsOrigins.source,
+    }
   });
 });
 
