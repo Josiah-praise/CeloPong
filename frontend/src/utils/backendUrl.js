@@ -48,7 +48,15 @@ function isValidUrl(candidate) {
   }
 }
 
-export function resolveBackendUrlWithSource() {
+let cachedMeta = null;
+
+function logResolution(meta) {
+  if (typeof console !== 'undefined') {
+    console.info(`[BACKEND_URL] Using ${meta.source} source: ${meta.url}`);
+  }
+}
+
+function computeBackendUrlWithSource() {
   const envUrl = sanitizeUrl(process.env.REACT_APP_BACKEND_URL);
   if (envUrl) {
     return { url: envUrl, source: BACKEND_URL_SOURCES.ENV };
@@ -63,6 +71,14 @@ export function resolveBackendUrlWithSource() {
   const fallback = sanitizeUrl(`http://localhost:${DEFAULT_PORT}`);
   warnDefault(fallback, BACKEND_URL_SOURCES.FALLBACK);
   return { url: fallback, source: BACKEND_URL_SOURCES.FALLBACK };
+}
+
+export function resolveBackendUrlWithSource() {
+  if (!cachedMeta) {
+    cachedMeta = computeBackendUrlWithSource();
+    logResolution(cachedMeta);
+  }
+  return cachedMeta;
 }
 
 export function resolveBackendUrl() {
