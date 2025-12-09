@@ -8,6 +8,7 @@
 - Totals should respect pagination if backend ever limits `/games/my-wins`; for now API returns aggregated totals.
 - Banner copy references `PRIZE_MULTIPLIER`; keep that constant updated if payout logic changes.
 - Claimable-only toggle is purely client-side for now; consider server-side filtering if dataset grows.
+- Copy button on room codes speeds up support triage; ensure clipboard API availability is handled gracefully.
 
 ## Ideas
 - Add sparklines for win streaks.
