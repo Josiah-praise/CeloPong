@@ -1,4 +1,4 @@
-import { resolveBackendUrl } from './utils/backendUrl';
+import { resolveBackendUrl, resolveBackendUrlWithSource } from './utils/backendUrl';
 
 // Game constants
 export const STORAGE_KEY = 'pong_username';
@@ -9,7 +9,9 @@ export const PADDLE_SPEED = 0.01;
 export const INITIAL_RATING = 1000;
 
 // Backend connection
-export const BACKEND_URL = resolveBackendUrl();
+const backendUrlMeta = resolveBackendUrlWithSource();
+export const BACKEND_URL = backendUrlMeta.url;
+export const BACKEND_URL_SOURCE = backendUrlMeta.source;
 
 export const SOCKET_EVENTS = Object.freeze({
   LEADERBOARD_UPDATE: 'leaderboardUpdate',
