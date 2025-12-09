@@ -311,7 +311,7 @@ const GameHistory = ({ savedUsername }) => {
                 {loading && !isInitialLoad && (
                   <p className="pagination-info">Fetching more games…</p>
                 )}
-                <p className="pagination-info">
+                <p className="pagination-info" aria-live="polite">
                   Showing {displayedCount} of {pagination.total} games
                 </p>
               </div>
