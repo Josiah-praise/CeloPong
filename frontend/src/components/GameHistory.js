@@ -64,16 +64,22 @@ const GameHistory = ({ savedUsername }) => {
       }
 
       const data = await response.json();
+      let nextGamesSnapshot = [];
       setGames(prev => {
         if (shouldReset) {
-          return [...(data.games || [])].sort(sortByEndedAtDesc);
+          nextGamesSnapshot = [...(data.games || [])].sort(sortByEndedAtDesc);
+          return nextGamesSnapshot;
         }
-        return mergePages(prev, data.games, '_id', { comparator: sortByEndedAtDesc });
+        nextGamesSnapshot = mergePages(prev, data.games, '_id', { comparator: sortByEndedAtDesc });
+        return nextGamesSnapshot;
       });
       if (shouldReset) {
         setStats(data.stats);
       }
-      setPagination(data.pagination);
+      setPagination({
+        ...data.pagination,
+        hasMore: data.pagination?.hasMore ?? nextGamesSnapshot.length < data.pagination.total
+      });
     } catch (err) {
       console.error('Error fetching game history:', {
         error: err,
