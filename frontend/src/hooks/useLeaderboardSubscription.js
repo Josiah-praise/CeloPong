@@ -52,9 +52,13 @@ export default function useLeaderboardSubscription() {
         const data = await response.json();
         if (isMounted) {
           setLeaderboard(data);
+          setIsLoading(false);
         }
       } catch (error) {
         console.error('[Leaderboard] initial fetch failed', error);
+        if (isMounted) {
+          setIsLoading(false);
+        }
       }
     }
 
