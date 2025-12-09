@@ -6,6 +6,7 @@ function emitLeaderboardUpdate(target, payload) {
   }
 
   target.emit(SocketEvents.LEADERBOARD_UPDATE, payload);
+  target.emit(SocketEvents.RANKINGS_UPDATE, payload);
 }
 
 module.exports = emitLeaderboardUpdate;
