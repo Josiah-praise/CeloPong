@@ -9,6 +9,7 @@
 - Banner copy references `PRIZE_MULTIPLIER`; keep that constant updated if payout logic changes.
 - Claimable-only toggle is purely client-side for now; consider server-side filtering if dataset grows.
 - Copy button on room codes speeds up support triage; ensure clipboard API availability is handled gracefully.
+- When the claimable filter hides all results, the UI prompts players to show all wins to avoid confusion.
 
 ## Ideas
 - Add sparklines for win streaks.
