@@ -44,3 +44,12 @@ function trimDecimals(value, digits = 4) {
 export function formatWeiToEth(weiValue, digits = 4) {
   return trimDecimals(formatEther(weiValue), digits);
 }
+
+export function sumWei(values) {
+  return values.reduce((acc, value) => {
+    if (typeof value === 'bigint') {
+      return acc + value;
+    }
+    return acc + safeParseEther(value);
+  }, ZERO);
+}
