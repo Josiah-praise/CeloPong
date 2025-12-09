@@ -21,7 +21,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const titleRef = useRef();
   const navigate = useNavigate();
   const socketRef = useRef(null);
-  const { leaderboard, setLeaderboard, socket } = useLeaderboardSubscription();
+  const { leaderboard, socket } = useLeaderboardSubscription();
   useEffect(() => {
     setRankings(leaderboard);
   }, [leaderboard]);
