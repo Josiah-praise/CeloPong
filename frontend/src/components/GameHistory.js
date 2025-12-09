@@ -24,6 +24,7 @@ const GameHistory = ({ savedUsername }) => {
   const remainingGames = Math.max(pagination.total - displayedCount, 0);
   const isFilteringStaked = stakedFilter !== null;
   const isLoadMoreDisabled = loading || !pagination.hasMore;
+  const isInitialLoad = loading && displayedCount === 0;
 
   // Fetch game history
   const fetchGameHistory = useCallback(async () => {
@@ -222,7 +223,7 @@ const GameHistory = ({ savedUsername }) => {
 
       {/* Game List */}
       <div className="games-content">
-        {loading && pagination.offset === 0 ? (
+        {isInitialLoad ? (
           <div className="loading">Loading game history...</div>
         ) : error ? (
           <div className="error-message">{error}</div>
@@ -302,6 +303,9 @@ const GameHistory = ({ savedUsername }) => {
                 >
                   {loading ? 'Loading...' : `Load More (${remainingGames} left)`}
                 </button>
+                {loading && !isInitialLoad && (
+                  <p className="pagination-info">Fetching more games…</p>
+                )}
                 <p className="pagination-info">
                   Showing {displayedCount} of {pagination.total} games
                 </p>
