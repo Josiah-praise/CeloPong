@@ -12,3 +12,4 @@
 - Surface a console warning so devs know to configure the variable in production builds.
 - Avoid runtime crashes by validating URLs before use.
 - Track the source (env/location/fallback) for observability and future telemetry.
+- Expose the resolved URL & source via `useBackendUrl` for UI components/banners.
