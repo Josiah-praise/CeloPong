@@ -49,9 +49,10 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Normalize FRONTEND_URL by removing trailing slash
 const FRONTEND_URL = process.env.FRONTEND_URL?.replace(/\/$/, '');
+const corsOrigins = getCorsOrigins(FRONTEND_URL);
 
 app.use(cors({
-  origin: FRONTEND_URL,
+  origin: corsOrigins.origins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -62,7 +63,7 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: FRONTEND_URL,
+    origin: corsOrigins.origins,
     methods: ['GET', 'POST'],
     credentials: true,
     allowedHeaders: ['*']
