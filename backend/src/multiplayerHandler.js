@@ -364,7 +364,7 @@ class MultiplayerHandler {
     this.io.to(roomCode).emit('gameOver', gameOverData);
 
     const leaderboard = await this.leaderboardManager.getTopPlayers(10);
-    this.io.emit('leaderboardUpdate', leaderboard);
+    emitLeaderboardUpdate(this.io, leaderboard);
 
     this.endGame(roomCode);
   }
