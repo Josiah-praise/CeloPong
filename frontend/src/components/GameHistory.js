@@ -5,6 +5,12 @@ import { computePrizeFromStake } from '../utils/eth';
 import { mergePages, shouldResetPagination } from '../utils/pagination';
 import '../styles/GameHistory.css';
 
+const sortByEndedAtDesc = (a, b) => {
+  const dateA = new Date(a?.endedAt || 0).getTime();
+  const dateB = new Date(b?.endedAt || 0).getTime();
+  return dateB - dateA;
+};
+
 const GameHistory = ({ savedUsername }) => {
   const navigate = useNavigate();
   const [games, setGames] = useState([]);
