@@ -22,3 +22,8 @@
 
 - Log payout calculations in dev builds if parsing fails.
 - Consider surfacing stake vs payout in analytics events for My Wins usage.
+
+## Next Steps
+
+- Backfill historical wins with explicit `payoutAmount` to avoid recomputing from `stakeAmount`.
+- Localize the new `stake ×2` label for non-English builds.
