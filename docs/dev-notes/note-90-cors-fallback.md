@@ -10,6 +10,7 @@
 - Warn in logs so prod setups know they are running wide open.
 - Keep `FRONTEND_URL` trimming for when it is present.
 - Allow `FRONTEND_URL_FALLBACK` to override defaults without touching primary env.
+- Support an opt-in wildcard (`FRONTEND_URL_ALLOW_ALL=true`) for emergency debugging.
 
 ## Proposed Steps
 1. Add a helper that returns `{ origins, source }` based on env + defaults.
