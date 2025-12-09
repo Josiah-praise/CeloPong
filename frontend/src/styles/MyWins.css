@@ -213,6 +213,15 @@
   font-weight: bold;
 }
 
+.prize-note {
+  display: block;
+  font-size: 0.6rem;
+  color: #aaa;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .tx-hash a {
   color: rgb(116, 113, 203);
   text-decoration: none;

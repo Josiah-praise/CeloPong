@@ -2,8 +2,8 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
-import { formatEther } from 'viem';
 import { BACKEND_URL } from '../constants';
+import { computePrizeFromStake } from '../utils/eth';
 import '../styles/MyWins.css';
 
 const MyWins = () => {
@@ -269,22 +269,27 @@ const MyWins = () => {
         ) : (
           <>
             <div className="wins-list">
-              {wins.map((game) => (
-                <div key={game._id} className={`win-card ${game.claimed ? 'claimed' : 'claimable'}`}>
-                  <div className="win-header">
-                    <span className="room-code">Room: {game.roomCode}</span>
-                    <span className={`status-badge ${game.claimed ? 'claimed' : 'unclaimed'}`}>
-                      {game.claimed ? '✅ Claimed' : '💎 Claimable'}
-                    </span>
-                  </div>
-
-                  <div className="win-details">
-                    <div className="detail-row">
-                      <span className="detail-label">Prize Amount:</span>
-                      <span className="detail-value prize-amount">
-                        {game.stakeAmount} ETH
+              {wins.map((game) => {
+                const prize = computePrizeFromStake(game.stakeAmount);
+                return (
+                  <div key={game._id} className={`win-card ${game.claimed ? 'claimed' : 'claimable'}`}>
+                    <div className="win-header">
+                      <span className="room-code">Room: {game.roomCode}</span>
+                      <span className={`status-badge ${game.claimed ? 'claimed' : 'unclaimed'}`}>
+                        {game.claimed ? '✅ Claimed' : '💎 Claimable'}
                       </span>
                     </div>
+
+                    <div className="win-details">
+                      <div className="detail-row">
+                        <span className="detail-label">Prize Amount:</span>
+                        <span className="detail-value prize-amount">
+                          {prize.formattedPayout} ETH
+                          <span className="prize-note">
+                            stake {prize.formattedStake} ETH ×2
+                          </span>
+                        </span>
+                      </div>
 
                     <div className="detail-row">
                       <span className="detail-label">Final Score:</span>
@@ -316,19 +321,20 @@ const MyWins = () => {
                         </span>
                       </div>
                     )}
-                  </div>
+                    </div>
 
-                  {!game.claimed && (
-                    <button
-                      onClick={() => handleClaimPrize(game)}
-                      className="claim-button"
-                      disabled={claimingGameId === game._id || !game.winnerSignature}
-                    >
-                      {!game.winnerSignature ? 'Signature Pending...' : 'Claim Prize'}
-                    </button>
-                  )}
-                </div>
-              ))}
+                    {!game.claimed && (
+                      <button
+                        onClick={() => handleClaimPrize(game)}
+                        className="claim-button"
+                        disabled={claimingGameId === game._id || !game.winnerSignature}
+                      >
+                        {!game.winnerSignature ? 'Signature Pending...' : 'Claim Prize'}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {pagination.hasMore && (
