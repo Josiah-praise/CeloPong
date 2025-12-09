@@ -11,6 +11,7 @@
 - Display the full payout (2× stake) everywhere the UI references prize totals.
 - Introduce a formatter that can safely double numeric strings without floating-point loss.
 - Document the logic so future contributors avoid repeating the bug.
+- Surface aggregate claimable/claimed totals so the benefit is obvious at a glance.
 
 ## Proposed Steps
 
