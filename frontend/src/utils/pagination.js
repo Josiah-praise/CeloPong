@@ -20,3 +20,8 @@ export function mergePages(existingItems, newItems, key = '_id') {
 
   return merged;
 }
+
+export function shouldResetPagination(offset) {
+  const numericOffset = Number(offset);
+  return !numericOffset || numericOffset === 0;
+}
