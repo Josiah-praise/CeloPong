@@ -1,3 +1,6 @@
+import { resolveBackendUrlWithSource } from './utils/backendUrl';
+import { readBooleanEnv } from './utils/env';
+
 // Game constants
 export const STORAGE_KEY = 'pong_username';
 
@@ -7,7 +10,9 @@ export const PADDLE_SPEED = 0.01;
 export const INITIAL_RATING = 1000;
 
 // Backend connection
-export const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+const backendUrlMeta = resolveBackendUrlWithSource();
+export const BACKEND_URL = backendUrlMeta.url;
+export const BACKEND_URL_SOURCE = backendUrlMeta.source;
 
 export const SOCKET_EVENTS = Object.freeze({
   LEADERBOARD_UPDATE: 'leaderboardUpdate',
@@ -16,3 +21,7 @@ export const SOCKET_EVENTS = Object.freeze({
 });
 
 export const LEADERBOARD_LIMIT = 10;
+
+export const SHOW_BACKEND_URL_BANNER =
+  process.env.NODE_ENV !== 'production' &&
+  readBooleanEnv(process.env.REACT_APP_SHOW_BACKEND_URL_BANNER, true);

@@ -95,6 +95,24 @@ button:hover {
   box-shadow: 0 0 10px rgba(116,113,203, 0.2);
 }
 
+.backend-url-banner {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: #b7b7b7;
+  text-align: center;
+}
+
+.backend-url-banner span {
+  color: #4dfd8c;
+  font-weight: bold;
+}
+
+.backend-url-banner em {
+  font-style: normal;
+  color: #999;
+  margin-left: 0.25rem;
+}
+
 dialog {
   padding: 2rem;
   border: 2px solid rgb(116,113,203);

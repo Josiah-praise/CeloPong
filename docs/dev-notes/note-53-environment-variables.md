@@ -8,6 +8,7 @@ Clearly documenting environment variables prevents fragile deployments.
 - Document default values and acceptable ranges inside `STARTUP_GUIDE.md` with links to this note.
 - Use a config loader that validates presence/types at startup and throws descriptive errors when missing.
 - Avoid leaking secrets to the frontend by prefixing only safe variables with the framework-specific `REACT_APP_` or equivalent.
+- Frontend defaults: treat `REACT_APP_BACKEND_URL` as optional when `REACT_APP_BACKEND_URL_FALLBACK` or the resolver fallback kicks in, and expose toggles such as `REACT_APP_SHOW_BACKEND_URL_BANNER`.
 
 ## Observability
 - Log which optional vars are using defaults (without printing actual secret values) for easier debugging.

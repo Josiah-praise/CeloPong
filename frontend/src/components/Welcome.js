@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { useAppKit } from '@reown/appkit/react';
 import { useAccount } from 'wagmi';
 import '../styles/Welcome.css';
-import { BACKEND_URL } from '../constants';
+import { BACKEND_URL, SHOW_BACKEND_URL_BANNER } from '../constants';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer1, useStakeAsPlayer2, useGetMatch } from '../hooks/useContract';
 import { STAKE_AMOUNTS } from '../contracts/PongEscrow';
-import { useLeaderboardSubscription } from '../hooks';
+import { useLeaderboardSubscription, useBackendUrl } from '../hooks';
 
 const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const [activeGames, setActiveGames] = useState([]);
@@ -21,6 +21,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const navigate = useNavigate();
   const socketRef = useRef(null);
   const { leaderboard, isLoading: isLeaderboardLoading, socket } = useLeaderboardSubscription();
+  const { url: backendUrl, source: backendUrlSource } = useBackendUrl();
 
   // Web3 hooks
   const { open } = useAppKit();
@@ -608,6 +609,13 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
             )}
           </div>
         </div>
+
+        {SHOW_BACKEND_URL_BANNER && (
+          // Developer helper: quickly see which backend URL is active
+          <div className="backend-url-banner" data-testid="backend-url-banner">
+            Backend: <span>{backendUrl}</span> <em>({backendUrlSource})</em>
+          </div>
+        )}
 
         <div className="instructions">
           <h2>How to Play</h2>

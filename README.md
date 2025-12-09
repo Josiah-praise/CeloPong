@@ -53,7 +53,9 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 **Key Files:**
 - `components/Welcome.js` - Home screen with game mode buttons and leaderboard
 - `hooks/useLeaderboardSubscription.js` - Consolidates HTTP + WebSocket leaderboard data
-- `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync
+- `hooks/useBackendUrl.js` - Surfaces the resolved backend URL + source for debugging banners
+- `utils/backendUrl.js` - Normalizes backend URL resolution/fallback logic shared by the entire frontend
+- `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync and now sources `BACKEND_URL` via a resolver that falls back to localhost during development.
 - `components/MultiplayerGame.js` - Real-time multiplayer game logic
 - `App.js` - React Router setup and username management
 
@@ -214,6 +216,14 @@ networks:
 - Uses `http://localhost:8080` (host machine port)
 - WebSocket connection via Socket.IO
 - CORS enabled for browser access
+- When `REACT_APP_BACKEND_URL` is not set, the React app now falls back to this origin (or `http://localhost:8080`) and logs the detected source in the console to prevent silent failures.
+- Optional: set `REACT_APP_BACKEND_URL_FALLBACK` to enforce a custom fallback origin when neither the env var nor `window.location.origin` apply (e.g., running from `file://`).
+- Optional: set `REACT_APP_SHOW_BACKEND_URL_BANNER=false` to hide the development banner that explains which backend URL/source is in use.
+
+**Backend URL Troubleshooting**
+- Open the browser console to view the backend banner and confirm which origin/source is active.
+- Override via `REACT_APP_BACKEND_URL` or `REACT_APP_BACKEND_URL_FALLBACK` if the detected origin is wrong.
+- Hide the banner with `REACT_APP_SHOW_BACKEND_URL_BANNER=false` once configured.
 
 **2. Backend → Player Service (Docker Network)**
 - Uses `http://player-service:5001` (Docker DNS name)

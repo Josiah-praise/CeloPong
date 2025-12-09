@@ -6,7 +6,7 @@
 - [ ] **`POST /games` allows forged winners & signatures** – Anyone can POST arbitrary winners/staking data and the backend will generate a payout signature, enabling fund theft. _(Label: Security)_
 - [ ] **Player ratings can be self-assigned** – `POST /players` and `PATCH /players/:name/rating` accept arbitrary ratings/wins/losses without authentication, letting users inflate their ELO. _(Label: Security)_
 - [ ] **Backend blocks CORS/WebSocket when `FRONTEND_URL` unset** – Express/Socket.IO cors configs deny access if the env variable isn’t provided, breaking local development. _(Label: Bug)_
-- [ ] **Frontend cannot connect when `REACT_APP_BACKEND_URL` missing** – `BACKEND_URL` stays undefined and every fetch/socket call fails; add a default or validation. _(Label: Bug)_
+- [x] **Frontend cannot connect when `REACT_APP_BACKEND_URL` missing** – `BACKEND_URL` stays undefined and every fetch/socket call fails; add a default or validation. _(Label: Bug)_
 - [ ] **Rematch accept routes to `/multiplayer` which doesn’t exist** – `GameOver` navigates to `/multiplayer` even though the router only defines `/game`, so accept rematch shows a blank screen. _(Label: Bug)_
 - [ ] **Rematch sockets never reach the server** – The gameplay socket disconnects before `GameOver` opens a new socket, so backend handlers can’t find the room and rematches never start. _(Label: Bug)_
 - [ ] **Socket handshake logs leak sensitive data** – `backend/src/server.js` logs entire request headers, exposing cookies/tokens in logs; remove or scrub them. _(Label: Security)_
