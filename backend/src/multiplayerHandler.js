@@ -3,6 +3,7 @@ const GameManager = require('./gameManager');
 const LeaderboardManager = require('./leaderboardManager');
 const Game = require('./models/Game');
 const signatureService = require('./services/signatureService');
+const emitLeaderboardUpdate = require('./utils/emitLeaderboardUpdate');
 
 class MultiplayerHandler {
   constructor(io) {
