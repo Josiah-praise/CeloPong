@@ -26,6 +26,7 @@ export function mergePages(existingItems, newItems, key = '_id', options = {}) {
 }
 
 export function shouldResetPagination(offset) {
+  // Interpret undefined/null/'0' as needing a reset
   const numericOffset = Number(offset);
   return !numericOffset || numericOffset === 0;
 }
