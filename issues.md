@@ -5,7 +5,7 @@
 - [ ] **Duplicate `getTopPlayers` breaks cached leaderboard** – `backend/src/gameHandlers.js` defines `getTopPlayers` twice; the async version overwrites the Map-based helper so every update hits the non-existent player-service. _(Label: Bug)_
 - [ ] **`POST /games` allows forged winners & signatures** – Anyone can POST arbitrary winners/staking data and the backend will generate a payout signature, enabling fund theft. _(Label: Security)_
 - [ ] **Player ratings can be self-assigned** – `POST /players` and `PATCH /players/:name/rating` accept arbitrary ratings/wins/losses without authentication, letting users inflate their ELO. _(Label: Security)_
-- [ ] **Backend blocks CORS/WebSocket when `FRONTEND_URL` unset** – Express/Socket.IO cors configs deny access if the env variable isn’t provided, breaking local development. _(Label: Bug)_
+- [x] **Backend blocks CORS/WebSocket when `FRONTEND_URL` unset** – Express/Socket.IO cors configs deny access if the env variable isn’t provided, breaking local development. _(Label: Bug)_
 - [x] **Frontend cannot connect when `REACT_APP_BACKEND_URL` missing** – `BACKEND_URL` stays undefined and every fetch/socket call fails; add a default or validation. _(Label: Bug)_
 - [ ] **Rematch accept routes to `/multiplayer` which doesn’t exist** – `GameOver` navigates to `/multiplayer` even though the router only defines `/game`, so accept rematch shows a blank screen. _(Label: Bug)_
 - [ ] **Rematch sockets never reach the server** – The gameplay socket disconnects before `GameOver` opens a new socket, so backend handlers can’t find the room and rematches never start. _(Label: Bug)_
@@ -14,7 +14,7 @@
 - [ ] **Local leaderboard cache is never updated** – Ratings stored in `playerRankings` stay at 1000 because `updatePlayerRanking` isn’t called, so emitted data is wrong. _(Label: Bug)_
 - [ ] **Pause button permanently kills the game loop** – `updateGameState` returns `null` when paused, and the multiplayer loop treats it as game over, so play never resumes. _(Label: Bug)_
 - [ ] **Staked match winners never receive claim signatures** – The multiplayer flow updates `Game` records without calling `signatureService`, leaving `winnerSignature` empty and wins unclaimable. _(Label: Bug)_
-- [ ] **“Load more” on My Wins discards previous results** – Pagination overwrites the `wins` array instead of appending, so users can’t scroll past the first page. _(Label: Bug)_
+- [x] **“Load more” on My Wins discards previous results** – Pagination overwrites the `wins` array instead of appending, so users can’t scroll past the first page. _(Label: Bug)_
 - [x] **Game History pagination has the same overwrite problem** – History fetches replace the `games` state each time, preventing users from viewing older matches. _(Label: Bug)_
 - [x] **Prize amount shown is only half the real payout** – My Wins displays `stakeAmount` rather than 2× stake, underreporting rewards. _(Label: Bug)_
 - [ ] **Earnings stat ignores unclaimed wins and halves values** – `/games/player/:name/history` sums raw stakes and only counted when `claimed`, so statistics are inaccurate. _(Label: Bug)_

@@ -10,6 +10,7 @@ const MultiplayerHandler = require('./multiplayerHandler');
 const Player = require('./models/Player');
 const Game = require('./models/Game');
 const signatureService = require('./services/signatureService');
+const { getCorsOrigins } = require('./utils/corsOrigins');
 
 const app = express();
 
@@ -48,9 +49,13 @@ process.on('unhandledRejection', (reason, promise) => {
 
 // Normalize FRONTEND_URL by removing trailing slash
 const FRONTEND_URL = process.env.FRONTEND_URL?.replace(/\/$/, '');
+const corsOrigins = getCorsOrigins(FRONTEND_URL);
+function formatOrigins(origins) {
+  return origins === true ? '*' : origins;
+}
 
 app.use(cors({
-  origin: FRONTEND_URL,
+  origin: corsOrigins.origins,
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
@@ -61,7 +66,7 @@ const httpServer = createServer(app);
 
 const io = new Server(httpServer, {
   cors: {
-    origin: FRONTEND_URL,
+    origin: corsOrigins.origins,
     methods: ['GET', 'POST'],
     credentials: true,
     allowedHeaders: ['*']
@@ -86,7 +91,11 @@ app.get('/health', (req, res) => {
     status: 'ok', 
     timestamp: new Date().toISOString(),
     environment: process.env.NODE_ENV,
-    frontend_url: FRONTEND_URL || 'not set'
+    frontend_url: FRONTEND_URL || 'not set',
+    cors: {
+      origins: formatOrigins(corsOrigins.origins),
+      source: corsOrigins.source,
+    }
   });
 });
 
@@ -622,6 +631,10 @@ try {
     console.log(`Server running on port ${PORT}`);
     console.log(`Environment: ${process.env.NODE_ENV}`);
     console.log(`Server accepting connections from: ${FRONTEND_URL || "all origins (debug mode)"}`);
+    console.log('CORS origins:', formatOrigins(corsOrigins.origins), 'source:', corsOrigins.source);
+    if (corsOrigins.source === 'wildcard') {
+      console.warn('[CORS] Allowing all origins. Do not use in production.');
+    }
     console.log(`Health check available at http://localhost:${PORT}/health`);
     
     const addresses = Object.values(require('os').networkInterfaces())

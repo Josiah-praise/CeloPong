@@ -188,6 +188,10 @@ pnpm dev
 - If you skip `REACT_APP_BACKEND_URL`, the frontend now falls back to `window.location.origin` (or `http://localhost:8080`) and logs that decision in the browser console so you can still play locally. You can also define `REACT_APP_BACKEND_URL_FALLBACK` to force a specific origin for unusual setups, or set `REACT_APP_SHOW_BACKEND_URL_BANNER=false` to hide the helper banner in development.
 - Game History pagination now appends results; if “Load More” still repeats the first page, verify backend respects `offset`.
 - My Wins pagination mirrors the same helper; check `limit/offset` if older wins never appear.
+- Backend CORS defaults to localhost when `FRONTEND_URL` is missing; set `FRONTEND_URL` or `FRONTEND_URL_FALLBACK` in production.
+- As a last resort, `FRONTEND_URL_ALLOW_ALL=true` opens CORS to every origin (not recommended outside debugging).
+- Copy `.env.example` to `.env` to quickly configure these variables.
+- Need a custom allowlist? set `FRONTEND_URL_DEV_ORIGINS=http://localhost:4173,http://localhost:3001`.
 
 ---
 

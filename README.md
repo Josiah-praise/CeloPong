@@ -29,6 +29,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - When the filter hides everything, use “Show All Wins” to reset the view
 - Game History “Load More” now truly appends older matches
 - My Wins “Load More” now appends earlier wins instead of replacing the list
+- `/health` now reports the active backend CORS origins/source
 
 ### My Wins Experience
 - Claim prizes directly via Wagmi hooks and see transaction updates inside a modal overlay.
@@ -76,6 +77,8 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - `utils/backendUrl.js` - Normalizes backend URL resolution/fallback logic shared by the entire frontend
 - `utils/eth.js` - Shared ETH formatting helpers (stake → payout doubling, wei summation, trimming)
 - `utils/pagination.js` - Helps merge paginated results without duplicating items
+- `backend/src/utils/corsOrigins.js` - Provides sane defaults when `FRONTEND_URL` is missing
+- `backend/scripts/showCorsConfig.js` - Quick helper to print the active backend CORS config
 - `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync and now sources `BACKEND_URL` via a resolver that falls back to localhost during development.
 - `components/MultiplayerGame.js` - Real-time multiplayer game logic
 - `App.js` - React Router setup and username management
@@ -241,6 +244,10 @@ networks:
 - When `REACT_APP_BACKEND_URL` is not set, the React app now falls back to this origin (or `http://localhost:8080`) and logs the detected source in the console to prevent silent failures.
 - Optional: set `REACT_APP_BACKEND_URL_FALLBACK` to enforce a custom fallback origin when neither the env var nor `window.location.origin` apply (e.g., running from `file://`).
 - Optional: set `REACT_APP_SHOW_BACKEND_URL_BANNER=false` to hide the development banner that explains which backend URL/source is in use.
+- Backend counterpart: set `FRONTEND_URL` (preferred) or `FRONTEND_URL_FALLBACK` to restrict allowed origins; otherwise localhost defaults are used for development.
+- Emergency mode: `FRONTEND_URL_ALLOW_ALL=true` sets a wildcard (development only, logs warnings).
+- See `.env.example` for backend environment variables set during development.
+- Use `FRONTEND_URL_DEV_ORIGINS` (comma-separated) to customize the default allowlist for local gadgets.
 
 **Backend URL Troubleshooting**
 - Open the browser console to view the backend banner and confirm which origin/source is active.
@@ -567,3 +574,6 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Original Pong game by Atari (1972)
 - Socket.IO for real-time communication
 - Docker for containerization
+- Run `pnpm run show:cors` (or `npm run show:cors`) to verify the backend CORS configuration without starting the server.
+- Run `pnpm run test:cors` to see how different env combinations resolve.
+- See `docs/dev-notes/note-91-cors-debugging.md` for more context.
