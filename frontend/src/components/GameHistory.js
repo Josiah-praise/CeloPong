@@ -45,7 +45,9 @@ const GameHistory = ({ savedUsername }) => {
 
       const data = await response.json();
       setGames(prev => shouldReset ? data.games : mergePages(prev, data.games));
-      setStats(data.stats);
+      if (shouldReset) {
+        setStats(data.stats);
+      }
       setPagination(data.pagination);
     } catch (err) {
       console.error('Error fetching game history:', err);
