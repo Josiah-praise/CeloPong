@@ -24,6 +24,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - My Wins dashboard now surfaces total claimable/claimed ETH stats
 - Claimable-only filter makes it easy to focus on pending prizes
 - Game History cards now show staked payout totals with tooltips
+- My Wins cards include a quick “Copy Room” action for support/debugging
 
 ## Architecture Overview
 
