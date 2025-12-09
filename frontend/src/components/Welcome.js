@@ -623,8 +623,8 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
         <div className="rankings">
           <h2>Top Players</h2>
           <div className="rankings-list">
-            {rankings.length > 0 ? (
-              rankings.map((player, index) => (
+            {leaderboard.length > 0 ? (
+              leaderboard.map((player, index) => (
                 <div key={player.name} className="ranking-item">
                   <span className="rank">{index + 1}</span>
                   <span className="name">{player.name}</span>
