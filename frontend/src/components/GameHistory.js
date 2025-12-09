@@ -227,6 +227,13 @@ const GameHistory = ({ savedUsername }) => {
                       <span className="detail-value score">{game.finalScore}</span>
                     </div>
 
+                    {game.isStaked && (
+                      <div className="detail-row">
+                        <span className="detail-label">Prize Payout:</span>
+                        <span className="detail-value">{prizeInfo.formattedPayout} ETH</span>
+                      </div>
+                    )}
+
                     <div className="detail-row">
                       <span className="detail-label">Played At:</span>
                       <span className="detail-value date">{formatDate(game.endedAt)}</span>
