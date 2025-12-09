@@ -456,7 +456,7 @@ const MyWins = () => {
                   {loading ? 'Loading...' : 'Load More'}
                 </button>
                 <p className="pagination-info">
-                  Showing {Math.min(pagination.offset + wins.length, pagination.total)} of {pagination.total} wins
+                  Showing {wins.length} of {pagination.total} wins
                 </p>
               </div>
             ) : (
