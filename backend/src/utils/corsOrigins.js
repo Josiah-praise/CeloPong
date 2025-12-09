@@ -7,13 +7,18 @@ const ORIGIN_SOURCES = {
   ENV: 'env',
   FALLBACK_ENV: 'fallback-env',
   DEFAULT: 'default',
+  WILDCARD: 'wildcard',
 };
 
 function normalizeUrl(url) {
   return url?.replace(/\/$/, '') || null;
 }
 
-function getCorsOrigins(envUrl = process.env.FRONTEND_URL, fallbackUrl = process.env.FRONTEND_URL_FALLBACK) {
+function getCorsOrigins(envUrl = process.env.FRONTEND_URL, fallbackUrl = process.env.FRONTEND_URL_FALLBACK, allowAll = process.env.FRONTEND_URL_ALLOW_ALL === 'true') {
+  if (allowAll) {
+    return { origins: true, source: ORIGIN_SOURCES.WILDCARD };
+  }
+
   const normalized = normalizeUrl(envUrl);
   if (normalized) {
     return { origins: [normalized], source: ORIGIN_SOURCES.ENV };
