@@ -629,6 +629,9 @@ try {
     console.log(`Environment: ${process.env.NODE_ENV}`);
     console.log(`Server accepting connections from: ${FRONTEND_URL || "all origins (debug mode)"}`);
     console.log('CORS origins:', corsOrigins.origins, 'source:', corsOrigins.source);
+    if (corsOrigins.source === 'wildcard') {
+      console.warn('[CORS] Allowing all origins. Do not use in production.');
+    }
     console.log(`Health check available at http://localhost:${PORT}/health`);
     
     const addresses = Object.values(require('os').networkInterfaces())
