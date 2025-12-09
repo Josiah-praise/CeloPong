@@ -339,7 +339,11 @@ const MyWins = () => {
           <div className="no-wins">
             <p>{showClaimableOnly ? 'No claimable wins!' : 'No wins yet!'}</p>
             <p>{showClaimableOnly ? 'Great job claiming everything.' : 'Play some staked matches to win prizes'}</p>
-            {!showClaimableOnly && (
+            {showClaimableOnly ? (
+              <button onClick={() => setShowClaimableOnly(false)} className="play-button">
+                Show All Wins
+              </button>
+            ) : (
               <button onClick={() => navigate('/')} className="play-button">
                 Play Now
               </button>
