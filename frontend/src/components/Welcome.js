@@ -21,6 +21,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const navigate = useNavigate();
   const socketRef = useRef(null);
   const { leaderboard, isLoading: isLeaderboardLoading, socket } = useLeaderboardSubscription();
+  const { url: backendUrl, source: backendUrlSource } = useBackendUrl();
 
   // Web3 hooks
   const { open } = useAppKit();
