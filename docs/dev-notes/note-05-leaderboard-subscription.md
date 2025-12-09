@@ -4,7 +4,7 @@
 Leaderboards update live via Socket.IO broadcasts from `leaderboardManager.js`. Documenting the subscription strategy will help keep bandwidth predictable and ensures we can degrade gracefully when the backend is under load.
 
 ## Implementation Notes
-- The frontend subscribes to `leaderboardUpdate` after a successful connection; wrap listener setup inside a React effect tied to the socket reference.
+- The frontend subscribes to `leaderboardUpdate` (and the temporary alias `rankingsUpdate`) via the new `useLeaderboardSubscription` hook that owns socket lifecycle work.
 - Debounce UI updates so we do not rerender the leaderboard 60 times per second—aim for a 1s refresh or only on change detection.
 - On the backend, consolidate updates so every finished match triggers one payload that includes ranks, rating deltas, and a timestamp.
 - Provide pagination support for future long leaderboards by letting clients request a slice and caching results server-side.
