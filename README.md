@@ -21,6 +21,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - Genome-based procedural music generation
 - Touch and mouse controls for mobile/desktop
 - Accurate staked prize reporting — My Wins shows full 2× payouts
+- My Wins dashboard now surfaces total claimable/claimed ETH stats
 
 ## Architecture Overview
 
