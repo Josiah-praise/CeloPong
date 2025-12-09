@@ -43,7 +43,7 @@ class GameHandlers {
       // Emit updated rankings
       this.getTopPlayers().then(topPlayers => {
         console.log('Emitting rankings update:', topPlayers);
-        socket.emit('rankingsUpdate', topPlayers);
+        emitLeaderboardUpdate(socket, topPlayers);
       });
     }
 
