@@ -18,19 +18,27 @@ function warnDefault(url) {
   }
 }
 
+function sanitizeUrl(url) {
+  if (!url) {
+    return null;
+  }
+
+  return url.replace(/\/+$/, '');
+}
+
 export function resolveBackendUrl() {
-  const envUrl = process.env.REACT_APP_BACKEND_URL;
+  const envUrl = sanitizeUrl(process.env.REACT_APP_BACKEND_URL);
   if (envUrl) {
     return envUrl;
   }
 
-  const locationUrl = deriveFromLocation();
+  const locationUrl = sanitizeUrl(deriveFromLocation());
   if (locationUrl) {
     warnDefault(locationUrl);
     return locationUrl;
   }
 
-  const fallback = `http://localhost:${DEFAULT_PORT}`;
+  const fallback = sanitizeUrl(`http://localhost:${DEFAULT_PORT}`);
   warnDefault(fallback);
   return fallback;
 }
