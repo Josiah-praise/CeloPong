@@ -90,6 +90,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
    - `gameUpdate` - Ball/paddle positions (60 times/second)
    - `gameOver` - Match results and rating changes
    - `leaderboardUpdate` (legacy alias: `rankingsUpdate`) - Live ranking updates
+   - Pagination helpers keep large lists (Game History/My Wins) synchronized without duplicate cards
 
 #### 2. Backend Layer (Node.js + Socket.IO)
 **Location:** `backend/src/`
