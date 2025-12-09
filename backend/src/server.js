@@ -50,6 +50,9 @@ process.on('unhandledRejection', (reason, promise) => {
 // Normalize FRONTEND_URL by removing trailing slash
 const FRONTEND_URL = process.env.FRONTEND_URL?.replace(/\/$/, '');
 const corsOrigins = getCorsOrigins(FRONTEND_URL);
+function formatOrigins(origins) {
+  return origins === true ? '*' : origins;
+}
 
 app.use(cors({
   origin: corsOrigins.origins,
@@ -90,7 +93,7 @@ app.get('/health', (req, res) => {
     environment: process.env.NODE_ENV,
     frontend_url: FRONTEND_URL || 'not set',
     cors: {
-      origins: corsOrigins.origins,
+      origins: formatOrigins(corsOrigins.origins),
       source: corsOrigins.source,
     }
   });
@@ -628,7 +631,7 @@ try {
     console.log(`Server running on port ${PORT}`);
     console.log(`Environment: ${process.env.NODE_ENV}`);
     console.log(`Server accepting connections from: ${FRONTEND_URL || "all origins (debug mode)"}`);
-    console.log('CORS origins:', corsOrigins.origins, 'source:', corsOrigins.source);
+    console.log('CORS origins:', formatOrigins(corsOrigins.origins), 'source:', corsOrigins.source);
     if (corsOrigins.source === 'wildcard') {
       console.warn('[CORS] Allowing all origins. Do not use in production.');
     }
