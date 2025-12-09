@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
-import { computePrizeFromStake, mergePages, shouldResetPagination } from '../utils';
+import { computePrizeFromStake, mergePages, shouldResetPagination, createPaginationState } from '../utils';
 import '../styles/GameHistory.css';
 
 const sortByEndedAtDesc = (a, b) => {
@@ -18,7 +18,7 @@ const GameHistory = ({ savedUsername }) => {
   const [error, setError] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
   const [stakedFilter, setStakedFilter] = useState(null);
-  const [pagination, setPagination] = useState({ total: 0, limit: 50, offset: 0, hasMore: false });
+  const [pagination, setPagination] = useState(createPaginationState(50));
   const displayedCount = games.length;
   const remainingGames = Math.max(pagination.total - displayedCount, 0);
   const isFilteringStaked = stakedFilter !== null;
