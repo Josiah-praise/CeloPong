@@ -12,6 +12,12 @@ function deriveFromLocation() {
   return `${safeProtocol}//${safeHost}:${DEFAULT_PORT}`;
 }
 
+function warnDefault(url) {
+  if (typeof console !== 'undefined') {
+    console.warn('[BACKEND_URL] Falling back to', url);
+  }
+}
+
 export function resolveBackendUrl() {
   const envUrl = process.env.REACT_APP_BACKEND_URL;
   if (envUrl) {
@@ -20,8 +26,11 @@ export function resolveBackendUrl() {
 
   const locationUrl = deriveFromLocation();
   if (locationUrl) {
+    warnDefault(locationUrl);
     return locationUrl;
   }
 
-  return `http://localhost:${DEFAULT_PORT}`;
+  const fallback = `http://localhost:${DEFAULT_PORT}`;
+  warnDefault(fallback);
+  return fallback;
 }
