@@ -18,6 +18,7 @@
 - Legacy alias kept temporarily: `rankingsUpdate`
 - Request event from client: `getLeaderboard`
 - Payload: Array of `{ name, rating, wins, losses }`
+- Slice: Respect `LEADERBOARD_LIMIT` so clients receive the same payload size regardless of transport.
 
 ## Compatibility Plan
 
