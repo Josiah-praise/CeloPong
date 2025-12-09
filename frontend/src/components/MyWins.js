@@ -215,15 +215,15 @@ const MyWins = () => {
       </div>
 
       <div className="wins-summary">
-        <div className="summary-card claimable">
+        <div className="summary-card claimable" data-testid="claimable-total">
           <span className="summary-label">Claimable</span>
           <span className="summary-value">{formattedTotals.claimable} ETH</span>
         </div>
-        <div className="summary-card claimed">
+        <div className="summary-card claimed" data-testid="claimed-total">
           <span className="summary-label">Claimed</span>
           <span className="summary-value">{formattedTotals.claimed} ETH</span>
         </div>
-        <div className="summary-card total">
+        <div className="summary-card total" data-testid="total-won">
           <span className="summary-label">Total Won</span>
           <span className="summary-value">{formattedTotals.total} ETH</span>
         </div>
