@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
 import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
-import { computePrizeFromStake, formatWeiToEth, sumWei } from '../utils/eth';
+import { computePrizeFromStake, formatWeiToEth, sumWei } from '../utils';
 import '../styles/MyWins.css';
 
 const MyWins = () => {
