@@ -9,3 +9,8 @@
 - Append results while keeping ordering consistent (newest first).
 - Avoid duplicate cards when backend returns overlapping items.
 - Preserve stats/pagination metadata without corrupting totals.
+
+## Proposed Steps
+1. Introduce a helper to merge new pages into existing state by `_id`.
+2. Update `GameHistory` to replace results when `offset === 0`, append otherwise.
+3. Keep `stats` derived from first page to avoid drift.
