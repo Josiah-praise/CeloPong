@@ -191,7 +191,7 @@ const Game = ({ username }) => {
 
   const testBackendConnection = async () => {
     try {
-      const response = await fetch(`${BACKEND_URL || 'http://localhost:5000'}/health`);
+      const response = await fetch(`${BACKEND_URL}/health`);
       const data = await response.json();
       console.log('Backend health check:', data);
       return true;
