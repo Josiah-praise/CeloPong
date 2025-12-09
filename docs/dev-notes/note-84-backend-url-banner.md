@@ -8,6 +8,7 @@
 - Controlled via `REACT_APP_SHOW_BACKEND_URL_BANNER` (defaults to `true` in non-production builds).
 - Reads data from `useBackendUrl`, ensuring banner stays consistent with the resolver.
 - Hidden automatically in production builds.
+- Tagged with `data-testid="backend-url-banner"` for potential UI tests.
 
 ## Future Ideas
 - Link to `/health` endpoint for quick checks.
