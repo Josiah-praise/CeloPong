@@ -20,6 +20,9 @@ function safeParseEther(value) {
 export function computePrizeFromStake(stakeAmount) {
   const stakeWei = safeParseEther(stakeAmount);
   const payoutWei = stakeWei * TWO;
+  if (stakeWei === ZERO && stakeAmount) {
+    console.warn('[MyWins] Unable to parse stake amount:', stakeAmount);
+  }
 
   return {
     stakeWei,
