@@ -1,4 +1,5 @@
 {
+  "name": "celo-pong-root",
   "scripts": {
     "show:cors": "node backend/scripts/showCorsConfig.js",
     "test:cors": "node backend/scripts/testCorsOrigins.js"
