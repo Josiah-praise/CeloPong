@@ -60,7 +60,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - `hooks/useLeaderboardSubscription.js` - Consolidates HTTP + WebSocket leaderboard data
 - `hooks/useBackendUrl.js` - Surfaces the resolved backend URL + source for debugging banners
 - `utils/backendUrl.js` - Normalizes backend URL resolution/fallback logic shared by the entire frontend
-- `utils/eth.js` - Shared ETH formatting helpers (stake → payout doubling)
+- `utils/eth.js` - Shared ETH formatting helpers (stake → payout doubling, wei summation, trimming)
 - `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync and now sources `BACKEND_URL` via a resolver that falls back to localhost during development.
 - `components/MultiplayerGame.js` - Real-time multiplayer game logic
 - `App.js` - React Router setup and username management
