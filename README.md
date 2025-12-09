@@ -575,3 +575,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 - Socket.IO for real-time communication
 - Docker for containerization
 - Run `node backend/scripts/showCorsConfig.js` to verify the backend CORS configuration without starting the server.
+- Run `node backend/scripts/testCorsOrigins.js` to see how different env combinations resolve.
