@@ -32,3 +32,7 @@ export function shouldResetPagination(offset) {
   const numericOffset = Number(offset);
   return !numericOffset || numericOffset === 0;
 }
+
+export function createPaginationState(limit = 50) {
+  return { total: 0, limit, offset: 0, hasMore: false };
+}
