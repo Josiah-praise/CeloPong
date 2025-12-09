@@ -630,7 +630,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
               ))
             ) : (
               <div className="no-rankings">
-                {isLeaderboardLoading ? 'Loading leaderboard...' : 'No players ranked yet'}
+                {isLeaderboardLoading ? 'Fetching top players...' : 'No players ranked yet'}
               </div>
             )}
           </div>
