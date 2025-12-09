@@ -65,7 +65,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
    - `gameStart` - Game begins
    - `gameUpdate` - Ball/paddle positions (60 times/second)
    - `gameOver` - Match results and rating changes
-   - `leaderboardUpdate` - Live ranking updates
+   - `leaderboardUpdate` (legacy alias: `rankingsUpdate`) - Live ranking updates
 
 #### 2. Backend Layer (Node.js + Socket.IO)
 **Location:** `backend/src/`
@@ -112,7 +112,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
    - Calculate ELO changes
    - Update Player Service
    - Emit `gameOver` with results
-   - Broadcast `leaderboardUpdate` to all clients
+   - Broadcast `leaderboardUpdate` (and `rankingsUpdate` for backwards compatibility) to all clients
 
 **Why Server-Side Game Logic?**
 - Prevents cheating (clients can't manipulate game state)
