@@ -9,6 +9,7 @@
 - Provide a comparator when historical ordering matters (e.g., `endedAt`).
 - Utilities are re-exported via `frontend/src/utils/index.js` for convenience.
 - `createPaginationState(limit)` returns the default shape for local reducers.
+- My Wins and Game History both rely on these helpers—keep them backward compatible.
 
 ## Next Steps
 - Extract a shared `usePaginatedList` hook that wraps loading state and offsets.
