@@ -18,3 +18,9 @@
 - Legacy alias kept temporarily: `rankingsUpdate`
 - Request event from client: `getLeaderboard`
 - Payload: Array of `{ name, rating, wins, losses }`
+
+## Compatibility Plan
+
+1. Emit both `leaderboardUpdate` and `rankingsUpdate` on the backend.
+2. Update the frontend to listen to both while logging deprecation warnings.
+3. Remove the legacy event when telemetry confirms there are zero references.
