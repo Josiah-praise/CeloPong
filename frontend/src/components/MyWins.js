@@ -6,6 +6,12 @@ import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
 import { computePrizeFromStake, formatWeiToEth, sumWei, mergePages, shouldResetPagination, createPaginationState } from '../utils';
 import '../styles/MyWins.css';
 
+const sortWinsByEndedAt = (a, b) => {
+  const dateA = new Date(a?.endedAt || 0).getTime();
+  const dateB = new Date(b?.endedAt || 0).getTime();
+  return dateB - dateA;
+};
+
 const MyWins = () => {
   const navigate = useNavigate();
   const { address, isConnected } = useAccount();
@@ -50,7 +56,12 @@ const MyWins = () => {
       }
 
       const data = await response.json();
-      setWins(prev => shouldReset ? data.games : mergePages(prev, data.games));
+      setWins(prev => {
+        if (shouldReset) {
+          return [...(data.games || [])].sort(sortWinsByEndedAt);
+        }
+        return mergePages(prev, data.games, '_id', { comparator: sortWinsByEndedAt });
+      });
       setPagination({
         ...data.pagination,
         hasMore: data.pagination?.hasMore ?? (data.pagination.offset + data.pagination.limit) < data.pagination.total
