@@ -1,6 +1,12 @@
 const DEFAULT_PORT = 8080;
 const DEFAULT_PROTOCOL = 'http:';
 
+export const BACKEND_URL_SOURCES = {
+  ENV: 'env',
+  LOCATION: 'location',
+  FALLBACK: 'fallback',
+};
+
 function deriveFromLocation() {
   if (typeof window === 'undefined' || !window.location) {
     return null;
