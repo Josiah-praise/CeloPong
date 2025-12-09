@@ -21,6 +21,7 @@
 - Log cors source + allowed origins on startup.
 - Consider exposing `/health` field `cors_origin`.
 - `/health` now returns `cors.origins` and `cors.source` for quick debugging.
+- Default origins include common React/Vite ports (3000/4173).
 
 ## Next Steps
 - Add integration tests hitting `/health` to ensure defaults don't regress.
