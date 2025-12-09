@@ -18,3 +18,7 @@
 ## Observability
 - Log the page size + offset while in development to confirm increments.
 - Consider instrumenting a metric for “history_load_more” to detect failures.
+
+## Next Steps
+- Evaluate moving pagination logic to a shared hook used by My Wins.
+- Investigate backend support for `cursor`-based pagination to remove offset math.
