@@ -114,7 +114,7 @@ class GameHandlers {
 
     // Emit current rankings to all clients
     this.getTopPlayers().then(topPlayers => {
-      this.io.emit('rankingsUpdate', topPlayers);
+      emitLeaderboardUpdate(this.io, topPlayers);
     });
 
     // Then, check for waiting players
