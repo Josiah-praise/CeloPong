@@ -1,3 +1,7 @@
 export function mergePages(existingItems, newItems, key = '_id') {
-  return [];
+  const merged = Array.isArray(existingItems) ? [...existingItems] : [];
+  if (!Array.isArray(newItems) || newItems.length === 0) {
+    return merged;
+  }
+  return merged;
 }
