@@ -13,6 +13,7 @@
 - Document the logic so future contributors avoid repeating the bug.
 - Surface aggregate claimable/claimed totals so the benefit is obvious at a glance.
 - Provide helper utilities (`computePrizeFromStake`, `sumWei`) for future payout work.
+- Keep `PRIZE_MULTIPLIER` defined in `frontend/src/constants.js` in sync with backend economics.
 
 ## Proposed Steps
 
