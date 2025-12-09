@@ -7,6 +7,7 @@
 ## Usage Tips
 - Always pass `_id` or a stable key to prevent duplicates.
 - Provide a comparator when historical ordering matters (e.g., `endedAt`).
+- Utilities are re-exported via `frontend/src/utils/index.js` for convenience.
 
 ## Next Steps
 - Extract a shared `usePaginatedList` hook that wraps loading state and offsets.
