@@ -1,5 +1,8 @@
 const SocketEvents = require('./socketEvents');
 
+/**
+ * Set of outbound events that should receive identical leaderboard payloads
+ */
 const LEGACY_EVENTS = [
   SocketEvents.LEADERBOARD_UPDATE,
   SocketEvents.RANKINGS_UPDATE,
