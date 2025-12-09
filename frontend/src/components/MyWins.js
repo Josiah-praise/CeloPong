@@ -44,6 +44,13 @@ const MyWins = () => {
       setLoading(true);
       setError(null);
 
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug('[MyWins] fetching page', {
+          limit: pagination.limit,
+          offset: pagination.offset
+        });
+      }
+
       const shouldReset = shouldResetPagination(pagination.offset);
 
       const params = new URLSearchParams({
@@ -70,7 +77,10 @@ const MyWins = () => {
         hasMore: data.pagination?.hasMore ?? (data.pagination.offset + data.pagination.limit) < data.pagination.total
       });
     } catch (err) {
-      console.error('Error fetching wins:', err);
+      console.error('Error fetching wins:', {
+        error: err,
+        offset: pagination.offset
+      });
       setError('Failed to load your wins. Please try again.');
     } finally {
       setLoading(false);
