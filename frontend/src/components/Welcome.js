@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAppKit } from '@reown/appkit/react';
 import { useAccount } from 'wagmi';
 import '../styles/Welcome.css';
-import { BACKEND_URL } from '../constants';
+import { BACKEND_URL, SHOW_BACKEND_URL_BANNER } from '../constants';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer1, useStakeAsPlayer2, useGetMatch } from '../hooks/useContract';
 import { STAKE_AMOUNTS } from '../contracts/PongEscrow';
@@ -609,6 +609,12 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
             )}
           </div>
         </div>
+
+        {SHOW_BACKEND_URL_BANNER && (
+          <div className="backend-url-banner">
+            Backend: <span>{backendUrl}</span> <em>({backendUrlSource})</em>
+          </div>
+        )}
 
         <div className="instructions">
           <h2>How to Play</h2>
