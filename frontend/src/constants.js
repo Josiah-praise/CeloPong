@@ -1,4 +1,4 @@
-import { resolveBackendUrl, resolveBackendUrlWithSource } from './utils/backendUrl';
+import { resolveBackendUrlWithSource } from './utils/backendUrl';
 
 // Game constants
 export const STORAGE_KEY = 'pong_username';
