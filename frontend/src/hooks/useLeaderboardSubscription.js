@@ -14,6 +14,37 @@ export default function useLeaderboardSubscription() {
     []
   );
 
+  useEffect(() => {
+    let isMounted = true;
+
+    async function fetchInitialLeaderboard() {
+      try {
+        const response = await fetch(`${BACKEND_URL}/api/rankings/top?limit=10`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: { 'Content-Type': 'application/json' },
+        });
+
+        if (!response.ok) {
+          throw new Error(`Failed to load leaderboard: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (isMounted) {
+          setLeaderboard(data);
+        }
+      } catch (error) {
+        console.error('[Leaderboard] initial fetch failed', error);
+      }
+    }
+
+    fetchInitialLeaderboard();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
   return {
     leaderboard,
     setLeaderboard,
