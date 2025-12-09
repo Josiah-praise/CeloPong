@@ -1,3 +1,4 @@
+// Centralized logic for picking the backend origin used by the React app
 const DEFAULT_PORT = 8080;
 const DEFAULT_PROTOCOL = 'http:';
 const DEFAULT_BACKEND = `http://localhost:${DEFAULT_PORT}`;
