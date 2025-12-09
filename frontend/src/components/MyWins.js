@@ -15,6 +15,7 @@ const MyWins = () => {
   const [claimingGameId, setClaimingGameId] = useState(null);
   const [claimErrorMessage, setClaimErrorMessage] = useState(null);
   const [pagination, setPagination] = useState({ total: 0, limit: 20, offset: 0, hasMore: false });
+  const [showClaimableOnly, setShowClaimableOnly] = useState(false);
 
   const {
     claimPrize,
@@ -160,6 +161,11 @@ const MyWins = () => {
         prizeInfo: computePrizeFromStake(game.stakeAmount),
       })),
     [wins]
+  );
+
+  const filteredWins = useMemo(
+    () => winsWithPrize.filter((game) => (showClaimableOnly ? !game.claimed : true)),
+    [winsWithPrize, showClaimableOnly]
   );
 
   const prizeTotals = useMemo(() => {
@@ -318,18 +324,30 @@ const MyWins = () => {
           <div className="loading">Loading your wins...</div>
         ) : error ? (
           <div className="error-message">{error}</div>
-        ) : wins.length === 0 ? (
+        ) : filteredWins.length === 0 ? (
           <div className="no-wins">
-            <p>No wins yet!</p>
-            <p>Play some staked matches to win prizes</p>
-            <button onClick={() => navigate('/')} className="play-button">
-              Play Now
-            </button>
+            <p>{showClaimableOnly ? 'No claimable wins!' : 'No wins yet!'}</p>
+            <p>{showClaimableOnly ? 'Great job claiming everything.' : 'Play some staked matches to win prizes'}</p>
+            {!showClaimableOnly && (
+              <button onClick={() => navigate('/')} className="play-button">
+                Play Now
+              </button>
+            )}
           </div>
         ) : (
           <>
+            <div className="wins-toolbar">
+              <label className="toggle">
+                <input
+                  type="checkbox"
+                  checked={showClaimableOnly}
+                  onChange={(e) => setShowClaimableOnly(e.target.checked)}
+                />
+                Show claimable only
+              </label>
+            </div>
             <div className="wins-list">
-              {winsWithPrize.map((game) => {
+              {filteredWins.map((game) => {
                 const prize = game.prizeInfo;
                 return (
                   <div key={game._id} className={`win-card ${game.claimed ? 'claimed' : 'claimable'}`}>
