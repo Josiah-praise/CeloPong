@@ -20,6 +20,7 @@ const GameHistory = ({ savedUsername }) => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [stakedFilter, setStakedFilter] = useState(null);
   const [pagination, setPagination] = useState({ total: 0, limit: 50, offset: 0, hasMore: false });
+  const displayedCount = games.length;
 
   // Fetch game history
   const fetchGameHistory = useCallback(async () => {
@@ -293,7 +294,7 @@ const GameHistory = ({ savedUsername }) => {
                   {loading ? 'Loading...' : 'Load More'}
                 </button>
                 <p className="pagination-info">
-                  Showing {games.length} of {pagination.total} games
+                  Showing {displayedCount} of {pagination.total} games
                 </p>
               </div>
             )}
