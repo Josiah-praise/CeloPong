@@ -451,6 +451,7 @@ const MyWins = () => {
                   onClick={loadMore}
                   className="load-more-button"
                   disabled={loading}
+                  data-testid="wins-load-more"
                 >
                   {loading ? 'Loading...' : 'Load More'}
                 </button>
