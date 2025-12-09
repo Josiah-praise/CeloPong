@@ -64,6 +64,9 @@ const MyWins = () => {
   }, [address, pagination.limit, pagination.offset]);
 
   const loadMore = () => {
+    if (loading || !pagination.hasMore) {
+      return;
+    }
     setPagination(prev => ({
       ...prev,
       offset: prev.offset + prev.limit
