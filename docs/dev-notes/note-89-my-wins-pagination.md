@@ -8,3 +8,4 @@
 - Reuse `mergePages`/`shouldResetPagination` so pagination appends properly.
 - Avoid duplicate cards and keep “claimable only” filter working after new pages load.
 - Show accurate pagination info (showing N of M wins).
+- Indicate when all wins are loaded and disable the button accordingly.
