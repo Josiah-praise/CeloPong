@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
 import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
-import { computePrizeFromStake, formatWeiToEth, sumWei } from '../utils';
+import { computePrizeFromStake, formatWeiToEth, sumWei, mergePages, shouldResetPagination, createPaginationState } from '../utils';
 import '../styles/MyWins.css';
 
 const MyWins = () => {
@@ -14,7 +14,7 @@ const MyWins = () => {
   const [error, setError] = useState(null);
   const [claimingGameId, setClaimingGameId] = useState(null);
   const [claimErrorMessage, setClaimErrorMessage] = useState(null);
-  const [pagination, setPagination] = useState({ total: 0, limit: 20, offset: 0, hasMore: false });
+  const [pagination, setPagination] = useState(createPaginationState(20));
   const [showClaimableOnly, setShowClaimableOnly] = useState(false);
   const [copiedRoom, setCopiedRoom] = useState(null);
 
@@ -35,6 +35,8 @@ const MyWins = () => {
       setLoading(true);
       setError(null);
 
+      const shouldReset = shouldResetPagination(pagination.offset);
+
       const params = new URLSearchParams({
         address,
         limit: pagination.limit,
@@ -48,8 +50,11 @@ const MyWins = () => {
       }
 
       const data = await response.json();
-      setWins(data.games);
-      setPagination(data.pagination);
+      setWins(prev => shouldReset ? data.games : mergePages(prev, data.games));
+      setPagination({
+        ...data.pagination,
+        hasMore: data.pagination?.hasMore ?? (data.pagination.offset + data.pagination.limit) < data.pagination.total
+      });
     } catch (err) {
       console.error('Error fetching wins:', err);
       setError('Failed to load your wins. Please try again.');
