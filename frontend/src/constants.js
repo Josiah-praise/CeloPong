@@ -20,3 +20,7 @@ export const SOCKET_EVENTS = Object.freeze({
 });
 
 export const LEADERBOARD_LIMIT = 10;
+
+export const SHOW_BACKEND_URL_BANNER =
+  process.env.NODE_ENV !== 'production' &&
+  process.env.REACT_APP_SHOW_BACKEND_URL_BANNER !== 'false';
