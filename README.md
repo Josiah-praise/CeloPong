@@ -20,6 +20,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - Original 80's inspired soundtrack
 - Genome-based procedural music generation
 - Touch and mouse controls for mobile/desktop
+- Accurate staked prize reporting — My Wins shows full 2× payouts
 
 ## Architecture Overview
 
