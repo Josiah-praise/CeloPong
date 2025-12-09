@@ -10,6 +10,7 @@ const MultiplayerHandler = require('./multiplayerHandler');
 const Player = require('./models/Player');
 const Game = require('./models/Game');
 const signatureService = require('./services/signatureService');
+const { getCorsOrigins } = require('./utils/corsOrigins');
 
 const app = express();
 
