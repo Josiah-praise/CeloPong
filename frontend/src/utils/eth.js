@@ -17,9 +17,10 @@ function safeParseEther(value) {
 }
 
 // Consumes a stake amount and derives stake/payout info in wei + ETH strings
-export function computePrizeFromStake(stakeAmount) {
+export function computePrizeFromStake(stakeAmount, multiplier = 2n) {
   const stakeWei = safeParseEther(stakeAmount);
-  const payoutWei = stakeWei * TWO;
+  const multiplierWei = typeof multiplier === 'bigint' ? multiplier : BigInt(multiplier || 1);
+  const payoutWei = stakeWei * multiplierWei;
   if (stakeWei === ZERO && stakeAmount) {
     console.warn('[MyWins] Unable to parse stake amount:', stakeAmount);
   }

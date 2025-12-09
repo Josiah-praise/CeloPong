@@ -158,7 +158,7 @@ const MyWins = () => {
     () =>
       wins.map((game) => ({
         ...game,
-        prizeInfo: computePrizeFromStake(game.stakeAmount),
+        prizeInfo: computePrizeFromStake(game.stakeAmount, PRIZE_MULTIPLIER),
       })),
     [wins]
   );

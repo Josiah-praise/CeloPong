@@ -199,7 +199,7 @@ const GameHistory = ({ savedUsername }) => {
           <>
             <div className="games-list">
               {games.map((game) => {
-                const prizeInfo = computePrizeFromStake(game.stakeAmount);
+                const prizeInfo = computePrizeFromStake(game.stakeAmount, PRIZE_MULTIPLIER);
                 return (
                 <div key={game._id} className={`game-card ${game.result}`}>
                   <div className="game-header">
