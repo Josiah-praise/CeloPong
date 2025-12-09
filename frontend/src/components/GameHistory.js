@@ -22,6 +22,7 @@ const GameHistory = ({ savedUsername }) => {
   const [pagination, setPagination] = useState({ total: 0, limit: 50, offset: 0, hasMore: false });
   const displayedCount = games.length;
   const remainingGames = Math.max(pagination.total - displayedCount, 0);
+  const isFilteringStaked = stakedFilter !== null;
 
   // Fetch game history
   const fetchGameHistory = useCallback(async () => {
@@ -212,6 +213,9 @@ const GameHistory = ({ savedUsername }) => {
           >
             Casual
           </button>
+          {isFilteringStaked && (
+            <span className="filter-hint">Filtering by {stakedFilter === 'true' ? 'staked' : 'casual'} games</span>
+          )}
         </div>
       </div>
 

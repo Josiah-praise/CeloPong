@@ -134,6 +134,11 @@
   flex-wrap: wrap;
 }
 
+.filter-hint {
+  font-size: 0.6rem;
+  color: #bbb;
+}
+
 .filter-group-label {
   font-size: 0.7rem;
   color: #888;
