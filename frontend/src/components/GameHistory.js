@@ -226,7 +226,7 @@ const GameHistory = ({ savedUsername }) => {
           </div>
         ) : (
           <>
-            <div className="games-list">
+            <div className="games-list" data-testid="history-list">
               {games.map((game) => {
                 const prizeInfo = computePrizeFromStake(game.stakeAmount, PRIZE_MULTIPLIER);
                 return (
@@ -288,6 +288,7 @@ const GameHistory = ({ savedUsername }) => {
                   onClick={loadMore}
                   className="load-more-button"
                   disabled={loading}
+                  data-testid="history-load-more"
                 >
                   {loading ? 'Loading...' : 'Load More'}
                 </button>
