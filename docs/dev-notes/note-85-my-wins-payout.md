@@ -12,6 +12,7 @@
 - Introduce a formatter that can safely double numeric strings without floating-point loss.
 - Document the logic so future contributors avoid repeating the bug.
 - Surface aggregate claimable/claimed totals so the benefit is obvious at a glance.
+- Provide helper utilities (`computePrizeFromStake`, `sumWei`) for future payout work.
 
 ## Proposed Steps
 
