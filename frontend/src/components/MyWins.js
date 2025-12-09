@@ -387,7 +387,7 @@ const MyWins = () => {
                         <span className="detail-value prize-amount" data-testid="prize-amount">
                           {prize.formattedPayout} ETH
                           <span className="prize-note">
-                            stake {prize.formattedStake} ETH ×2
+                            stake {prize.formattedStake} ETH ×{Number(prize.multiplier)}
                           </span>
                         </span>
                       </div>
