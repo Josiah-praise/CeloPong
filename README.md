@@ -76,6 +76,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - `utils/backendUrl.js` - Normalizes backend URL resolution/fallback logic shared by the entire frontend
 - `utils/eth.js` - Shared ETH formatting helpers (stake → payout doubling, wei summation, trimming)
 - `utils/pagination.js` - Helps merge paginated results without duplicating items
+- `backend/src/utils/corsOrigins.js` - Provides sane defaults when `FRONTEND_URL` is missing
 - `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync and now sources `BACKEND_URL` via a resolver that falls back to localhost during development.
 - `components/MultiplayerGame.js` - Real-time multiplayer game logic
 - `App.js` - React Router setup and username management
