@@ -63,6 +63,80 @@
   margin: 0 auto;
 }
 
+.wins-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.5rem;
+}
+
+.toggle {
+  font-size: 0.7rem;
+  color: #bbb;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.toggle input {
+  accent-color: rgb(253, 208, 64);
+  width: 16px;
+  height: 16px;
+}
+
+.wins-summary {
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.summary-note {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  font-size: 0.65rem;
+  color: #999;
+  font-family: 'Press Start 2P', monospace;
+}
+
+.summary-card {
+  border: 2px solid rgba(116, 113, 203, 0.6);
+  border-radius: 8px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  text-align: center;
+  box-shadow: 0 0 10px rgba(116, 113, 203, 0.2);
+}
+
+.summary-card.claimable {
+  border-color: rgb(253, 208, 64);
+}
+
+.summary-card.claimed {
+  border-color: #4caf50;
+}
+
+.summary-card.total {
+  border-color: rgb(116, 113, 203);
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.6rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  color: rgb(253, 208, 64);
+  font-family: 'Press Start 2P', monospace;
+}
+
 .loading,
 .error-message,
 .connect-wallet-prompt {
@@ -164,6 +238,21 @@
   color: rgb(253, 208, 64);
 }
 
+.copy-room-button {
+  margin-left: 0.5rem;
+  border: 1px solid rgba(253, 208, 64, 0.6);
+  background: transparent;
+  color: #fff;
+  font-size: 0.5rem;
+  padding: 0.2rem 0.4rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.copy-room-button:hover {
+  background: rgba(253, 208, 64, 0.2);
+}
+
 .status-badge {
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -211,6 +300,15 @@
   color: rgb(253, 208, 64);
   font-size: 1rem;
   font-weight: bold;
+}
+
+.prize-note {
+  display: block;
+  font-size: 0.6rem;
+  color: #aaa;
+  margin-top: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .tx-hash a {
@@ -357,6 +455,10 @@
 @media (max-width: 768px) {
   .my-wins-container {
     padding: 1rem 0.5rem;
+  }
+
+  .wins-summary {
+    grid-template-columns: 1fr;
   }
 
   .my-wins-header h1 {

@@ -20,6 +20,18 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - Original 80's inspired soundtrack
 - Genome-based procedural music generation
 - Touch and mouse controls for mobile/desktop
+- Accurate staked prize reporting — My Wins shows full 2× payouts
+- My Wins dashboard now surfaces total claimable/claimed ETH stats
+- Claimable-only filter makes it easy to focus on pending prizes
+- Game History cards now show staked payout totals with tooltips
+- My Wins cards include a quick “Copy Room” action for support/debugging
+- Game History and My Wins leverage shared ETH helpers to prevent rounding mistakes
+- When the filter hides everything, use “Show All Wins” to reset the view
+
+### My Wins Experience
+- Claim prizes directly via Wagmi hooks and see transaction updates inside a modal overlay.
+- Summary cards highlight total claimable, claimed, and overall winnings calculated at 2× stakes.
+- Toggle between all wins vs. claimable-only and copy room codes for support tickets.
 
 ## Architecture Overview
 
@@ -55,6 +67,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - `hooks/useLeaderboardSubscription.js` - Consolidates HTTP + WebSocket leaderboard data
 - `hooks/useBackendUrl.js` - Surfaces the resolved backend URL + source for debugging banners
 - `utils/backendUrl.js` - Normalizes backend URL resolution/fallback logic shared by the entire frontend
+- `utils/eth.js` - Shared ETH formatting helpers (stake → payout doubling, wei summation, trimming)
 - `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync and now sources `BACKEND_URL` via a resolver that falls back to localhost during development.
 - `components/MultiplayerGame.js` - Real-time multiplayer game logic
 - `App.js` - React Router setup and username management

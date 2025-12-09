@@ -1,9 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
-import { formatEther } from 'viem';
-import { BACKEND_URL } from '../constants';
+import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
+import { computePrizeFromStake, formatWeiToEth, sumWei } from '../utils/eth';
 import '../styles/MyWins.css';
 
 const MyWins = () => {
@@ -15,6 +15,8 @@ const MyWins = () => {
   const [claimingGameId, setClaimingGameId] = useState(null);
   const [claimErrorMessage, setClaimErrorMessage] = useState(null);
   const [pagination, setPagination] = useState({ total: 0, limit: 20, offset: 0, hasMore: false });
+  const [showClaimableOnly, setShowClaimableOnly] = useState(false);
+  const [copiedRoom, setCopiedRoom] = useState(null);
 
   const {
     claimPrize,
@@ -153,6 +155,63 @@ const MyWins = () => {
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
   };
 
+  const handleCopyRoomCode = async (roomCode) => {
+    try {
+      await navigator.clipboard.writeText(roomCode);
+      setCopiedRoom(roomCode);
+      setTimeout(() => setCopiedRoom(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy room code', err);
+    }
+  };
+
+  const winsWithPrize = useMemo(
+    () =>
+      wins.map((game) => ({
+        ...game,
+        prizeInfo: computePrizeFromStake(game.stakeAmount, PRIZE_MULTIPLIER),
+      })),
+    [wins]
+  );
+
+  const filteredWins = useMemo(
+    () => winsWithPrize.filter((game) => (showClaimableOnly ? !game.claimed : true)),
+    [winsWithPrize, showClaimableOnly]
+  );
+
+  const prizeTotals = useMemo(() => {
+    return winsWithPrize.reduce(
+      (acc, game) => {
+        const payout = game.prizeInfo.payoutWei;
+        if (game.claimed) {
+          acc.claimed += payout;
+        } else {
+          acc.claimable += payout;
+        }
+        return acc;
+      },
+      { claimable: 0n, claimed: 0n }
+    );
+  }, [winsWithPrize]);
+
+  const totalPrizeWei = useMemo(
+    () => sumWei(winsWithPrize.map((game) => game.prizeInfo.payoutWei)),
+    [winsWithPrize]
+  );
+
+  const claimableCount = useMemo(
+    () => winsWithPrize.filter((game) => !game.claimed).length,
+    [winsWithPrize]
+  );
+
+  const formattedTotals = useMemo(() => {
+    return {
+      claimable: formatWeiToEth(prizeTotals.claimable),
+      claimed: formatWeiToEth(prizeTotals.claimed),
+      total: formatWeiToEth(totalPrizeWei),
+    };
+  }, [prizeTotals, totalPrizeWei]);
+
   if (!isConnected) {
     return (
       <div className="my-wins-container">
@@ -176,6 +235,24 @@ const MyWins = () => {
           {address?.slice(0, 6)}...{address?.slice(-4)}
         </p>
       </div>
+
+      <div className="wins-summary">
+        <div className="summary-card claimable" data-testid="claimable-total">
+          <span className="summary-label">Claimable</span>
+          <span className="summary-value">{formattedTotals.claimable} ETH</span>
+        </div>
+        <div className="summary-card claimed" data-testid="claimed-total">
+          <span className="summary-label">Claimed</span>
+          <span className="summary-value">{formattedTotals.claimed} ETH</span>
+        </div>
+        <div className="summary-card total" data-testid="total-won">
+          <span className="summary-label">Total Won</span>
+          <span className="summary-value">{formattedTotals.total} ETH</span>
+        </div>
+      </div>
+      <p className="summary-note">
+        Totals reflect {PRIZE_MULTIPLIER}× stake payouts. {claimableCount > 0 ? `${claimableCount} win(s) ready to claim.` : 'All wins have been claimed.'}
+      </p>
 
       {/* Transaction Progress Modal */}
       {claimingGameId && (
@@ -258,33 +335,62 @@ const MyWins = () => {
           <div className="loading">Loading your wins...</div>
         ) : error ? (
           <div className="error-message">{error}</div>
-        ) : wins.length === 0 ? (
+        ) : filteredWins.length === 0 ? (
           <div className="no-wins">
-            <p>No wins yet!</p>
-            <p>Play some staked matches to win prizes</p>
-            <button onClick={() => navigate('/')} className="play-button">
-              Play Now
-            </button>
+            <p>{showClaimableOnly ? 'No claimable wins!' : 'No wins yet!'}</p>
+            <p>{showClaimableOnly ? 'Great job claiming everything.' : 'Play some staked matches to win prizes'}</p>
+            {showClaimableOnly ? (
+              <button onClick={() => setShowClaimableOnly(false)} className="play-button">
+                Show All Wins
+              </button>
+            ) : (
+              <button onClick={() => navigate('/')} className="play-button">
+                Play Now
+              </button>
+            )}
           </div>
         ) : (
           <>
+            <div className="wins-toolbar">
+              <label className="toggle" data-testid="claimable-toggle">
+                <input
+                  type="checkbox"
+                  checked={showClaimableOnly}
+                  onChange={(e) => setShowClaimableOnly(e.target.checked)}
+                />
+                Show claimable only
+              </label>
+            </div>
             <div className="wins-list">
-              {wins.map((game) => (
-                <div key={game._id} className={`win-card ${game.claimed ? 'claimed' : 'claimable'}`}>
-                  <div className="win-header">
-                    <span className="room-code">Room: {game.roomCode}</span>
-                    <span className={`status-badge ${game.claimed ? 'claimed' : 'unclaimed'}`}>
-                      {game.claimed ? '✅ Claimed' : '💎 Claimable'}
-                    </span>
-                  </div>
-
-                  <div className="win-details">
-                    <div className="detail-row">
-                      <span className="detail-label">Prize Amount:</span>
-                      <span className="detail-value prize-amount">
-                        {game.stakeAmount} ETH
+              {filteredWins.map((game) => {
+                const prize = game.prizeInfo;
+                return (
+                  <div key={game._id} className={`win-card ${game.claimed ? 'claimed' : 'claimable'}`}>
+                    <div className="win-header">
+                      <span className="room-code">
+                        Room: {game.roomCode}
+                        <button
+                          className="copy-room-button"
+                          onClick={() => handleCopyRoomCode(game.roomCode)}
+                        >
+                          {copiedRoom === game.roomCode ? 'Copied!' : 'Copy'}
+                        </button>
+                      </span>
+                      <span className={`status-badge ${game.claimed ? 'claimed' : 'unclaimed'}`}>
+                        {game.claimed ? '✅ Claimed' : '💎 Claimable'}
                       </span>
                     </div>
+
+                    <div className="win-details">
+                      <div className="detail-row">
+                        <span className="detail-label">Prize Amount:</span>
+                        <span className="detail-value prize-amount" data-testid="prize-amount">
+                          {prize.formattedPayout} ETH
+                          <span className="prize-note">
+                            stake {prize.formattedStake} ETH ×{Number(prize.multiplier)}
+                          </span>
+                        </span>
+                      </div>
 
                     <div className="detail-row">
                       <span className="detail-label">Final Score:</span>
@@ -316,19 +422,22 @@ const MyWins = () => {
                         </span>
                       </div>
                     )}
-                  </div>
+                    </div>
 
-                  {!game.claimed && (
-                    <button
-                      onClick={() => handleClaimPrize(game)}
-                      className="claim-button"
-                      disabled={claimingGameId === game._id || !game.winnerSignature}
-                    >
-                      {!game.winnerSignature ? 'Signature Pending...' : 'Claim Prize'}
-                    </button>
-                  )}
-                </div>
-              ))}
+                    {!game.claimed && (
+                      <button
+                        onClick={() => handleClaimPrize(game)}
+                        className="claim-button"
+                        disabled={claimingGameId === game._id || !game.winnerSignature}
+                      >
+                        {!game.winnerSignature
+                          ? 'Signature Pending...'
+                          : `Claim ${prize.formattedPayout} ETH`}
+                      </button>
+                    )}
+                  </div>
+                );
+              })}
             </div>
 
             {pagination.hasMore && (

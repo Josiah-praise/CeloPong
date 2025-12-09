@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BACKEND_URL } from '../constants';
+import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
+import { computePrizeFromStake } from '../utils/eth';
 import '../styles/GameHistory.css';
 
 const GameHistory = ({ savedUsername }) => {
@@ -197,13 +198,17 @@ const GameHistory = ({ savedUsername }) => {
         ) : (
           <>
             <div className="games-list">
-              {games.map((game) => (
+              {games.map((game) => {
+                const prizeInfo = computePrizeFromStake(game.stakeAmount, PRIZE_MULTIPLIER);
+                return (
                 <div key={game._id} className={`game-card ${game.result}`}>
                   <div className="game-header">
                     <div className="game-header-left">
                       <span className="room-code">Room: {game.roomCode}</span>
                       {game.isStaked && (
-                        <span className="stake-badge">💎 {game.stakeAmount} ETH</span>
+                        <span className="stake-badge" title={`Winner receives ${prizeInfo.formattedPayout} ETH`}>
+                          💎 {game.stakeAmount} ETH (x{PRIZE_MULTIPLIER})
+                        </span>
                       )}
                     </div>
                     <span className={`result-badge ${game.result}`}>
@@ -222,6 +227,13 @@ const GameHistory = ({ savedUsername }) => {
                       <span className="detail-value score">{game.finalScore}</span>
                     </div>
 
+                    {game.isStaked && (
+                      <div className="detail-row">
+                        <span className="detail-label">Prize Payout:</span>
+                        <span className="detail-value">{prizeInfo.formattedPayout} ETH</span>
+                      </div>
+                    )}
+
                     <div className="detail-row">
                       <span className="detail-label">Played At:</span>
                       <span className="detail-value date">{formatDate(game.endedAt)}</span>
@@ -237,7 +249,8 @@ const GameHistory = ({ savedUsername }) => {
                     )}
                   </div>
                 </div>
-              ))}
+              );
+              })}
             </div>
 
             {pagination.hasMore && (
