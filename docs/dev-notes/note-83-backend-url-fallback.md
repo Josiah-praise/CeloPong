@@ -11,3 +11,4 @@
 - Provide a sane default (e.g., same origin or `http://localhost:8080`) when env config is absent.
 - Surface a console warning so devs know to configure the variable in production builds.
 - Avoid runtime crashes by validating URLs before use.
+- Track the source (env/location/fallback) for observability and future telemetry.
