@@ -13,3 +13,4 @@
 - Avoid runtime crashes by validating URLs before use.
 - Track the source (env/location/fallback) for observability and future telemetry.
 - Expose the resolved URL & source via `useBackendUrl` for UI components/banners.
+- Use `readBooleanEnv` when introducing new toggles tied to backend resolution UX.
