@@ -189,6 +189,7 @@ pnpm dev
 - Game History pagination now appends results; if “Load More” still repeats the first page, verify backend respects `offset`.
 - My Wins pagination mirrors the same helper; check `limit/offset` if older wins never appear.
 - Backend CORS defaults to localhost when `FRONTEND_URL` is missing; set `FRONTEND_URL` or `FRONTEND_URL_FALLBACK` in production.
+- As a last resort, `FRONTEND_URL_ALLOW_ALL=true` opens CORS to every origin (not recommended outside debugging).
 
 ---
 
