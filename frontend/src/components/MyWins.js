@@ -3,8 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
 import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
-import { computePrizeFromStake, formatWeiToEth, sumWei } from '../utils';
+import { computePrizeFromStake, formatWeiToEth, sumWei, mergePages, shouldResetPagination, createPaginationState } from '../utils';
 import '../styles/MyWins.css';
+
+const sortWinsByEndedAt = (a, b) => {
+  const dateA = new Date(a?.endedAt || 0).getTime();
+  const dateB = new Date(b?.endedAt || 0).getTime();
+  return dateB - dateA;
+};
 
 const MyWins = () => {
   const navigate = useNavigate();
@@ -14,9 +20,12 @@ const MyWins = () => {
   const [error, setError] = useState(null);
   const [claimingGameId, setClaimingGameId] = useState(null);
   const [claimErrorMessage, setClaimErrorMessage] = useState(null);
-  const [pagination, setPagination] = useState({ total: 0, limit: 20, offset: 0, hasMore: false });
+  const [pagination, setPagination] = useState(createPaginationState(20));
   const [showClaimableOnly, setShowClaimableOnly] = useState(false);
   const [copiedRoom, setCopiedRoom] = useState(null);
+  const displayedCount = wins.length;
+  const remainingWins = Math.max(pagination.total - displayedCount, 0);
+  const isLoadMoreDisabled = loading || !pagination.hasMore;
 
   const {
     claimPrize,
@@ -35,6 +44,15 @@ const MyWins = () => {
       setLoading(true);
       setError(null);
 
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug('[MyWins] fetching page', {
+          limit: pagination.limit,
+          offset: pagination.offset
+        });
+      }
+
+      const shouldReset = shouldResetPagination(pagination.offset);
+
       const params = new URLSearchParams({
         address,
         limit: pagination.limit,
@@ -48,10 +66,21 @@ const MyWins = () => {
       }
 
       const data = await response.json();
-      setWins(data.games);
-      setPagination(data.pagination);
+      setWins(prev => {
+        if (shouldReset) {
+          return [...(data.games || [])].sort(sortWinsByEndedAt);
+        }
+        return mergePages(prev, data.games, '_id', { comparator: sortWinsByEndedAt });
+      });
+      setPagination({
+        ...data.pagination,
+        hasMore: data.pagination?.hasMore ?? (data.pagination.offset + data.pagination.limit) < data.pagination.total
+      });
     } catch (err) {
-      console.error('Error fetching wins:', err);
+      console.error('Error fetching wins:', {
+        error: err,
+        offset: pagination.offset
+      });
       setError('Failed to load your wins. Please try again.');
     } finally {
       setLoading(false);
@@ -59,6 +88,9 @@ const MyWins = () => {
   }, [address, pagination.limit, pagination.offset]);
 
   const loadMore = () => {
+    if (isLoadMoreDisabled) {
+      return;
+    }
     setPagination(prev => ({
       ...prev,
       offset: prev.offset + prev.limit
@@ -440,19 +472,22 @@ const MyWins = () => {
               })}
             </div>
 
-            {pagination.hasMore && (
+            {pagination.hasMore ? (
               <div className="load-more-section">
                 <button
                   onClick={loadMore}
                   className="load-more-button"
-                  disabled={loading}
+                  disabled={isLoadMoreDisabled}
+                  data-testid="wins-load-more"
                 >
-                  {loading ? 'Loading...' : 'Load More'}
+                  {loading ? 'Loading...' : `Load More (${remainingWins} left)`}
                 </button>
                 <p className="pagination-info">
-                  Showing {Math.min(pagination.offset + wins.length, pagination.total)} of {pagination.total} wins
+                  Showing {displayedCount} of {pagination.total} wins
                 </p>
               </div>
+            ) : (
+              <p className="pagination-info">All {displayedCount} wins loaded.</p>
             )}
           </>
         )}
