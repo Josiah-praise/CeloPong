@@ -9,6 +9,7 @@
 - Provide sane defaults (localhost/self origin) when env var missing.
 - Warn in logs so prod setups know they are running wide open.
 - Keep `FRONTEND_URL` trimming for when it is present.
+- Allow `FRONTEND_URL_FALLBACK` to override defaults without touching primary env.
 
 ## Proposed Steps
 1. Add a helper that returns `{ origins, source }` based on env + defaults.
