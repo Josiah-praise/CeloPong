@@ -4,6 +4,7 @@ import { BACKEND_URL, SOCKET_EVENTS } from '../constants';
 
 export default function useLeaderboardSubscription() {
   const [leaderboard, setLeaderboard] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const socket = useMemo(
     () =>
