@@ -3,6 +3,7 @@ const GameManager = require('./gameManager');
 const LeaderboardManager = require('./leaderboardManager');
 const Game = require('./models/Game');
 const signatureService = require('./services/signatureService');
+const emitLeaderboardUpdate = require('./utils/emitLeaderboardUpdate');
 
 class MultiplayerHandler {
   constructor(io) {
@@ -79,7 +80,7 @@ class MultiplayerHandler {
 
     socket.on('getLeaderboard', async () => {
       const leaderboard = await this.leaderboardManager.getTopPlayers(10);
-      socket.emit('leaderboardUpdate', leaderboard);
+      emitLeaderboardUpdate(socket, leaderboard);
     });
 
     if (username) {
@@ -363,7 +364,7 @@ class MultiplayerHandler {
     this.io.to(roomCode).emit('gameOver', gameOverData);
 
     const leaderboard = await this.leaderboardManager.getTopPlayers(10);
-    this.io.emit('leaderboardUpdate', leaderboard);
+    emitLeaderboardUpdate(this.io, leaderboard);
 
     this.endGame(roomCode);
   }

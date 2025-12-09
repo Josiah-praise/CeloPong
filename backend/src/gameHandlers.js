@@ -1,4 +1,5 @@
 const { calculateElo } = require('./utils/eloCalculator');
+const emitLeaderboardUpdate = require('./utils/emitLeaderboardUpdate');
 const fetch = require('node-fetch');
 
 class GameHandlers {
@@ -42,7 +43,7 @@ class GameHandlers {
       // Emit updated rankings
       this.getTopPlayers().then(topPlayers => {
         console.log('Emitting rankings update:', topPlayers);
-        socket.emit('rankingsUpdate', topPlayers);
+        emitLeaderboardUpdate(socket, topPlayers);
       });
     }
 
@@ -113,7 +114,7 @@ class GameHandlers {
 
     // Emit current rankings to all clients
     this.getTopPlayers().then(topPlayers => {
-      this.io.emit('rankingsUpdate', topPlayers);
+      emitLeaderboardUpdate(this.io, topPlayers);
     });
 
     // Then, check for waiting players
@@ -443,7 +444,7 @@ class GameHandlers {
           // Get updated top players
           this.getTopPlayers().then(topPlayers => {
             // Emit updated rankings to all clients
-            this.io.emit('rankingsUpdate', topPlayers);
+            emitLeaderboardUpdate(this.io, topPlayers);
 
             // Send game over event with all relevant data
             this.io.to(gameId).emit('gameOver', {

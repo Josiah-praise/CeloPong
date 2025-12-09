@@ -4,7 +4,7 @@
 Broadcast cadence affects bandwidth and freshness. This note details how `leaderboardManager.js` should push updates.
 
 ## Implementation Notes
-- Gather player deltas at the end of each match and push one consolidated `leaderboardUpdate` event to all subscribers.
+- Gather player deltas at the end of each match and push one consolidated `leaderboardUpdate` event to all subscribers (emit `rankingsUpdate` as an alias until legacy clients disappear).
 - Debounce updates—if multiple matches end simultaneously, compose a single payload containing sorted top players.
 - Include metadata (timestamp, server version) for debugging.
 - Provide REST fallback to fetch the latest leaderboard on client reconnect.

@@ -10,7 +10,7 @@
 - [ ] **Rematch accept routes to `/multiplayer` which doesn’t exist** – `GameOver` navigates to `/multiplayer` even though the router only defines `/game`, so accept rematch shows a blank screen. _(Label: Bug)_
 - [ ] **Rematch sockets never reach the server** – The gameplay socket disconnects before `GameOver` opens a new socket, so backend handlers can’t find the room and rematches never start. _(Label: Bug)_
 - [ ] **Socket handshake logs leak sensitive data** – `backend/src/server.js` logs entire request headers, exposing cookies/tokens in logs; remove or scrub them. _(Label: Security)_
-- [ ] **Leaderboard never refreshes over WebSocket** – Frontend listens for `rankingsUpdate` while backend emits `leaderboardUpdate`, so live updates never arrive. _(Label: Bug)_
+- [x] **Leaderboard never refreshes over WebSocket** – Frontend listens for `rankingsUpdate` while backend emits `leaderboardUpdate`, so live updates never arrive. _(Label: Bug)_
 - [ ] **Local leaderboard cache is never updated** – Ratings stored in `playerRankings` stay at 1000 because `updatePlayerRanking` isn’t called, so emitted data is wrong. _(Label: Bug)_
 - [ ] **Pause button permanently kills the game loop** – `updateGameState` returns `null` when paused, and the multiplayer loop treats it as game over, so play never resumes. _(Label: Bug)_
 - [ ] **Staked match winners never receive claim signatures** – The multiplayer flow updates `Game` records without calling `signatureService`, leaving `winnerSignature` empty and wins unclaimable. _(Label: Bug)_

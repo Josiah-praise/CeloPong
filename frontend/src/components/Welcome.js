@@ -2,15 +2,14 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppKit } from '@reown/appkit/react';
 import { useAccount } from 'wagmi';
-import io from 'socket.io-client';
 import '../styles/Welcome.css';
 import { BACKEND_URL } from '../constants';
 import soundManager from '../utils/soundManager';
 import { useStakeAsPlayer1, useStakeAsPlayer2, useGetMatch } from '../hooks/useContract';
 import { STAKE_AMOUNTS } from '../contracts/PongEscrow';
+import { useLeaderboardSubscription } from '../hooks';
 
 const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
-  const [rankings, setRankings] = useState([]);
   const [activeGames, setActiveGames] = useState([]);
   const [showTitle, setShowTitle] = useState(false);
   const [audioStarted, setAudioStarted] = useState(false);
@@ -21,6 +20,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const titleRef = useRef();
   const navigate = useNavigate();
   const socketRef = useRef(null);
+  const { leaderboard, isLoading: isLeaderboardLoading, socket } = useLeaderboardSubscription();
 
   // Web3 hooks
   const { open } = useAppKit();
@@ -35,54 +35,24 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   } = useStakeAsPlayer1();
 
   useEffect(() => {
-    const fetchRankings = async () => {
-      try {
-        console.log('Fetching rankings...');
-        const response = await fetch(`${BACKEND_URL}/api/rankings/top?limit=10`, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          }
-        });
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        console.log('Received rankings:', data);
-        setRankings(data);
-      } catch (error) {
-        console.error('Failed to fetch rankings:', error);
-        // Use empty array instead of showing an error to the user
-        setRankings([]);
-      }
-    };
-
-    fetchRankings();
-
-    const socket = io(BACKEND_URL, {
-      withCredentials: true,
-      transports: ['websocket']
-    });
+    if (!socket) {
+      return;
+    }
 
     socketRef.current = socket;
 
-    socket.on('connect', () => {
+    const handleConnect = () => {
       console.log('Socket connected');
       socket.emit('getActiveGames');
-    });
+    };
 
-    socket.on('rankingsUpdate', (newRankings) => {
-      console.log('Received rankings update:', newRankings);
-      setRankings(newRankings);
-    });
-
-    socket.on('activeGamesList', (games) => {
+    const handleActiveGames = (games) => {
       console.log('Received active games:', games);
       setActiveGames(games);
-    });
+    };
+
+    socket.on('connect', handleConnect);
+    socket.on('activeGamesList', handleActiveGames);
 
     const gamesInterval = setInterval(() => {
       socket.emit('getActiveGames');
@@ -90,9 +60,10 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
 
     return () => {
       clearInterval(gamesInterval);
-      socket.disconnect();
+      socket.off('connect', handleConnect);
+      socket.off('activeGamesList', handleActiveGames);
     };
-  }, []);
+  }, [socket]);
 
   // Add handler to start audio after user interaction
   const handleStartAudio = useCallback(() => {
@@ -648,8 +619,8 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
         <div className="rankings">
           <h2>Top Players</h2>
           <div className="rankings-list">
-            {rankings.length > 0 ? (
-              rankings.map((player, index) => (
+            {leaderboard.length > 0 ? (
+              leaderboard.map((player, index) => (
                 <div key={player.name} className="ranking-item">
                   <span className="rank">{index + 1}</span>
                   <span className="name">{player.name}</span>
@@ -658,7 +629,9 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
                 </div>
               ))
             ) : (
-              <div className="no-rankings">No players ranked yet</div>
+              <div className="no-rankings">
+                {isLeaderboardLoading ? 'Fetching top players...' : 'No players ranked yet'}
+              </div>
             )}
           </div>
         </div>
