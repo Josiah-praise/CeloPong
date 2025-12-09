@@ -338,7 +338,9 @@ const MyWins = () => {
                         className="claim-button"
                         disabled={claimingGameId === game._id || !game.winnerSignature}
                       >
-                        {!game.winnerSignature ? 'Signature Pending...' : 'Claim Prize'}
+                        {!game.winnerSignature
+                          ? 'Signature Pending...'
+                          : `Claim ${prize.formattedPayout} ETH`}
                       </button>
                     )}
                   </div>
