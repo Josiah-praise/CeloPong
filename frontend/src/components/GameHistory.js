@@ -31,6 +31,15 @@ const GameHistory = ({ savedUsername }) => {
 
       const shouldReset = shouldResetPagination(pagination.offset);
 
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug('[GameHistory] fetching page', {
+          offset: pagination.offset,
+          limit: pagination.limit,
+          filter: activeFilter,
+          staked: stakedFilter
+        });
+      }
+
       const params = new URLSearchParams({
         filter: activeFilter,
         limit: pagination.limit,
