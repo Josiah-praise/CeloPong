@@ -1,3 +1,8 @@
 export function resolveBackendUrl() {
-  return process.env.REACT_APP_BACKEND_URL;
+  const envUrl = process.env.REACT_APP_BACKEND_URL;
+  if (envUrl) {
+    return envUrl;
+  }
+
+  return undefined;
 }
