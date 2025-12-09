@@ -9,6 +9,8 @@ export const BACKEND_URL_SOURCES = {
   FALLBACK_ENV: 'fallback-env',
 };
 
+export const DEFAULT_BACKEND_URL = DEFAULT_BACKEND;
+
 function deriveFromLocation() {
   if (typeof window === 'undefined' || !window.location) {
     return null;
