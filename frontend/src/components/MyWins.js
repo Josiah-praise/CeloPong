@@ -292,7 +292,7 @@ const MyWins = () => {
                     <div className="win-details">
                       <div className="detail-row">
                         <span className="detail-label">Prize Amount:</span>
-                        <span className="detail-value prize-amount">
+                        <span className="detail-value prize-amount" data-testid="prize-amount">
                           {prize.formattedPayout} ETH
                           <span className="prize-note">
                             stake {prize.formattedStake} ETH ×2
