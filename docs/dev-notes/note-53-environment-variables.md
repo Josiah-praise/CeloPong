@@ -5,6 +5,7 @@ Clearly documenting environment variables prevents fragile deployments.
 
 ## Implementation Notes
 - Maintain a `.env.example` file listing required vars for each service (frontend API URLs, backend secrets, player service ports).
+- `.env.example` now includes backend CORS envs—update it whenever new flags such as `FRONTEND_URL_ALLOW_ALL` are added.
 - Document default values and acceptable ranges inside `STARTUP_GUIDE.md` with links to this note.
 - Use a config loader that validates presence/types at startup and throws descriptive errors when missing.
 - Avoid leaking secrets to the frontend by prefixing only safe variables with the framework-specific `REACT_APP_` or equivalent.
