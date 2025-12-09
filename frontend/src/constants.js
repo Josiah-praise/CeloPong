@@ -1,4 +1,5 @@
 import { resolveBackendUrlWithSource } from './utils/backendUrl';
+import { readBooleanEnv } from './utils/env';
 
 // Game constants
 export const STORAGE_KEY = 'pong_username';
@@ -23,4 +24,4 @@ export const LEADERBOARD_LIMIT = 10;
 
 export const SHOW_BACKEND_URL_BANNER =
   process.env.NODE_ENV !== 'production' &&
-  process.env.REACT_APP_SHOW_BACKEND_URL_BANNER !== 'false';
+  readBooleanEnv(process.env.REACT_APP_SHOW_BACKEND_URL_BANNER, true);
