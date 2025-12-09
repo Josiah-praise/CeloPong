@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
 import { BACKEND_URL } from '../constants';
-import { computePrizeFromStake, formatWeiToEth } from '../utils/eth';
+import { computePrizeFromStake, formatWeiToEth, sumWei } from '../utils/eth';
 import '../styles/MyWins.css';
 
 const MyWins = () => {
@@ -177,14 +177,18 @@ const MyWins = () => {
     );
   }, [winsWithPrize]);
 
+  const totalPrizeWei = useMemo(
+    () => sumWei(winsWithPrize.map((game) => game.prizeInfo.payoutWei)),
+    [winsWithPrize]
+  );
+
   const formattedTotals = useMemo(() => {
-    const total = prizeTotals.claimable + prizeTotals.claimed;
     return {
       claimable: formatWeiToEth(prizeTotals.claimable),
       claimed: formatWeiToEth(prizeTotals.claimed),
-      total: formatWeiToEth(total),
+      total: formatWeiToEth(totalPrizeWei),
     };
-  }, [prizeTotals]);
+  }, [prizeTotals, totalPrizeWei]);
 
   if (!isConnected) {
     return (
