@@ -186,6 +186,7 @@ pnpm dev
 - Backend: `PLAYER_SERVICE_URL=http://localhost:5001`
 - Frontend: `REACT_APP_BACKEND_URL=http://localhost:8080`
 - If you skip `REACT_APP_BACKEND_URL`, the frontend now falls back to `window.location.origin` (or `http://localhost:8080`) and logs that decision in the browser console so you can still play locally. You can also define `REACT_APP_BACKEND_URL_FALLBACK` to force a specific origin for unusual setups, or set `REACT_APP_SHOW_BACKEND_URL_BANNER=false` to hide the helper banner in development.
+- Game History pagination now appends results; if “Load More” still repeats the first page, verify backend respects `offset`.
 
 ---
 
