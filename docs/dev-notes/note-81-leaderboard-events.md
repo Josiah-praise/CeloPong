@@ -11,3 +11,10 @@
 - Declare a canonical socket event name for leaderboard pushes.
 - Provide a compatibility layer long enough to migrate every client.
 - Document the wire contract so future handlers emit/listen consistently.
+
+## Chosen Contract
+
+- Canonical outbound event: `leaderboardUpdate`
+- Legacy alias kept temporarily: `rankingsUpdate`
+- Request event from client: `getLeaderboard`
+- Payload: Array of `{ name, rating, wins, losses }`
