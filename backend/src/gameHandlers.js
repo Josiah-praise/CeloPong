@@ -444,7 +444,7 @@ class GameHandlers {
           // Get updated top players
           this.getTopPlayers().then(topPlayers => {
             // Emit updated rankings to all clients
-            this.io.emit('rankingsUpdate', topPlayers);
+            emitLeaderboardUpdate(this.io, topPlayers);
 
             // Send game over event with all relevant data
             this.io.to(gameId).emit('gameOver', {
