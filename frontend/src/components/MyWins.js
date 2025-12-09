@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
@@ -153,6 +153,15 @@ const MyWins = () => {
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
   };
 
+  const winsWithPrize = useMemo(
+    () =>
+      wins.map((game) => ({
+        ...game,
+        prizeInfo: computePrizeFromStake(game.stakeAmount),
+      })),
+    [wins]
+  );
+
   if (!isConnected) {
     return (
       <div className="my-wins-container">
@@ -269,8 +278,8 @@ const MyWins = () => {
         ) : (
           <>
             <div className="wins-list">
-              {wins.map((game) => {
-                const prize = computePrizeFromStake(game.stakeAmount);
+              {winsWithPrize.map((game) => {
+                const prize = game.prizeInfo;
                 return (
                   <div key={game._id} className={`win-card ${game.claimed ? 'claimed' : 'claimable'}`}>
                     <div className="win-header">
