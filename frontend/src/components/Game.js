@@ -238,7 +238,7 @@ const Game = ({ username }) => {
 
     console.log('Setting up socket for username:', username);
 
-    const newSocket = io(BACKEND_URL || 'http://localhost:5000', {
+    const newSocket = io(BACKEND_URL, {
       withCredentials: true,
       transports: ['websocket'],
       path: '/socket.io/',
