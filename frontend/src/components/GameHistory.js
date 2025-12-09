@@ -23,6 +23,7 @@ const GameHistory = ({ savedUsername }) => {
   const displayedCount = games.length;
   const remainingGames = Math.max(pagination.total - displayedCount, 0);
   const isFilteringStaked = stakedFilter !== null;
+  const isLoadMoreDisabled = loading || !pagination.hasMore;
 
   // Fetch game history
   const fetchGameHistory = useCallback(async () => {
@@ -103,7 +104,7 @@ const GameHistory = ({ savedUsername }) => {
   };
 
   const loadMore = () => {
-    if (loading || !pagination.hasMore) {
+    if (isLoadMoreDisabled) {
       return;
     }
     setPagination(prev => ({
@@ -296,7 +297,7 @@ const GameHistory = ({ savedUsername }) => {
                 <button
                   onClick={loadMore}
                   className="load-more-button"
-                  disabled={loading}
+                  disabled={isLoadMoreDisabled}
                   data-testid="history-load-more"
                 >
                   {loading ? 'Loading...' : `Load More (${remainingGames} left)`}
