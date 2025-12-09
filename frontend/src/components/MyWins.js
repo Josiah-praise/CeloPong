@@ -348,7 +348,7 @@ const MyWins = () => {
         ) : (
           <>
             <div className="wins-toolbar">
-              <label className="toggle">
+              <label className="toggle" data-testid="claimable-toggle">
                 <input
                   type="checkbox"
                   checked={showClaimableOnly}
