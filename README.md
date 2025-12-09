@@ -29,6 +29,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - When the filter hides everything, use “Show All Wins” to reset the view
 - Game History “Load More” now truly appends older matches
 - My Wins “Load More” now appends earlier wins instead of replacing the list
+- `/health` now reports the active backend CORS origins/source
 
 ### My Wins Experience
 - Claim prizes directly via Wagmi hooks and see transaction updates inside a modal overlay.
