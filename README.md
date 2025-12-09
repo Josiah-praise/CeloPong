@@ -215,6 +215,7 @@ networks:
 - WebSocket connection via Socket.IO
 - CORS enabled for browser access
 - When `REACT_APP_BACKEND_URL` is not set, the React app now falls back to this origin (or `http://localhost:8080`) and logs the detected source in the console to prevent silent failures.
+- Optional: set `REACT_APP_BACKEND_URL_FALLBACK` to enforce a custom fallback origin when neither the env var nor `window.location.origin` apply (e.g., running from `file://`).
 
 **2. Backend → Player Service (Docker Network)**
 - Uses `http://player-service:5001` (Docker DNS name)
