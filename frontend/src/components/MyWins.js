@@ -228,6 +228,7 @@ const MyWins = () => {
           <span className="summary-value">{formattedTotals.total} ETH</span>
         </div>
       </div>
+      <p className="summary-note">Totals reflect 2× stake payouts. Claim pending wins to receive funds.</p>
 
       {/* Transaction Progress Modal */}
       {claimingGameId && (

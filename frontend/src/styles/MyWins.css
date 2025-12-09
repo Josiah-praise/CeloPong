@@ -71,6 +71,15 @@
   gap: 1rem;
 }
 
+.summary-note {
+  max-width: 1200px;
+  margin: 0 auto 2rem;
+  text-align: center;
+  font-size: 0.65rem;
+  color: #999;
+  font-family: 'Press Start 2P', monospace;
+}
+
 .summary-card {
   border: 2px solid rgba(116, 113, 203, 0.6);
   border-radius: 8px;
