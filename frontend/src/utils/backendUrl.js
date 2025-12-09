@@ -69,6 +69,12 @@ function computeBackendUrlWithSource() {
     return { url: locationUrl, source: BACKEND_URL_SOURCES.LOCATION };
   }
 
+  const manualFallback = sanitizeUrl(process.env.REACT_APP_BACKEND_URL_FALLBACK);
+  if (manualFallback) {
+    warnDefault(manualFallback, BACKEND_URL_SOURCES.FALLBACK_ENV);
+    return { url: manualFallback, source: BACKEND_URL_SOURCES.FALLBACK_ENV };
+  }
+
   const fallback = sanitizeUrl(`http://localhost:${DEFAULT_PORT}`);
   warnDefault(fallback, BACKEND_URL_SOURCES.FALLBACK);
   return { url: fallback, source: BACKEND_URL_SOURCES.FALLBACK };
