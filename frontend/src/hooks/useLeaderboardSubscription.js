@@ -15,6 +15,25 @@ export default function useLeaderboardSubscription() {
   );
 
   useEffect(() => {
+    const handleLiveUpdate = (payload) => {
+      setLeaderboard(payload);
+    };
+
+    socket.on('connect', () => {
+      socket.emit(SOCKET_EVENTS.GET_LEADERBOARD);
+    });
+
+    socket.on(SOCKET_EVENTS.LEADERBOARD_UPDATE, handleLiveUpdate);
+    socket.on(SOCKET_EVENTS.LEGACY_RANKINGS_UPDATE, handleLiveUpdate);
+
+    return () => {
+      socket.off(SOCKET_EVENTS.LEADERBOARD_UPDATE, handleLiveUpdate);
+      socket.off(SOCKET_EVENTS.LEGACY_RANKINGS_UPDATE, handleLiveUpdate);
+      socket.disconnect();
+    };
+  }, [socket]);
+
+  useEffect(() => {
     let isMounted = true;
 
     async function fetchInitialLeaderboard() {
