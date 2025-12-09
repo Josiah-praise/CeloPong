@@ -14,3 +14,5 @@ export const SOCKET_EVENTS = Object.freeze({
   LEGACY_RANKINGS_UPDATE: 'rankingsUpdate',
   GET_LEADERBOARD: 'getLeaderboard',
 });
+
+export const LEADERBOARD_LIMIT = 10;
