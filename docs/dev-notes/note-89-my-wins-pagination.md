@@ -9,3 +9,6 @@
 - Avoid duplicate cards and keep “claimable only” filter working after new pages load.
 - Show accurate pagination info (showing N of M wins).
 - Indicate when all wins are loaded and disable the button accordingly.
+
+## Observability
+- Add console.debug logs for offset/limit similar to Game History for easier troubleshooting.
