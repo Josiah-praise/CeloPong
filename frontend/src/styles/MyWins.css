@@ -238,6 +238,21 @@
   color: rgb(253, 208, 64);
 }
 
+.copy-room-button {
+  margin-left: 0.5rem;
+  border: 1px solid rgba(253, 208, 64, 0.6);
+  background: transparent;
+  color: #fff;
+  font-size: 0.5rem;
+  padding: 0.2rem 0.4rem;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.copy-room-button:hover {
+  background: rgba(253, 208, 64, 0.2);
+}
+
 .status-badge {
   padding: 0.5rem 1rem;
   border-radius: 4px;

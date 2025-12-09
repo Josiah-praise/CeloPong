@@ -16,6 +16,7 @@ const MyWins = () => {
   const [claimErrorMessage, setClaimErrorMessage] = useState(null);
   const [pagination, setPagination] = useState({ total: 0, limit: 20, offset: 0, hasMore: false });
   const [showClaimableOnly, setShowClaimableOnly] = useState(false);
+  const [copiedRoom, setCopiedRoom] = useState(null);
 
   const {
     claimPrize,
@@ -152,6 +153,16 @@ const MyWins = () => {
     if (!dateString) return 'N/A';
     const date = new Date(dateString);
     return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+  };
+
+  const handleCopyRoomCode = async (roomCode) => {
+    try {
+      await navigator.clipboard.writeText(roomCode);
+      setCopiedRoom(roomCode);
+      setTimeout(() => setCopiedRoom(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy room code', err);
+    }
   };
 
   const winsWithPrize = useMemo(
@@ -352,7 +363,15 @@ const MyWins = () => {
                 return (
                   <div key={game._id} className={`win-card ${game.claimed ? 'claimed' : 'claimable'}`}>
                     <div className="win-header">
-                      <span className="room-code">Room: {game.roomCode}</span>
+                      <span className="room-code">
+                        Room: {game.roomCode}
+                        <button
+                          className="copy-room-button"
+                          onClick={() => handleCopyRoomCode(game.roomCode)}
+                        >
+                          {copiedRoom === game.roomCode ? 'Copied!' : 'Copy'}
+                        </button>
+                      </span>
                       <span className={`status-badge ${game.claimed ? 'claimed' : 'unclaimed'}`}>
                         {game.claimed ? '✅ Claimed' : '💎 Claimable'}
                       </span>
