@@ -14,3 +14,7 @@
 1. Add a helper that returns `{ origins, source }` based on env + defaults.
 2. Update Express and Socket.IO to use the helper outputs.
 3. Enhance health endpoint/logs to show active CORS policy.
+
+## Observability
+- Log cors source + allowed origins on startup.
+- Consider exposing `/health` field `cors_origin`.
