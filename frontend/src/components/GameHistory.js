@@ -1,8 +1,14 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
-import { computePrizeFromStake } from '../utils/eth';
+import { computePrizeFromStake, mergePages, shouldResetPagination, createPaginationState } from '../utils';
 import '../styles/GameHistory.css';
+
+const sortByEndedAtDesc = (a, b) => {
+  const dateA = new Date(a?.endedAt || 0).getTime();
+  const dateB = new Date(b?.endedAt || 0).getTime();
+  return dateB - dateA;
+};
 
 const GameHistory = ({ savedUsername }) => {
   const navigate = useNavigate();
@@ -12,7 +18,12 @@ const GameHistory = ({ savedUsername }) => {
   const [error, setError] = useState(null);
   const [activeFilter, setActiveFilter] = useState('all');
   const [stakedFilter, setStakedFilter] = useState(null);
-  const [pagination, setPagination] = useState({ total: 0, limit: 50, offset: 0, hasMore: false });
+  const [pagination, setPagination] = useState(createPaginationState(50));
+  const displayedCount = games.length;
+  const remainingGames = Math.max(pagination.total - displayedCount, 0);
+  const isFilteringStaked = stakedFilter !== null;
+  const isLoadMoreDisabled = loading || !pagination.hasMore;
+  const isInitialLoad = loading && displayedCount === 0;
 
   // Fetch game history
   const fetchGameHistory = useCallback(async () => {
@@ -21,6 +32,17 @@ const GameHistory = ({ savedUsername }) => {
     try {
       setLoading(true);
       setError(null);
+
+      const shouldReset = shouldResetPagination(pagination.offset);
+
+      if (process.env.NODE_ENV !== 'production') {
+        console.debug('[GameHistory] fetching page', {
+          offset: pagination.offset,
+          limit: pagination.limit,
+          filter: activeFilter,
+          staked: stakedFilter
+        });
+      }
 
       const params = new URLSearchParams({
         filter: activeFilter,
@@ -41,11 +63,28 @@ const GameHistory = ({ savedUsername }) => {
       }
 
       const data = await response.json();
-      setGames(data.games);
-      setStats(data.stats);
-      setPagination(data.pagination);
+      let nextGamesSnapshot = [];
+      setGames(prev => {
+        if (shouldReset) {
+          nextGamesSnapshot = [...(data.games || [])].sort(sortByEndedAtDesc);
+          return nextGamesSnapshot;
+        }
+        nextGamesSnapshot = mergePages(prev, data.games, '_id', { comparator: sortByEndedAtDesc });
+        return nextGamesSnapshot;
+      });
+      if (shouldReset) {
+        setStats(data.stats);
+      }
+      setPagination({
+        ...data.pagination,
+        hasMore: data.pagination?.hasMore ?? nextGamesSnapshot.length < data.pagination.total
+      });
     } catch (err) {
-      console.error('Error fetching game history:', err);
+      console.error('Error fetching game history:', {
+        error: err,
+        offset: pagination.offset,
+        limit: pagination.limit
+      });
       setError('Failed to load game history. Please try again.');
     } finally {
       setLoading(false);
@@ -71,6 +110,9 @@ const GameHistory = ({ savedUsername }) => {
   };
 
   const loadMore = () => {
+    if (isLoadMoreDisabled) {
+      return;
+    }
     setPagination(prev => ({
       ...prev,
       offset: prev.offset + prev.limit
@@ -178,12 +220,15 @@ const GameHistory = ({ savedUsername }) => {
           >
             Casual
           </button>
+          {isFilteringStaked && (
+            <span className="filter-hint">Filtering by {stakedFilter === 'true' ? 'staked' : 'casual'} games</span>
+          )}
         </div>
       </div>
 
       {/* Game List */}
       <div className="games-content">
-        {loading && pagination.offset === 0 ? (
+        {isInitialLoad ? (
           <div className="loading">Loading game history...</div>
         ) : error ? (
           <div className="error-message">{error}</div>
@@ -197,7 +242,7 @@ const GameHistory = ({ savedUsername }) => {
           </div>
         ) : (
           <>
-            <div className="games-list">
+            <div className="games-list" data-testid="history-list">
               {games.map((game) => {
                 const prizeInfo = computePrizeFromStake(game.stakeAmount, PRIZE_MULTIPLIER);
                 return (
@@ -253,19 +298,25 @@ const GameHistory = ({ savedUsername }) => {
               })}
             </div>
 
-            {pagination.hasMore && (
+            {pagination.hasMore ? (
               <div className="load-more-section">
                 <button
                   onClick={loadMore}
                   className="load-more-button"
-                  disabled={loading}
+                  disabled={isLoadMoreDisabled}
+                  data-testid="history-load-more"
                 >
-                  {loading ? 'Loading...' : 'Load More'}
+                  {loading ? 'Loading...' : `Load More (${remainingGames} left)`}
                 </button>
-                <p className="pagination-info">
-                  Showing {Math.min(pagination.offset + games.length, pagination.total)} of {pagination.total} games
+                {loading && !isInitialLoad && (
+                  <p className="pagination-info">Fetching more games…</p>
+                )}
+                <p className="pagination-info" aria-live="polite">
+                  Showing {displayedCount} of {pagination.total} games
                 </p>
               </div>
+            ) : (
+              <p className="pagination-info">All games loaded.</p>
             )}
           </>
         )}

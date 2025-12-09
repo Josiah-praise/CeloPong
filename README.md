@@ -27,11 +27,17 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - My Wins cards include a quick “Copy Room” action for support/debugging
 - Game History and My Wins leverage shared ETH helpers to prevent rounding mistakes
 - When the filter hides everything, use “Show All Wins” to reset the view
+- Game History “Load More” now truly appends older matches
 
 ### My Wins Experience
 - Claim prizes directly via Wagmi hooks and see transaction updates inside a modal overlay.
 - Summary cards highlight total claimable, claimed, and overall winnings calculated at 2× stakes.
 - Toggle between all wins vs. claimable-only and copy room codes for support tickets.
+
+### Game History Experience
+- Filter by result or match type while Load More now appends older games instead of replacing them.
+- Remaining game counts and tooltips make it easy to see how many matches are left.
+- Staked games display stake + payout details so rewards are transparent.
 
 ## Architecture Overview
 
@@ -68,6 +74,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - `hooks/useBackendUrl.js` - Surfaces the resolved backend URL + source for debugging banners
 - `utils/backendUrl.js` - Normalizes backend URL resolution/fallback logic shared by the entire frontend
 - `utils/eth.js` - Shared ETH formatting helpers (stake → payout doubling, wei summation, trimming)
+- `utils/pagination.js` - Helps merge paginated results without duplicating items
 - `constants.js` - Stores `LEADERBOARD_LIMIT` so sockets and REST fetches stay in sync and now sources `BACKEND_URL` via a resolver that falls back to localhost during development.
 - `components/MultiplayerGame.js` - Real-time multiplayer game logic
 - `App.js` - React Router setup and username management
@@ -83,6 +90,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
    - `gameUpdate` - Ball/paddle positions (60 times/second)
    - `gameOver` - Match results and rating changes
    - `leaderboardUpdate` (legacy alias: `rankingsUpdate`) - Live ranking updates
+   - Pagination helpers keep large lists (Game History/My Wins) synchronized without duplicate cards
 
 #### 2. Backend Layer (Node.js + Socket.IO)
 **Location:** `backend/src/`

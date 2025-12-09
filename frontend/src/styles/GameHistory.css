@@ -134,6 +134,11 @@
   flex-wrap: wrap;
 }
 
+.filter-hint {
+  font-size: 0.6rem;
+  color: #bbb;
+}
+
 .filter-group-label {
   font-size: 0.7rem;
   color: #888;
@@ -383,6 +388,7 @@
   transition: all 0.3s ease;
   font-family: 'Press Start 2P', monospace;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .load-more-button:hover:not(:disabled) {
