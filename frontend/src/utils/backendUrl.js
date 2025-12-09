@@ -1,5 +1,6 @@
 const DEFAULT_PORT = 8080;
 const DEFAULT_PROTOCOL = 'http:';
+const DEFAULT_BACKEND = `http://localhost:${DEFAULT_PORT}`;
 
 export const BACKEND_URL_SOURCES = {
   ENV: 'env',
@@ -75,7 +76,7 @@ function computeBackendUrlWithSource() {
     return { url: manualFallback, source: BACKEND_URL_SOURCES.FALLBACK_ENV };
   }
 
-  const fallback = sanitizeUrl(`http://localhost:${DEFAULT_PORT}`);
+  const fallback = sanitizeUrl(DEFAULT_BACKEND);
   warnDefault(fallback, BACKEND_URL_SOURCES.FALLBACK);
   return { url: fallback, source: BACKEND_URL_SOURCES.FALLBACK };
 }
