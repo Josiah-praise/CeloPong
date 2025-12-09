@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BACKEND_URL, PRIZE_MULTIPLIER } from '../constants';
 import { computePrizeFromStake } from '../utils/eth';
+import { mergePages, shouldResetPagination } from '../utils/pagination';
 import '../styles/GameHistory.css';
 
 const GameHistory = ({ savedUsername }) => {
