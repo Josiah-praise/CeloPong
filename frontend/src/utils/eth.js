@@ -26,3 +26,18 @@ export function computePrizeFromStake(stakeAmount) {
     formattedPayout: formatEther(payoutWei),
   };
 }
+
+function trimDecimals(value, digits = 4) {
+  if (!value.includes('.')) {
+    return value;
+  }
+
+  const [intPart, fraction = ''] = value.split('.');
+  const trimmedFraction = fraction.slice(0, digits).replace(/0+$/, '');
+
+  return trimmedFraction.length > 0 ? `${intPart}.${trimmedFraction}` : intPart;
+}
+
+export function formatWeiToEth(weiValue, digits = 4) {
+  return trimDecimals(formatEther(weiValue), digits);
+}
