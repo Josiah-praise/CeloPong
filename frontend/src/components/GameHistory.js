@@ -102,6 +102,9 @@ const GameHistory = ({ savedUsername }) => {
   };
 
   const loadMore = () => {
+    if (loading || !pagination.hasMore) {
+      return;
+    }
     setPagination(prev => ({
       ...prev,
       offset: prev.offset + prev.limit
