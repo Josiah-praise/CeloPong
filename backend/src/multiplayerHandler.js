@@ -80,7 +80,7 @@ class MultiplayerHandler {
 
     socket.on('getLeaderboard', async () => {
       const leaderboard = await this.leaderboardManager.getTopPlayers(10);
-      socket.emit('leaderboardUpdate', leaderboard);
+      emitLeaderboardUpdate(socket, leaderboard);
     });
 
     if (username) {
