@@ -15,6 +15,8 @@ export function mergePages(existingItems, newItems, key = '_id', options = {}) {
     merged.push(item);
     if (itemKey) {
       seen.add(itemKey);
+    } else if (process.env.NODE_ENV !== 'production') {
+      console.warn('[pagination] missing key', key, item);
     }
   }
 
