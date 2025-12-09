@@ -298,7 +298,7 @@ const GameHistory = ({ savedUsername }) => {
               })}
             </div>
 
-            {pagination.hasMore && (
+            {pagination.hasMore ? (
               <div className="load-more-section">
                 <button
                   onClick={loadMore}
@@ -315,6 +315,8 @@ const GameHistory = ({ savedUsername }) => {
                   Showing {displayedCount} of {pagination.total} games
                 </p>
               </div>
+            ) : (
+              <p className="pagination-info">All games loaded.</p>
             )}
           </>
         )}
