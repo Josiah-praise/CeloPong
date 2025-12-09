@@ -279,7 +279,7 @@ const GameHistory = ({ savedUsername }) => {
                   {loading ? 'Loading...' : 'Load More'}
                 </button>
                 <p className="pagination-info">
-                  Showing {Math.min(pagination.offset + games.length, pagination.total)} of {pagination.total} games
+                  Showing {games.length} of {pagination.total} games
                 </p>
               </div>
             )}
