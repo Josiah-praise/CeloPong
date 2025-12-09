@@ -23,7 +23,23 @@ function sanitizeUrl(url) {
     return null;
   }
 
-  return url.replace(/\/+$/, '');
+  const trimmed = url.replace(/\/+$/, '');
+
+  if (!isValidUrl(trimmed)) {
+    console.warn('[BACKEND_URL] Ignoring invalid URL', trimmed);
+    return null;
+  }
+
+  return trimmed;
+}
+
+function isValidUrl(candidate) {
+  try {
+    new URL(candidate);
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function resolveBackendUrl() {
