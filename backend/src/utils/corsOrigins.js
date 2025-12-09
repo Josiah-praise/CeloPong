@@ -16,7 +16,19 @@ function normalizeUrl(url) {
   return url?.replace(/\/$/, '') || null;
 }
 
-function getCorsOrigins(envUrl = process.env.FRONTEND_URL, fallbackUrl = process.env.FRONTEND_URL_FALLBACK, allowAll = process.env.FRONTEND_URL_ALLOW_ALL === 'true') {
+function parseDevOrigins(value) {
+  if (!value) {
+    return null;
+  }
+  return value.split(',').map(normalizeUrl).filter(Boolean);
+}
+
+function getCorsOrigins(
+  envUrl = process.env.FRONTEND_URL,
+  fallbackUrl = process.env.FRONTEND_URL_FALLBACK,
+  allowAll = process.env.FRONTEND_URL_ALLOW_ALL === 'true',
+  devOverrides = process.env.FRONTEND_URL_DEV_ORIGINS
+) {
   if (allowAll) {
     return { origins: true, source: ORIGIN_SOURCES.WILDCARD };
   }
@@ -29,6 +41,11 @@ function getCorsOrigins(envUrl = process.env.FRONTEND_URL, fallbackUrl = process
   const fallback = normalizeUrl(fallbackUrl);
   if (fallback) {
     return { origins: [fallback], source: ORIGIN_SOURCES.FALLBACK_ENV };
+  }
+
+  const overrideOrigins = parseDevOrigins(devOverrides);
+  if (overrideOrigins?.length) {
+    return { origins: overrideOrigins, source: ORIGIN_SOURCES.DEFAULT };
   }
 
   return { origins: DEFAULT_DEV_ORIGINS, source: ORIGIN_SOURCES.DEFAULT };
