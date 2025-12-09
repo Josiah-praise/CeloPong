@@ -182,6 +182,11 @@ const MyWins = () => {
     [winsWithPrize]
   );
 
+  const claimableCount = useMemo(
+    () => winsWithPrize.filter((game) => !game.claimed).length,
+    [winsWithPrize]
+  );
+
   const formattedTotals = useMemo(() => {
     return {
       claimable: formatWeiToEth(prizeTotals.claimable),
@@ -228,7 +233,9 @@ const MyWins = () => {
           <span className="summary-value">{formattedTotals.total} ETH</span>
         </div>
       </div>
-      <p className="summary-note">Totals reflect 2× stake payouts. Claim pending wins to receive funds.</p>
+      <p className="summary-note">
+        Totals reflect 2× stake payouts. {claimableCount > 0 ? `${claimableCount} win(s) ready to claim.` : 'All wins have been claimed.'}
+      </p>
 
       {/* Transaction Progress Modal */}
       {claimingGameId && (
