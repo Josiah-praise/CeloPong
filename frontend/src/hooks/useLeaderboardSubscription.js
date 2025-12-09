@@ -2,6 +2,7 @@ import { useEffect, useState, useMemo } from 'react';
 import io from 'socket.io-client';
 import { BACKEND_URL, SOCKET_EVENTS } from '../constants';
 
+// Subscribes to leaderboard updates via WebSocket while providing initial HTTP data
 export default function useLeaderboardSubscription() {
   const [leaderboard, setLeaderboard] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
