@@ -1,4 +1,5 @@
 const { calculateElo } = require('./utils/eloCalculator');
+const emitLeaderboardUpdate = require('./utils/emitLeaderboardUpdate');
 const fetch = require('node-fetch');
 
 class GameHandlers {
