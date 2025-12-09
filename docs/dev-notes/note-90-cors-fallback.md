@@ -19,3 +19,7 @@
 ## Observability
 - Log cors source + allowed origins on startup.
 - Consider exposing `/health` field `cors_origin`.
+
+## Next Steps
+- Add integration tests hitting `/health` to ensure defaults don't regress.
+- Document recommended origin lists for staging/prod environments.
