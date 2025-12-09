@@ -219,6 +219,11 @@ networks:
 - Optional: set `REACT_APP_BACKEND_URL_FALLBACK` to enforce a custom fallback origin when neither the env var nor `window.location.origin` apply (e.g., running from `file://`).
 - Optional: set `REACT_APP_SHOW_BACKEND_URL_BANNER=false` to hide the development banner that explains which backend URL/source is in use.
 
+**Backend URL Troubleshooting**
+- Open the browser console to view the backend banner and confirm which origin/source is active.
+- Override via `REACT_APP_BACKEND_URL` or `REACT_APP_BACKEND_URL_FALLBACK` if the detected origin is wrong.
+- Hide the banner with `REACT_APP_SHOW_BACKEND_URL_BANNER=false` once configured.
+
 **2. Backend → Player Service (Docker Network)**
 - Uses `http://player-service:5001` (Docker DNS name)
 - Services on same network can use service names
