@@ -10,7 +10,6 @@ import { STAKE_AMOUNTS } from '../contracts/PongEscrow';
 import useLeaderboardSubscription from '../hooks/useLeaderboardSubscription';
 
 const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
-  const [rankings, setRankings] = useState([]);
   const [activeGames, setActiveGames] = useState([]);
   const [showTitle, setShowTitle] = useState(false);
   const [audioStarted, setAudioStarted] = useState(false);
