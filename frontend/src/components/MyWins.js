@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAccount } from 'wagmi';
 import { useClaimPrize } from '../hooks/useContract';
 import { BACKEND_URL } from '../constants';
-import { computePrizeFromStake } from '../utils/eth';
+import { computePrizeFromStake, formatWeiToEth } from '../utils/eth';
 import '../styles/MyWins.css';
 
 const MyWins = () => {
@@ -162,6 +162,30 @@ const MyWins = () => {
     [wins]
   );
 
+  const prizeTotals = useMemo(() => {
+    return winsWithPrize.reduce(
+      (acc, game) => {
+        const payout = game.prizeInfo.payoutWei;
+        if (game.claimed) {
+          acc.claimed += payout;
+        } else {
+          acc.claimable += payout;
+        }
+        return acc;
+      },
+      { claimable: 0n, claimed: 0n }
+    );
+  }, [winsWithPrize]);
+
+  const formattedTotals = useMemo(() => {
+    const total = prizeTotals.claimable + prizeTotals.claimed;
+    return {
+      claimable: formatWeiToEth(prizeTotals.claimable),
+      claimed: formatWeiToEth(prizeTotals.claimed),
+      total: formatWeiToEth(total),
+    };
+  }, [prizeTotals]);
+
   if (!isConnected) {
     return (
       <div className="my-wins-container">
@@ -184,6 +208,21 @@ const MyWins = () => {
         <p className="wallet-address">
           {address?.slice(0, 6)}...{address?.slice(-4)}
         </p>
+      </div>
+
+      <div className="wins-summary">
+        <div className="summary-card claimable">
+          <span className="summary-label">Claimable</span>
+          <span className="summary-value">{formattedTotals.claimable} ETH</span>
+        </div>
+        <div className="summary-card claimed">
+          <span className="summary-label">Claimed</span>
+          <span className="summary-value">{formattedTotals.claimed} ETH</span>
+        </div>
+        <div className="summary-card total">
+          <span className="summary-label">Total Won</span>
+          <span className="summary-value">{formattedTotals.total} ETH</span>
+        </div>
       </div>
 
       {/* Transaction Progress Modal */}

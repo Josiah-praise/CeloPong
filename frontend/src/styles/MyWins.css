@@ -63,6 +63,50 @@
   margin: 0 auto;
 }
 
+.wins-summary {
+  max-width: 1200px;
+  margin: 0 auto 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.summary-card {
+  border: 2px solid rgba(116, 113, 203, 0.6);
+  border-radius: 8px;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  text-align: center;
+  box-shadow: 0 0 10px rgba(116, 113, 203, 0.2);
+}
+
+.summary-card.claimable {
+  border-color: rgb(253, 208, 64);
+}
+
+.summary-card.claimed {
+  border-color: #4caf50;
+}
+
+.summary-card.total {
+  border-color: rgb(116, 113, 203);
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.6rem;
+  color: #999;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  color: rgb(253, 208, 64);
+  font-family: 'Press Start 2P', monospace;
+}
+
 .loading,
 .error-message,
 .connect-wallet-prompt {
