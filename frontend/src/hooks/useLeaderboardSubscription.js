@@ -18,6 +18,7 @@ export default function useLeaderboardSubscription() {
   useEffect(() => {
     const handleLiveUpdate = (payload) => {
       setLeaderboard(payload);
+      setIsLoading(false);
     };
 
     socket.on('connect', () => {
