@@ -20,7 +20,7 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
   const titleRef = useRef();
   const navigate = useNavigate();
   const socketRef = useRef(null);
-  const { leaderboard, socket } = useLeaderboardSubscription();
+  const { leaderboard, isLoading: isLeaderboardLoading, socket } = useLeaderboardSubscription();
 
   // Web3 hooks
   const { open } = useAppKit();
@@ -629,7 +629,9 @@ const Welcome = ({ setGameState, savedUsername, onUsernameSet }) => {
                 </div>
               ))
             ) : (
-              <div className="no-rankings">No players ranked yet</div>
+              <div className="no-rankings">
+                {isLeaderboardLoading ? 'Loading leaderboard...' : 'No players ranked yet'}
+              </div>
             )}
           </div>
         </div>
