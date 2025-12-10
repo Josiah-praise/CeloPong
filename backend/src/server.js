@@ -610,7 +610,7 @@ try {
   });
 
   io.on('connection', (socket) => {
-    const username = socket.handshake.query.username;
+    const username = truncate(socket.handshake.query.username);
     console.log('New connection:', {
       socketId: socket.id,
       username,
