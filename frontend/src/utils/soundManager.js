@@ -18,7 +18,7 @@ class SoundManager {
     try {
       return new Audio(url);
     } catch (error) {
-      console.warn('Failed to create audio for', url, error);
+      console.warn('Failed to create audio for', url, 'falling back to raw path');
       return new Audio(path);
     }
   }
