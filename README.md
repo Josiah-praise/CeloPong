@@ -273,6 +273,7 @@ Host Machine (localhost)
 Port 3000 → frontend container
 Port 8080 → backend container  ──┐
 Port 5001 → player-service ←─────┘ (internal network)
+Port 27017 → mongodb container
 ```
 
 #### Docker Workflow
