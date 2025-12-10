@@ -4,6 +4,7 @@ import io from 'socket.io-client';
 import { STORAGE_KEY, BACKEND_URL } from '../constants';
 import '../styles/GameOver.css';
 
+// Route used when launching a rematch game session
 const REMATCH_ROUTE = '/game';
 
 const GameOver = () => {
