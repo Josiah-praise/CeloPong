@@ -484,7 +484,7 @@ class GameHandlers {
     console.log(`Updated ranking for ${playerName}: ${newRating}`);
   }
 
-  async getTopPlayers(limit = 10) {
+  async getTopPlayersLocal(limit = 10) {
     return Array.from(this.playerRankings.values())
       .sort((a, b) => b.rating - a.rating)
       .slice(0, limit);
