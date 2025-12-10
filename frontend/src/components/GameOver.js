@@ -5,7 +5,7 @@ import { STORAGE_KEY, BACKEND_URL } from '../constants';
 import '../styles/GameOver.css';
 
 const GameOver = () => {
-  const REMATCH_ROUTE = '/multiplayer';
+  const REMATCH_ROUTE = '/game';
   const location = useLocation();
   const navigate = useNavigate();
   const result = location.state;
