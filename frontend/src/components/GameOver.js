@@ -108,8 +108,8 @@ const GameOver = () => {
       <div className="stats">
         <p>Final Score: {result.finalScore[0]} - {result.finalScore[1]}</p>
         <p>New Rating: {result.rating}</p>
-        <p>Game Duration: {Math.round((result.stats.duration || 0) / 1000)}s</p>
-        <p>Total Hits: {result.stats.hits || 0}</p>
+        <p>Game Duration: {Math.round((stats.duration || 0) / 1000)}s</p>
+        <p>Total Hits: {stats.hits || 0}</p>
       </div>
 
       {rematchRequested && (
