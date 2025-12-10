@@ -493,6 +493,7 @@ class GameHandlers {
       .slice(0, limit);
   }
 
+  // Preferred helper that uses player service when configured, otherwise cache
   async getTopPlayers(limit = 10) {
     console.log('Leaderboard source:', this.leaderboardSource);
     if (!this.playerServiceEnabled) {
