@@ -591,6 +591,7 @@ class SoundManager {
   playHitSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.hitSound) return;
         this.hitSound.currentTime = 0;
         return this.hitSound.play()
           .catch(err => {
