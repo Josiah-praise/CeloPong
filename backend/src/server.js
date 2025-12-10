@@ -626,7 +626,7 @@ try {
     for (const existingSocket of existingSockets) {
       if (existingSocket.id !== socket.id &&
           existingSocket.handshake.query.username === username) {
-        console.log('Cleaning up old connection for:', username);
+        logSocketEvent('Cleaning up old connection for:', username);
         gameHandlers.handleDisconnect(existingSocket);
         existingSocket.disconnect(true);
       }
