@@ -44,6 +44,10 @@ function truncate(value, max = 50) {
 }
 
 function logSocketEvent(label, payload) {
+  if (payload === undefined) {
+    console.log(label);
+    return;
+  }
   console.log(label, payload);
 }
 
