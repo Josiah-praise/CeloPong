@@ -25,6 +25,7 @@ This single command will:
 - Build Docker images for all 3 services
 - Start containers in correct order
 - Display logs from all services
+- Start MongoDB on port 27017 with a local volume
 
 **3. Wait for Services to Start**
 
