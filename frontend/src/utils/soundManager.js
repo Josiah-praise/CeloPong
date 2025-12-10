@@ -11,6 +11,10 @@ class SoundManager {
     return SoundManager.buildPath(path);
   }
 
+  createAudio(path) {
+    return new Audio(SoundManager.buildPath(path));
+  }
+
   buildSounds() {
     this.hitSound = this.createAudio(this.soundPaths.hit);
     this.scoreSound = this.createAudio(this.soundPaths.score);
