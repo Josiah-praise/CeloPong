@@ -501,6 +501,7 @@ pnpm dev
 - React Router v6
 - HTML5 Canvas
 - Web Audio API
+- Static assets (sounds) resolve via `PUBLIC_URL` for subpath hosting
 
 ### Backend
 - Node.js 18
