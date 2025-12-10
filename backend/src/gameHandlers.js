@@ -607,7 +607,7 @@ class GameHandlers {
       if (response.ok) {
         return await response.json();
       }
-      
+      console.warn('Player service top players responded with status', response.status);
       return [];
     } catch (error) {
       console.error('Error fetching top players:', error);
