@@ -108,7 +108,7 @@ const GameOver = () => {
     <div className="game-over">
       <h1>{result.message}</h1>
       <div className="stats">
-        <p>Final Score: {(result.finalScore || [0, 0])[0]} - {(result.finalScore || [0, 0])[1]}</p>
+        <p>Final Score: {(Array.isArray(result.finalScore) ? result.finalScore : [0, 0])[0]} - {(Array.isArray(result.finalScore) ? result.finalScore : [0, 0])[1]}</p>
         <p>New Rating: {result.rating ?? '—'}</p>
         <p>Game Duration: {Math.round((stats.duration || 0) / 1000)}s</p>
         <p>Total Hits: {stats.hits || 0}</p>
