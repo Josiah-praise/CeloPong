@@ -8,6 +8,7 @@ class GameHandlers {
     this.games = new Map();
     this.waitingPlayers = new Set();
     this.playerRankings = new Map();
+    // Optional remote player service
     this.playerServiceUrl = process.env.PLAYER_SERVICE_URL || 'http://localhost:5001';
     this.playerServiceEnabled = Boolean(process.env.PLAYER_SERVICE_URL);
     this.leaderboardSource = this.playerServiceEnabled ? 'player-service' : 'memory';
