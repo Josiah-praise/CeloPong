@@ -1,8 +1,12 @@
 class SoundManager {
-  basePath(path) {
+  static buildPath(path) {
     const base = process?.env?.PUBLIC_URL || '';
     if (!base) return path;
     return `${base.replace(/\/$/, '')}${path}`;
+  }
+
+  basePath(path) {
+    return SoundManager.buildPath(path);
   }
 
   constructor() {
