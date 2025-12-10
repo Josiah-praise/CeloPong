@@ -38,6 +38,11 @@ function maskAddress(address) {
   return address;
 }
 
+function truncate(value, max = 50) {
+  if (typeof value !== 'string') return value;
+  return value.length > max ? `${value.slice(0, max)}…` : value;
+}
+
 // MongoDB Connection
 // Default URI matches the docker-compose Mongo service
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pong-it';
