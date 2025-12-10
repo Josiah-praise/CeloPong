@@ -10,11 +10,11 @@ class SoundManager {
   }
 
   constructor() {
-    this.hitSound = new Audio(this.basePath('/sounds/hit2.mp3'));
-    this.scoreSound = new Audio(this.basePath('/sounds/score2.mp3'));
-    this.loadSound = new Audio(this.basePath('/sounds/load2.mp3'));
-    this.gameOverSound = new Audio(this.basePath('/sounds/gameover3.mp3'));
-    this.introSound = new Audio(this.basePath('/sounds/intro2.mp3'));
+    this.hitSound = new Audio(SoundManager.buildPath('/sounds/hit2.mp3'));
+    this.scoreSound = new Audio(SoundManager.buildPath('/sounds/score2.mp3'));
+    this.loadSound = new Audio(SoundManager.buildPath('/sounds/load2.mp3'));
+    this.gameOverSound = new Audio(SoundManager.buildPath('/sounds/gameover3.mp3'));
+    this.introSound = new Audio(SoundManager.buildPath('/sounds/intro2.mp3'));
     
     this.audioContext = null;
     this.oscillators = [];
