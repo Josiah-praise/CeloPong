@@ -55,6 +55,7 @@ class SoundManager {
       intro: '/sounds/intro2.mp3',
     };
     this.buildSounds();
+    this.assetBase = SoundManager.buildPath('/sounds').replace(/\/sounds$/, '');
     
     this.audioContext = null;
     this.oscillators = [];
