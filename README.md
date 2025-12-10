@@ -279,6 +279,7 @@ Port 8080 → backend container  ──┐
 Port 5001 → player-service ←─────┘ (internal network)
 Port 27017 → mongodb container
 ```
+MongoDB shares the `app-network` so the backend can reach it by hostname `mongo`.
 
 **MongoDB Service**
 - Stores player/game data at `mongodb://mongo:27017/pong-it` using the `mongo-data` volume.
