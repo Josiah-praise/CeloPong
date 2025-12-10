@@ -16,6 +16,7 @@ const GameOver = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const result = location.state;
+  const message = result?.message || 'Game Over';
   const finalScore = Array.isArray(result?.finalScore) ? result.finalScore : DEFAULT_SCORE;
   const stats = result?.stats || {};
   const socketRef = useRef(null);
