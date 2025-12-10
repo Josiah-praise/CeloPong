@@ -30,6 +30,11 @@ function sanitizeHeaders(input = {}) {
 }
 
 function maskAddress(address) {
+  if (typeof address !== 'string') return address;
+  const parts = address.split('.');
+  if (parts.length === 4) {
+    return ['x', 'x', 'x', parts[3]].join('.');
+  }
   return address;
 }
 
