@@ -58,6 +58,7 @@ const GameOver = () => {
     });
 
     return () => {
+      socket.off('gameStart', goToRematch);
       socket.removeAllListeners();
       socket.disconnect();
     };
