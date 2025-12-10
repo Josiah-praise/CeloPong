@@ -19,6 +19,7 @@ services:
     environment:
       - PORT=8080
       - FRONTEND_URL=http://localhost:3000
+      - MONGODB_URI=mongodb://mongo:27017/pong-it
       - MONGODB_URI=mongodb://localhost:27017/pong-it
       - NODE_ENV=production
       # Optional: Add for staked match signature generation
