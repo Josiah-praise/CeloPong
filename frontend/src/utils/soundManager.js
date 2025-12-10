@@ -574,11 +574,11 @@ class SoundManager {
     this.isGenomeAudioPlaying = false;
     
     try {
-      this.hitSound.pause();
-      this.scoreSound.pause();
-      this.loadSound.pause();
-      this.gameOverSound.pause();
-      this.introSound.pause();
+      this.hitSound?.pause();
+      this.scoreSound?.pause();
+      this.loadSound?.pause();
+      this.gameOverSound?.pause();
+      this.introSound?.pause();
     } catch (e) {
       console.warn('Error stopping sound effects:', e);
     }
