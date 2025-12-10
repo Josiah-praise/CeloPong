@@ -64,9 +64,10 @@ function describeHeaders(input = {}) {
 }
 
 function describeOutgoingHeaders(input = {}) {
+  const keys = Object.keys(input);
   return {
-    keys: Object.keys(input),
-    total: Object.keys(input).length
+    keys: keys.slice(0, 10),
+    total: keys.length
   };
 }
 
