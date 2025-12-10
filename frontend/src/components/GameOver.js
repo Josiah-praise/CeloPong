@@ -46,7 +46,7 @@ const GameOver = () => {
 
     socketRef.current = socket;
 
-    socket.on(REMATCH_REQUESTED_EVENT, (data) => {
+    socket.on(REMATCH_REQUESTED_EVENT, () => {
       setRematchRequested(true);
       setWaitingForResponse(false);
       setRematchResponded(false);
