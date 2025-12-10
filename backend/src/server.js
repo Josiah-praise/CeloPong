@@ -609,6 +609,8 @@ app.get('/games/:roomCode', async (req, res) => {
 try {
   if (!ENABLE_SOCKET_HEADER_LOGS) {
     console.log('Socket header logging disabled (SOCKET_HEADER_LOGS!=true)');
+  } else {
+    console.warn('Socket header logging ENABLED; sensitive data may appear in logs');
   }
   // Socket.IO engine emits headers; be careful not to leak sensitive values
   io.engine.on("headers", (headers, req) => {
