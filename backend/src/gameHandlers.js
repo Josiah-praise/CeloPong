@@ -498,7 +498,7 @@ class GameHandlers {
     }
     try {
       const remote = await this.getTopPlayersRemote(limit);
-      if (remote && remote.length) {
+      if (Array.isArray(remote) && remote.length) {
         return remote;
       }
     } catch (error) {
