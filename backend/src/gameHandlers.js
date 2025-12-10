@@ -551,6 +551,9 @@ class GameHandlers {
 
   // Update player rating in the player service
   async updatePlayerRating(playerName, newRating, gameResult) {
+    if (!this.playerServiceEnabled) {
+      return;
+    }
     try {
       const response = await fetch(`${this.playerServiceUrl}/players/${encodeURIComponent(playerName)}/rating`, {
         method: 'PATCH',
