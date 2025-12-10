@@ -89,6 +89,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
    - **Quick Match**: `socket.emit('findRandomMatch', playerData)`
    - **Create Room**: `socket.emit('createRoom', playerData)`
    - **Join Room**: `socket.emit('joinRoom', { roomCode, player })`
+3. Post-match rematch accepts route back to `/game`
 3. Listens for events:
    - `gameStart` - Game begins
    - `gameUpdate` - Ball/paddle positions (60 times/second)
