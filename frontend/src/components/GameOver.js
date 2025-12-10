@@ -130,10 +130,10 @@ const GameOver = () => {
         <div className="rematch-request">
           <p>Opponent wants a rematch!</p>
           <div className="button-group">
-            <button onClick={handleAcceptRematch} className="accept-btn" disabled={waitingForResponse}>
+            <button onClick={handleAcceptRematch} className="accept-btn" disabled={waitingForResponse || rematchResponded}>
               Accept Rematch
             </button>
-            <button onClick={handleDeclineRematch} className="decline-btn" disabled={waitingForResponse}>
+            <button onClick={handleDeclineRematch} className="decline-btn" disabled={waitingForResponse || rematchResponded}>
               Decline
             </button>
           </div>
