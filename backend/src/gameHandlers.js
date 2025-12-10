@@ -61,7 +61,7 @@ class GameHandlers {
       console.log('Initializing ranking for new player:', username);
       this.playerRankings.set(username, {
         name: username,
-        rating: 1000,
+        rating: DEFAULT_RATING,
         lastUpdated: Date.now()
       });
       
