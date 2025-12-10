@@ -15,6 +15,10 @@ class GameHandlers {
     console.log('Leaderboard source initialized:', this.leaderboardSource);
   }
 
+  getLastRemoteLeaderboardError() {
+    return this.lastRemoteLeaderboardError;
+  }
+
   handleConnection(socket) {
     const username = socket.handshake.query.username;
     console.log('New connection details:', {
