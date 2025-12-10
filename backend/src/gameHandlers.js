@@ -32,6 +32,7 @@ class GameHandlers {
           rating: player.rating,
           lastUpdated: Date.now()
         });
+        console.log('Synced remote ranking into cache for', player.name);
       }
     });
   }
