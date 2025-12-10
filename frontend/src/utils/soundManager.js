@@ -15,7 +15,7 @@ class SoundManager {
   }
 
   createAudio(path) {
-    const basePath = this.assetBase || PUBLIC_URL || '.';
+    const basePath = this.assetBase || PUBLIC_URL || '.'; // '.' keeps relative paths working
     const url = `${basePath.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`;
     if (!url) return null;
     try {
