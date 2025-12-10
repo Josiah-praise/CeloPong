@@ -23,6 +23,7 @@ const GameOver = () => {
   const socketRef = useRef(null);
   const [rematchRequested, setRematchRequested] = useState(false);
   const [waitingForResponse, setWaitingForResponse] = useState(false);
+  const [rematchResponded, setRematchResponded] = useState(false);
 
   useEffect(() => {
     if (!result) {
