@@ -153,6 +153,13 @@ docker-compose up --build
 docker volume rm celo-pong_mongo-data
 ```
 
+### "MongoDB connection refused"
+
+**Fix:**
+```bash
+docker-compose restart mongo
+```
+
 ### "Frontend shows blank screen"
 
 **Clear browser cache:**
