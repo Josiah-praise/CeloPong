@@ -299,6 +299,7 @@ Creates images from Dockerfiles:
 - View Mongo logs: `docker-compose logs mongo`
 - MongoDB data lives in the `mongo-data` volume
 - Reset the volume with `docker volume rm celo-pong_mongo-data` if you need a clean DB
+- Stop and remove containers/volumes with `docker-compose down -v`
 
 **Starting Services:**
 ```bash
