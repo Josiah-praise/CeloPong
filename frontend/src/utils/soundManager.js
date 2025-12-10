@@ -12,7 +12,13 @@ class SoundManager {
   }
 
   createAudio(path) {
-    return new Audio(SoundManager.buildPath(path));
+    const url = SoundManager.buildPath(path);
+    try {
+      return new Audio(url);
+    } catch (error) {
+      console.warn('Failed to create audio for', url, error);
+      return new Audio(path);
+    }
   }
 
   buildSounds() {
