@@ -288,6 +288,7 @@ MongoDB shares the `app-network` so the backend can reach it by hostname `mongo`
 - You can inspect data with MongoDB Compass at `mongodb://localhost:27017`.
 - Local tools can connect on `localhost:27017` via the compose port mapping.
 - The `mongo-data` volume will grow with matches; prune it if space is tight.
+- Back up `mongo-data` if you need to preserve local progress.
 
 #### Docker Workflow
 
