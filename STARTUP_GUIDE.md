@@ -109,6 +109,7 @@ Enter your username and start playing!
 - See spectator count live
 - Multiple people can spectate same game
 - No lag or delays
+- Rematches return you to the game screen (`/game`)
 
 ---
 
