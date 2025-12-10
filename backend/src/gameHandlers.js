@@ -536,7 +536,7 @@ class GameHandlers {
   }
 
   // Get top players from the player service
-  async getTopPlayers(limit = 10) {
+  async getTopPlayersRemote(limit = 10) {
     try {
       const response = await fetch(`${this.playerServiceUrl}/players/top?limit=${limit}`);
       
