@@ -109,6 +109,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - Reads `MONGODB_URI` from environment (defaults to `mongodb://mongo:27017/pong-it`)
 - Optional `SOCKET_HEADER_LOGS=true` to emit sanitized Socket.IO headers for debugging (defaults off)
 - Leaderboard falls back to in-memory cache when no `PLAYER_SERVICE_URL` is set
+- Default player rating is 1000 when no remote rating exists
 - Keep `SOCKET_HEADER_LOGS=false` in production to avoid logging cookies/tokens
 
 **Key Files:**
