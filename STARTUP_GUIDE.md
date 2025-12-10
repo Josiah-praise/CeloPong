@@ -34,6 +34,7 @@ Watch the logs until you see:
 frontend_1         | webpack compiled successfully
 backend_1          | Server running on port 8080
 player-service_1   | Player ranking service running on port 5001
+mongo_1            | Replica set ready
 ```
 
 **4. Open Your Browser**
