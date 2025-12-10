@@ -630,7 +630,7 @@ try {
   io.engine.on("initial_headers", (headers, req) => {
     if (!ENABLE_SOCKET_HEADER_LOGS) return;
     console.log('Initial headers being sent:', headers);
-    console.log('Initial request headers (sanitized):', sanitizeHeaders(req.headers));
+    console.log('Initial request headers (sanitized):', describeHeaders(req.headers));
   });
 
   io.on('connection', (socket) => {
