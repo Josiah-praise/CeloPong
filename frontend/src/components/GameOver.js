@@ -6,6 +6,11 @@ import '../styles/GameOver.css';
 
 // Route used when launching a rematch game session
 const REMATCH_ROUTE = '/game';
+const REMATCH_REQUEST_EVENT = 'requestRematch';
+const REMATCH_RESPONSE_EVENT = 'rematchResponse';
+const REMATCH_REQUESTED_EVENT = 'rematchRequested';
+const REMATCH_DECLINED_EVENT = 'rematchDeclined';
+const GAME_START_EVENT = 'gameStart';
 
 const GameOver = () => {
   const location = useLocation();
