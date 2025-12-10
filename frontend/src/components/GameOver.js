@@ -63,7 +63,7 @@ const GameOver = () => {
     });
 
     return () => {
-      socket.off('gameStart', goToRematch);
+      socket.off(GAME_START_EVENT, goToRematch);
       socket.removeAllListeners();
       socket.disconnect();
     };
