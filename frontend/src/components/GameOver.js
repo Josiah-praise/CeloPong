@@ -94,6 +94,7 @@ const GameOver = () => {
       socketRef.current.emit(REMATCH_RESPONSE_EVENT, { accepted: true });
       setWaitingForResponse(true);
       setRematchRequested(false);
+      setRematchResponded(true);
     }
   };
 
@@ -101,6 +102,7 @@ const GameOver = () => {
     if (socketRef.current) {
       socketRef.current.emit(REMATCH_RESPONSE_EVENT, { accepted: false });
       setRematchRequested(false);
+      setRematchResponded(true);
     }
   };
 
