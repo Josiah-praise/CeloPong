@@ -15,7 +15,7 @@ class SoundManager {
   }
 
   createAudio(path) {
-    const basePath = this.assetBase || PUBLIC_URL || '';
+    const basePath = this.assetBase || PUBLIC_URL || '.';
     const url = basePath
       ? `${basePath.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`
       : SoundManager.buildPath(path);
