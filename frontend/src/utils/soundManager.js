@@ -58,11 +58,11 @@ class SoundManager {
       console.log('SoundManager audio base:', this.audioBase);
     }
     this.soundPaths = {
-      hit: '/sounds/hit2.mp3',
-      score: '/sounds/score2.mp3',
-      load: '/sounds/load2.mp3',
-      gameOver: '/sounds/gameover3.mp3',
-      intro: '/sounds/intro2.mp3',
+      hit: '/sounds/hit2.mp3',       // relative to PUBLIC_URL
+      score: '/sounds/score2.mp3',   // relative to PUBLIC_URL
+      load: '/sounds/load2.mp3',     // relative to PUBLIC_URL
+      gameOver: '/sounds/gameover3.mp3', // relative to PUBLIC_URL
+      intro: '/sounds/intro2.mp3',   // relative to PUBLIC_URL
     };
     this.buildSounds();
     this.assetBase = SoundManager.buildPath('/sounds').replace(/\/sounds$/, '');
