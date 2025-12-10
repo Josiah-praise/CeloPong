@@ -39,7 +39,7 @@ const GameOver = () => {
     });
 
     socket.on('gameStart', (data) => {
-      navigate('/multiplayer', {
+      navigate(REMATCH_ROUTE, {
         state: {
           gameMode: 'rematch',
           rematch: true
