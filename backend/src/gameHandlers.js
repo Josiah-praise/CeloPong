@@ -524,6 +524,8 @@ class GameHandlers {
         this.lastRemoteLeaderboardError = null;
         return remote;
       }
+      const emptyError = new Error('Remote leaderboard empty');
+      this.lastRemoteLeaderboardError = emptyError;
       console.warn('Remote leaderboard empty, using local cache');
     } catch (error) {
       console.error('Falling back to local leaderboard:', error);
