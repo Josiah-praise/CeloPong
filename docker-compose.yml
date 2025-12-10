@@ -28,6 +28,7 @@ services:
       - app-network
 
   mongodb:
+    image: mongo:7
 
 networks:
   app-network:
