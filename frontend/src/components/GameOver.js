@@ -47,6 +47,7 @@ const GameOver = () => {
     });
 
     const goToRematch = () => {
+      setWaitingForResponse(false);
       navigate(REMATCH_ROUTE, {
         state: {
           gameMode: 'rematch',
