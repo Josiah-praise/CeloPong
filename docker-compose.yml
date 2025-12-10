@@ -18,6 +18,8 @@ services:
     ports:
       - "27017:27017"
     restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=pong-it
     volumes:
       - mongo-data:/data/db
     networks:
