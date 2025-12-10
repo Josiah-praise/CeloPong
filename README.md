@@ -241,6 +241,7 @@ networks:
   app-network:
     driver: bridge             # Virtual network for inter-container communication
 ```
+MongoDB is pinned to `mongo:7` to align local containers with current tools.
 
 #### How Services Communicate
 
