@@ -3,7 +3,7 @@
 - [x] **Backend container needs MongoDB service** – `docker-compose.yml` starts only frontend and backend while `backend/src/server.js` connects to `mongodb://localhost:27017/pong-it`; add a MongoDB service and point the URI at it so the stack boots. _(Label: Bug)_
   - [x] docker-compose adds Mongo container and volume
 - [ ] **Player service missing but still referenced everywhere** – Docs/backend still call `PLAYER_SERVICE_URL` yet no player-service exists, causing leaderboard calls to fail until the dependency or code is fixed. _(Label: Bug)_
-- [ ] **Duplicate `getTopPlayers` breaks cached leaderboard** – `backend/src/gameHandlers.js` defines `getTopPlayers` twice; the async version overwrites the Map-based helper so every update hits the non-existent player-service. _(Label: Bug)_
+- [x] **Duplicate `getTopPlayers` breaks cached leaderboard** – `backend/src/gameHandlers.js` defines `getTopPlayers` twice; the async version overwrites the Map-based helper so every update hits the non-existent player-service. _(Label: Bug)_
 - [ ] **`POST /games` allows forged winners & signatures** – Anyone can POST arbitrary winners/staking data and the backend will generate a payout signature, enabling fund theft. _(Label: Security)_
 - [ ] **Player ratings can be self-assigned** – `POST /players` and `PATCH /players/:name/rating` accept arbitrary ratings/wins/losses without authentication, letting users inflate their ELO. _(Label: Security)_
 - [x] **Backend blocks CORS/WebSocket when `FRONTEND_URL` unset** – Express/Socket.IO cors configs deny access if the env variable isn’t provided, breaking local development. _(Label: Bug)_
