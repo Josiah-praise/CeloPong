@@ -163,6 +163,10 @@ docker volume rm celo-pong_mongo-data
 docker-compose restart mongo
 ```
 
+### "Need to debug socket headers"
+
+Set `SOCKET_HEADER_LOGS=true` in your `.env` to print sanitized headers (off by default).
+
 ### "Frontend shows blank screen"
 
 **Clear browser cache:**
