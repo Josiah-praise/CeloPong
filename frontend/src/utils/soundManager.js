@@ -18,6 +18,9 @@ class SoundManager {
     this.gameOverSound = new Audio(SoundManager.buildPath('/sounds/gameover3.mp3'));
     this.introSound = new Audio(SoundManager.buildPath('/sounds/intro2.mp3'));
     this.audioBase = process?.env?.PUBLIC_URL || '';
+    if (this.audioBase) {
+      console.log('SoundManager audio base:', this.audioBase);
+    }
     
     this.audioContext = null;
     this.oscillators = [];
