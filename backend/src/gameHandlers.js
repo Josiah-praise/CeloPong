@@ -553,6 +553,7 @@ class GameHandlers {
   // Update player rating in the player service
   async updatePlayerRating(playerName, newRating, gameResult) {
     if (!this.playerServiceEnabled) {
+      console.log('Player service disabled, skipping rating update for', playerName);
       return;
     }
     try {
