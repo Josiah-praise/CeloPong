@@ -289,6 +289,7 @@ Creates images from Dockerfiles:
 - `frontend/Dockerfile` → Installs React dependencies, copies code
 - `backend/Dockerfile` → Installs Node.js dependencies
 - `player-service/Dockerfile` → Installs Express dependencies
+- View Mongo logs: `docker-compose logs mongo`
 
 **Starting Services:**
 ```bash
