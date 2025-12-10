@@ -561,16 +561,16 @@ class GameHandlers {
         });
         
         const data = await createResponse.json();
-        return data.rating || 1000;
+        return data.rating || DEFAULT_RATING;
       } else if (response.ok) {
         const data = await response.json();
         return data.rating;
       }
-      
-      return 1000; // Default rating if something goes wrong
+
+      return DEFAULT_RATING; // Default rating if something goes wrong
     } catch (error) {
       console.error('Error fetching player rating:', error);
-      return 1000; // Default rating on error
+      return DEFAULT_RATING; // Default rating on error
     }
   }
 
