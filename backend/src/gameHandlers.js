@@ -510,9 +510,10 @@ class GameHandlers {
 
   // Returns top players from in-memory cache
   async getTopPlayersLocal(limit = 10) {
+    const size = Math.max(0, Number(limit) || 0);
     return Array.from(this.playerRankings.values())
       .sort((a, b) => b.rating - a.rating)
-      .slice(0, limit);
+      .slice(0, size);
   }
 
   // Preferred helper that uses player service when configured, otherwise cache
