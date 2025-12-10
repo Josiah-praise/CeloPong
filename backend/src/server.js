@@ -636,7 +636,7 @@ try {
   // Initial headers at handshake time may include auth/cookies
   io.engine.on("initial_headers", (headers, req) => {
     if (!ENABLE_SOCKET_HEADER_LOGS) return;
-    console.log('Initial headers being sent:', describeOutgoingHeaders(headers));
+    console.log('Initial headers being sent (summary):', describeOutgoingHeaders(headers));
     console.log('Initial request headers (sanitized):', describeHeaders(req.headers));
   });
 
