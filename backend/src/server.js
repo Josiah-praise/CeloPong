@@ -20,7 +20,10 @@ const MAX_HEADER_VALUE_LENGTH = 200;
 function sanitizeHeaders(input = {}) {
   return SAFE_HEADER_KEYS.reduce((acc, key) => {
     if (input[key]) {
-      acc[key] = input[key];
+      const value = input[key];
+      acc[key] = typeof value === 'string'
+        ? value.slice(0, MAX_HEADER_VALUE_LENGTH)
+        : value;
     }
     return acc;
   }, {});
