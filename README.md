@@ -283,6 +283,7 @@ Port 27017 → mongodb container
 **MongoDB Service**
 - Stores player/game data at `mongodb://mongo:27017/pong-it` using the `mongo-data` volume.
 - Remove the `mongo-data` volume to reset local data.
+- Add connection retries/healthchecks if startup ordering is an issue.
 
 #### Docker Workflow
 
