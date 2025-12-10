@@ -37,6 +37,9 @@ function maskAddress(address) {
   if (parts.length === 4) {
     return ['x', 'x', 'x', parts[3]].join('.');
   }
+   if (address.includes(':')) {
+     return 'ipv6';
+   }
   return address;
 }
 
