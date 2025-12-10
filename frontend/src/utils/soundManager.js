@@ -16,6 +16,7 @@ class SoundManager {
 
   createAudio(path) {
     const url = SoundManager.buildPath(path);
+    if (!url) return null;
     try {
       return new Audio(url);
     } catch (error) {
