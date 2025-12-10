@@ -2,13 +2,45 @@ const { calculateElo } = require('./utils/eloCalculator');
 const emitLeaderboardUpdate = require('./utils/emitLeaderboardUpdate');
 const fetch = require('node-fetch');
 
+const DEFAULT_RATING = 1000;
+
 class GameHandlers {
   constructor(io) {
     this.io = io;
     this.games = new Map();
     this.waitingPlayers = new Set();
     this.playerRankings = new Map();
-    this.playerServiceUrl = process.env.PLAYER_SERVICE_URL || 'http://localhost:5001';
+    // Optional remote player service
+    this.playerServiceUrl = process.env.PLAYER_SERVICE_URL || null;
+    this.playerServiceEnabled = Boolean(this.playerServiceUrl);
+    this.leaderboardSource = this.playerServiceEnabled ? 'player-service' : 'memory';
+    this.lastRemoteLeaderboardError = null;
+    console.log('Leaderboard source initialized:', this.leaderboardSource);
+  }
+
+  getLastRemoteLeaderboardError() {
+    return this.lastRemoteLeaderboardError;
+  }
+
+  getLeaderboardSource() {
+    return this.leaderboardSource;
+  }
+
+  updateLocalRankingsFromRemote(players = []) {
+    players.forEach(player => {
+      if (player?.name && typeof player.rating === 'number') {
+        this.playerRankings.set(player.name, {
+          name: player.name,
+          rating: player.rating,
+          lastUpdated: Date.now()
+        });
+        console.log('Synced remote ranking into cache for', player.name);
+      }
+    });
+  }
+
+  getCachedLeaderboard(limit = 10) {
+    return this.getTopPlayersLocal(limit);
   }
 
   handleConnection(socket) {
@@ -33,7 +65,7 @@ class GameHandlers {
       console.log('Initializing ranking for new player:', username);
       this.playerRankings.set(username, {
         name: username,
-        rating: 1000,
+        rating: DEFAULT_RATING,
         lastUpdated: Date.now()
       });
       
@@ -107,7 +139,7 @@ class GameHandlers {
     if (!this.playerRankings.has(player.name)) {
       this.playerRankings.set(player.name, {
         name: player.name,
-        rating: 1000, // Initial rating
+        rating: DEFAULT_RATING, // Initial rating
         lastUpdated: Date.now()
       });
     }
@@ -474,23 +506,54 @@ class GameHandlers {
 
   updatePlayerRanking(playerName, newRating) {
     // Update method to accept playerName instead of player object
+    const safeRating = Number.isFinite(newRating) ? newRating : DEFAULT_RATING;
     this.playerRankings.set(playerName, {
       name: playerName,
-      rating: newRating,
+      rating: safeRating,
       lastUpdated: Date.now()
     });
     
-    console.log(`Updated ranking for ${playerName}: ${newRating}`);
+    console.log(`Updated ranking for ${playerName}: ${safeRating}`);
   }
 
-  getTopPlayers(limit = 10) {
+  // Returns top players from in-memory cache
+  async getTopPlayersLocal(limit = 10) {
+    const size = Math.min(100, Math.max(0, Math.floor(Number(limit) || 0)));
     return Array.from(this.playerRankings.values())
       .sort((a, b) => b.rating - a.rating)
-      .slice(0, limit);
+      .slice(0, size);
+  }
+
+  // Preferred helper that uses player service when configured, otherwise cache
+  async getTopPlayers(limit = 10) {
+    console.log('Leaderboard source:', this.leaderboardSource);
+    if (!this.playerServiceEnabled) {
+      console.log('Using in-memory leaderboard (player service disabled)');
+      return this.getTopPlayersLocal(limit);
+    }
+    try {
+      const remote = await this.getTopPlayersRemote(limit);
+      if (Array.isArray(remote) && remote.length) {
+        this.updateLocalRankingsFromRemote(remote);
+        this.lastRemoteLeaderboardError = null;
+        return remote;
+      }
+      const emptyError = new Error('Remote leaderboard empty');
+      this.lastRemoteLeaderboardError = emptyError;
+      console.warn('Remote leaderboard empty, using local cache');
+    } catch (error) {
+      console.error('Falling back to local leaderboard:', error);
+      this.lastRemoteLeaderboardError = error;
+    }
+    return this.getTopPlayersLocal(limit);
   }
 
   // Get player ratings from the player service
   async getPlayerRating(playerName) {
+    if (!this.playerServiceEnabled) {
+      console.log('Player service disabled, using default rating for', playerName);
+      return DEFAULT_RATING;
+    }
     try {
       const response = await fetch(`${this.playerServiceUrl}/players/${encodeURIComponent(playerName)}`);
       
@@ -503,21 +566,25 @@ class GameHandlers {
         });
         
         const data = await createResponse.json();
-        return data.rating || 1000;
+        return data.rating || DEFAULT_RATING;
       } else if (response.ok) {
         const data = await response.json();
         return data.rating;
       }
-      
-      return 1000; // Default rating if something goes wrong
+
+      return DEFAULT_RATING; // Default rating if something goes wrong
     } catch (error) {
       console.error('Error fetching player rating:', error);
-      return 1000; // Default rating on error
+      return DEFAULT_RATING; // Default rating on error
     }
   }
 
   // Update player rating in the player service
   async updatePlayerRating(playerName, newRating, gameResult) {
+    if (!this.playerServiceEnabled) {
+      console.log('Player service disabled, skipping rating update for', playerName);
+      return;
+    }
     try {
       const response = await fetch(`${this.playerServiceUrl}/players/${encodeURIComponent(playerName)}/rating`, {
         method: 'PATCH',
@@ -534,14 +601,21 @@ class GameHandlers {
   }
 
   // Get top players from the player service
-  async getTopPlayers(limit = 10) {
+  async getTopPlayersRemote(limit = 10) {
+    // Used only when an external player service is configured
+    // and will be skipped otherwise
+    if (!this.playerServiceEnabled) {
+      return [];
+    }
+    console.log('Fetching leaderboard from player service:', this.playerServiceUrl);
+    const safeLimit = Math.min(100, Math.max(0, Math.floor(Number(limit) || 0)));
     try {
-      const response = await fetch(`${this.playerServiceUrl}/players/top?limit=${limit}`);
+      const response = await fetch(`${this.playerServiceUrl}/players/top?limit=${safeLimit}`);
       
       if (response.ok) {
         return await response.json();
       }
-      
+      console.warn('Player service top players responded with status', response.status);
       return [];
     } catch (error) {
       console.error('Error fetching top players:', error);

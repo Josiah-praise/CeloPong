@@ -7,6 +7,7 @@
 - 8GB RAM available
 - Ports 3000, 8080, and 5001 available
 - Port 27017 open for local MongoDB (lock down in production)
+- Player service is optional; leaderboard falls back to in-memory if `PLAYER_SERVICE_URL` is unset
 
 ### Starting the Application
 

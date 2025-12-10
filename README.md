@@ -108,6 +108,8 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - Communication with Player Service
 - Reads `MONGODB_URI` from environment (defaults to `mongodb://mongo:27017/pong-it`)
 - Optional `SOCKET_HEADER_LOGS=true` to emit sanitized Socket.IO headers for debugging (defaults off)
+- Leaderboard falls back to in-memory cache when no `PLAYER_SERVICE_URL` is set
+- Default player rating is 1000 when no remote rating exists
 - Keep `SOCKET_HEADER_LOGS=false` in production to avoid logging cookies/tokens
 
 **Key Files:**
@@ -260,6 +262,7 @@ MongoDB is pinned to `mongo:7` to align local containers with current tools.
 - Emergency mode: `FRONTEND_URL_ALLOW_ALL=true` sets a wildcard (development only, logs warnings).
 - See `.env.example` for backend environment variables set during development.
 - `MONGODB_URI` defaults to `mongodb://mongo:27017/pong-it` when using Docker Compose.
+- `PLAYER_SERVICE_URL` is optional; when omitted, the backend serves leaderboard data from memory.
 - Use `FRONTEND_URL_DEV_ORIGINS` (comma-separated) to customize the default allowlist for local gadgets.
 
 **Backend URL Troubleshooting**
