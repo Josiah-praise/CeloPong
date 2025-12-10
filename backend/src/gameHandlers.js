@@ -510,8 +510,6 @@ class GameHandlers {
     return this.getTopPlayersLocal(limit);
   }
 
-  // Remote fetch lives below; currently overrides this method
-
   // Get player ratings from the player service
   async getPlayerRating(playerName) {
     try {
