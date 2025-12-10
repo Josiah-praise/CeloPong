@@ -43,6 +43,10 @@ function truncate(value, max = 50) {
   return value.length > max ? `${value.slice(0, max)}…` : value;
 }
 
+function logSocketEvent(label, payload) {
+  console.log(label, payload);
+}
+
 // MongoDB Connection
 // Default URI matches the docker-compose Mongo service
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pong-it';
