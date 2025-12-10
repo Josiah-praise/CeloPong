@@ -599,8 +599,9 @@ class GameHandlers {
       return [];
     }
     console.log('Fetching leaderboard from player service:', this.playerServiceUrl);
+    const safeLimit = Math.max(0, Number(limit) || 0);
     try {
-      const response = await fetch(`${this.playerServiceUrl}/players/top?limit=${limit}`);
+      const response = await fetch(`${this.playerServiceUrl}/players/top?limit=${safeLimit}`);
       
       if (response.ok) {
         return await response.json();
