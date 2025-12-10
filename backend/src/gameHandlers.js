@@ -486,6 +486,7 @@ class GameHandlers {
     console.log(`Updated ranking for ${playerName}: ${newRating}`);
   }
 
+  // Returns top players from in-memory cache
   async getTopPlayersLocal(limit = 10) {
     return Array.from(this.playerRankings.values())
       .sort((a, b) => b.rating - a.rating)
