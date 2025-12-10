@@ -11,6 +11,7 @@ class GameHandlers {
     this.playerServiceUrl = process.env.PLAYER_SERVICE_URL || 'http://localhost:5001';
     this.playerServiceEnabled = Boolean(process.env.PLAYER_SERVICE_URL);
     this.leaderboardSource = this.playerServiceEnabled ? 'player-service' : 'memory';
+    console.log('Leaderboard source initialized:', this.leaderboardSource);
   }
 
   handleConnection(socket) {
