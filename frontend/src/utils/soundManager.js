@@ -655,6 +655,7 @@ class SoundManager {
   playIntroSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.introSound) return;
         this.introSound.currentTime = 0;
         return this.introSound.play()
           .catch(err => {
