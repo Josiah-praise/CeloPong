@@ -30,7 +30,7 @@
 - [ ] **Legacy `GameHandlers` still run alongside the new flow** – `server.js` wires both handlers, causing duplicate event processing and unexpected disconnects from the obsolete logic. _(Label: Bug)_
 - [ ] **Paddle positions are never validated on the server** – `gameManager.updatePaddle` trusts client-sent values, so cheaters can send impossible positions or NaN to break physics. _(Label: Security)_
 - [ ] **Reloading `/game` silently queues a random match** – Without `location.state`, `gameMode` defaults to `quick`, so refreshing a private/staked lobby abandons the intended room. _(Label: Bug)_
-- [ ] **Audio files break when the app isn’t hosted at the root** – Absolute paths like `/sounds/hit2.mp3` fail under subpaths; use relative URLs so audio works everywhere. _(Label: Bug)_
+- [x] **Audio files break when the app isn’t hosted at the root** – Absolute paths like `/sounds/hit2.mp3` fail under subpaths; use relative URLs so audio works everywhere. _(Label: Bug)_
   - [x] Use PUBLIC_URL-aware audio paths
 - [ ] **Escrow contract address is hard-coded** – `frontend/src/contracts/PongEscrow.js` bakes a single address/ABI, making environment changes require code edits. _(Label: Enhancement)_
 - [ ] **Staked game persistence failures are ignored** – After Player 1 stakes, the UI doesn’t handle `/games` write errors, so matches can be missing server-side data. _(Label: Bug)_
