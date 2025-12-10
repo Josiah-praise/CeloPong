@@ -502,13 +502,14 @@ class GameHandlers {
 
   updatePlayerRanking(playerName, newRating) {
     // Update method to accept playerName instead of player object
+    const safeRating = Number.isFinite(newRating) ? newRating : DEFAULT_RATING;
     this.playerRankings.set(playerName, {
       name: playerName,
-      rating: newRating,
+      rating: safeRating,
       lastUpdated: Date.now()
     });
     
-    console.log(`Updated ranking for ${playerName}: ${newRating}`);
+    console.log(`Updated ranking for ${playerName}: ${safeRating}`);
   }
 
   // Returns top players from in-memory cache
