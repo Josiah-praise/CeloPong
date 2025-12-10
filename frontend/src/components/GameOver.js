@@ -106,6 +106,8 @@ const GameOver = () => {
       socketRef.current.emit('leaveRoom');
       socketRef.current.disconnect();
     }
+    setRematchRequested(false);
+    setWaitingForResponse(false);
     navigate('/');
   };
 
