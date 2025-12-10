@@ -547,7 +547,7 @@ class GameHandlers {
   async getPlayerRating(playerName) {
     if (!this.playerServiceEnabled) {
       console.log('Player service disabled, using default rating for', playerName);
-      return 1000;
+      return DEFAULT_RATING;
     }
     try {
       const response = await fetch(`${this.playerServiceUrl}/players/${encodeURIComponent(playerName)}`);
