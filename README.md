@@ -301,6 +301,7 @@ Creates images from Dockerfiles:
 - `frontend/Dockerfile` → Installs React dependencies, copies code
 - `backend/Dockerfile` → Installs Node.js dependencies
 - `player-service/Dockerfile` → Installs Express dependencies
+- Validate the combined config with `docker-compose config`
 - View Mongo logs: `docker-compose logs mongo`
 - MongoDB data lives in the `mongo-data` volume
 - Reset the volume with `docker volume rm celo-pong_mongo-data` if you need a clean DB
