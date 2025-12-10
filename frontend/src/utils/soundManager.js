@@ -42,6 +42,10 @@ class SoundManager {
     }
   }
 
+  getAssetBase() {
+    return this.assetBase || '';
+  }
+
   constructor() {
     this.audioBase = PUBLIC_URL || '';
     if (this.audioBase) {
