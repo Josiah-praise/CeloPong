@@ -1,4 +1,8 @@
 class SoundManager {
+  basePath(path) {
+    return path;
+  }
+
   constructor() {
     this.hitSound = new Audio('/sounds/hit2.mp3');
     this.scoreSound = new Audio('/sounds/score2.mp3');
