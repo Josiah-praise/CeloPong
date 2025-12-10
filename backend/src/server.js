@@ -16,6 +16,7 @@ const app = express();
 
 // Enable only when diagnosing handshake issues; off by default to avoid leaking cookies/tokens
 const ENABLE_SOCKET_HEADER_LOGS = process.env.SOCKET_HEADER_LOGS === 'true';
+// Only log these non-sensitive headers
 const SAFE_HEADER_KEYS = ['origin', 'referer', 'user-agent', 'host'];
 const MAX_HEADER_VALUE_LENGTH = 200;
 
