@@ -145,6 +145,7 @@ const GameOver = () => {
       {!rematchRequested && (
         <div className="button-group">
           {waitingForResponse && <p>{WAITING_TEXT}</p>}
+          {rematchResponded && !waitingForResponse && <p>Response sent</p>}
           <button
             onClick={handleRematch}
             disabled={waitingForResponse}
