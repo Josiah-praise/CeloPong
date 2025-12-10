@@ -45,6 +45,7 @@ const GameOver = () => {
 
     socket.on(REMATCH_REQUESTED_EVENT, (data) => {
       setRematchRequested(true);
+      setWaitingForResponse(false);
     });
 
     const goToRematch = () => {
