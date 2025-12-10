@@ -39,6 +39,7 @@ services:
       - app-network
 
 volumes:
+  # Persist MongoDB data locally
   mongo-data:
 
 networks:
