@@ -511,7 +511,7 @@ class GameHandlers {
 
   // Returns top players from in-memory cache
   async getTopPlayersLocal(limit = 10) {
-    const size = Math.min(100, Math.max(0, Number(limit) || 0));
+    const size = Math.min(100, Math.max(0, Math.floor(Number(limit) || 0)));
     return Array.from(this.playerRankings.values())
       .sort((a, b) => b.rating - a.rating)
       .slice(0, size);
