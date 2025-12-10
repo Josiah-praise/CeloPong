@@ -262,6 +262,7 @@ MongoDB is pinned to `mongo:7` to align local containers with current tools.
 - Emergency mode: `FRONTEND_URL_ALLOW_ALL=true` sets a wildcard (development only, logs warnings).
 - See `.env.example` for backend environment variables set during development.
 - `MONGODB_URI` defaults to `mongodb://mongo:27017/pong-it` when using Docker Compose.
+- `PLAYER_SERVICE_URL` is optional; when omitted, the backend serves leaderboard data from memory.
 - Use `FRONTEND_URL_DEV_ORIGINS` (comma-separated) to customize the default allowlist for local gadgets.
 
 **Backend URL Troubleshooting**
