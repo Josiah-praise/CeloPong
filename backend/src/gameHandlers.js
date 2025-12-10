@@ -520,6 +520,7 @@ class GameHandlers {
   async getTopPlayers(limit = 10) {
     console.log('Leaderboard source:', this.leaderboardSource);
     if (!this.playerServiceEnabled) {
+      console.log('Using in-memory leaderboard (player service disabled)');
       return this.getTopPlayersLocal(limit);
     }
     try {
