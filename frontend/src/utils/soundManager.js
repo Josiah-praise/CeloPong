@@ -60,6 +60,9 @@ class SoundManager {
     };
     this.buildSounds();
     this.assetBase = SoundManager.buildPath('/sounds').replace(/\/sounds$/, '');
+    if (this.assetBase) {
+      console.log('SoundManager asset base:', this.assetBase);
+    }
     
     this.audioContext = null;
     this.oscillators = [];
