@@ -224,6 +224,13 @@ services:
     networks: [app-network]
     restart: unless-stopped
 
+  mongodb:
+    image: mongo:7
+    ports: ["27017:27017"]
+    volumes: ["mongo-data:/data/db"]
+    networks: [app-network]
+    restart: unless-stopped
+
   player-service:
     build: ./player-service
     ports: ["5001:5001"]
