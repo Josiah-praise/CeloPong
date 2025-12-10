@@ -4,8 +4,9 @@ import io from 'socket.io-client';
 import { STORAGE_KEY, BACKEND_URL } from '../constants';
 import '../styles/GameOver.css';
 
+const REMATCH_ROUTE = '/game';
+
 const GameOver = () => {
-  const REMATCH_ROUTE = '/game';
   const location = useLocation();
   const navigate = useNavigate();
   const result = location.state;
