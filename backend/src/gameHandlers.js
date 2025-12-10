@@ -557,6 +557,7 @@ class GameHandlers {
   // Get top players from the player service
   async getTopPlayersRemote(limit = 10) {
     // Used only when an external player service is configured
+    // and will be skipped otherwise
     try {
       const response = await fetch(`${this.playerServiceUrl}/players/top?limit=${limit}`);
       
