@@ -1,11 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import io from 'socket.io-client';
-import { STORAGE_KEY, BACKEND_URL } from '../constants';
+import { STORAGE_KEY, BACKEND_URL, REMATCH_ROUTE } from '../constants';
 import '../styles/GameOver.css';
 
-// Route used when launching a rematch game session
-const REMATCH_ROUTE = '/game';
 const REMATCH_REQUEST_EVENT = 'requestRematch';
 const REMATCH_RESPONSE_EVENT = 'rematchResponse';
 const REMATCH_REQUESTED_EVENT = 'rematchRequested';
