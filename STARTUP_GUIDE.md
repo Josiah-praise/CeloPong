@@ -27,6 +27,7 @@ This single command will:
 - Start containers in correct order
 - Display logs from all services
 - Start MongoDB on port 27017 with a local volume
+- Allow local MongoDB access at `mongodb://localhost:27017`
 
 **3. Wait for Services to Start**
 
