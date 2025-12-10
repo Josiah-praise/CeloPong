@@ -39,6 +39,10 @@ class GameHandlers {
     });
   }
 
+  getCachedLeaderboard(limit = 10) {
+    return this.getTopPlayersLocal(limit);
+  }
+
   handleConnection(socket) {
     const username = socket.handshake.query.username;
     console.log('New connection details:', {
