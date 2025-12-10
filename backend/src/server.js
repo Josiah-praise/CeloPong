@@ -610,7 +610,7 @@ try {
       socketId: socket.id,
       username,
       transport: socket.conn.transport.name,
-      address: socket.handshake.address
+      address: maskAddress(socket.handshake.address)
     });
 
     const existingSockets = Array.from(io.sockets.sockets.values());
