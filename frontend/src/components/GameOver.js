@@ -10,6 +10,7 @@ const REMATCH_REQUESTED_EVENT = 'rematchRequested';
 const REMATCH_DECLINED_EVENT = 'rematchDeclined';
 const GAME_START_EVENT = 'gameStart';
 const DEFAULT_SCORE = [0, 0];
+const WAITING_TEXT = 'Waiting for opponent...';
 
 const GameOver = () => {
   const location = useLocation();
