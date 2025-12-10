@@ -298,6 +298,7 @@ Creates images from Dockerfiles:
 - `player-service/Dockerfile` → Installs Express dependencies
 - View Mongo logs: `docker-compose logs mongo`
 - MongoDB data lives in the `mongo-data` volume
+- Reset the volume with `docker volume rm celo-pong_mongo-data` if you need a clean DB
 
 **Starting Services:**
 ```bash
