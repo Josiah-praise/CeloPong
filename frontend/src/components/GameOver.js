@@ -19,6 +19,7 @@ const GameOver = () => {
   const message = result?.message || 'Game Over';
   const finalScore = Array.isArray(result?.finalScore) ? result.finalScore : DEFAULT_SCORE;
   const stats = result?.stats || {};
+  const rating = result?.rating ?? '—';
   const socketRef = useRef(null);
   const [rematchRequested, setRematchRequested] = useState(false);
   const [waitingForResponse, setWaitingForResponse] = useState(false);
