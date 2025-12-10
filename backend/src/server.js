@@ -15,6 +15,7 @@ const { getCorsOrigins } = require('./utils/corsOrigins');
 const app = express();
 
 const SAFE_HEADER_KEYS = ['origin', 'referer', 'user-agent'];
+const MAX_HEADER_VALUE_LENGTH = 200;
 
 function sanitizeHeaders(input = {}) {
   return SAFE_HEADER_KEYS.reduce((acc, key) => {
