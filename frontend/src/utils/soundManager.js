@@ -3,7 +3,8 @@ class SoundManager {
     // Keep audio assets working under subpaths (e.g., /pong-app/sounds/...)
     const base = process?.env?.PUBLIC_URL || '';
     if (!base) return path;
-    return `${base.replace(/\/$/, '')}${path}`;
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${base.replace(/\/$/, '')}${normalizedPath}`;
   }
 
   basePath(path) {
