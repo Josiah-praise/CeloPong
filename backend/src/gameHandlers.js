@@ -2,6 +2,8 @@ const { calculateElo } = require('./utils/eloCalculator');
 const emitLeaderboardUpdate = require('./utils/emitLeaderboardUpdate');
 const fetch = require('node-fetch');
 
+const DEFAULT_RATING = 1000;
+
 class GameHandlers {
   constructor(io) {
     this.io = io;
