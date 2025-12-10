@@ -107,6 +107,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - ELO rating calculations
 - Communication with Player Service
 - Reads `MONGODB_URI` from environment (defaults to `mongodb://mongo:27017/pong-it`)
+- Optional `SOCKET_HEADER_LOGS=true` to emit sanitized Socket.IO headers for debugging (defaults off)
 
 **Key Files:**
 - `server.js` - Express + Socket.IO server setup
