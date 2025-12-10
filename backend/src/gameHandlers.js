@@ -494,7 +494,15 @@ class GameHandlers {
     if (!this.playerServiceEnabled) {
       return this.getTopPlayersLocal(limit);
     }
-    return this.getTopPlayersRemote(limit);
+    try {
+      const remote = await this.getTopPlayersRemote(limit);
+      if (remote && remote.length) {
+        return remote;
+      }
+    } catch (error) {
+      console.error('Falling back to local leaderboard:', error);
+    }
+    return this.getTopPlayersLocal(limit);
   }
 
   // Remote fetch lives below; currently overrides this method
