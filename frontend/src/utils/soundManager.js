@@ -11,12 +11,15 @@ class SoundManager {
     return SoundManager.buildPath(path);
   }
 
+  buildSounds() {
+    this.hitSound = new Audio(SoundManager.buildPath(this.soundPaths.hit));
+    this.scoreSound = new Audio(SoundManager.buildPath(this.soundPaths.score));
+    this.loadSound = new Audio(SoundManager.buildPath(this.soundPaths.load));
+    this.gameOverSound = new Audio(SoundManager.buildPath(this.soundPaths.gameOver));
+    this.introSound = new Audio(SoundManager.buildPath(this.soundPaths.intro));
+  }
+
   constructor() {
-    this.hitSound = new Audio(SoundManager.buildPath('/sounds/hit2.mp3'));
-    this.scoreSound = new Audio(SoundManager.buildPath('/sounds/score2.mp3'));
-    this.loadSound = new Audio(SoundManager.buildPath('/sounds/load2.mp3'));
-    this.gameOverSound = new Audio(SoundManager.buildPath('/sounds/gameover3.mp3'));
-    this.introSound = new Audio(SoundManager.buildPath('/sounds/intro2.mp3'));
     this.audioBase = process?.env?.PUBLIC_URL || '';
     if (this.audioBase) {
       console.log('SoundManager audio base:', this.audioBase);
