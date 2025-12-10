@@ -503,11 +503,13 @@ class GameHandlers {
     try {
       const remote = await this.getTopPlayersRemote(limit);
       if (Array.isArray(remote) && remote.length) {
+        this.lastRemoteLeaderboardError = null;
         return remote;
       }
       console.warn('Remote leaderboard empty, using local cache');
     } catch (error) {
       console.error('Falling back to local leaderboard:', error);
+      this.lastRemoteLeaderboardError = error;
     }
     return this.getTopPlayersLocal(limit);
   }
