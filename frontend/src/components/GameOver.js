@@ -11,6 +11,7 @@ const REMATCH_RESPONSE_EVENT = 'rematchResponse';
 const REMATCH_REQUESTED_EVENT = 'rematchRequested';
 const REMATCH_DECLINED_EVENT = 'rematchDeclined';
 const GAME_START_EVENT = 'gameStart';
+const DEFAULT_SCORE = [0, 0];
 
 const GameOver = () => {
   const location = useLocation();
