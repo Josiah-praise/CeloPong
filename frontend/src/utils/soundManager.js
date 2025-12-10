@@ -28,6 +28,7 @@ class SoundManager {
       gameOver: '/sounds/gameover3.mp3',
       intro: '/sounds/intro2.mp3',
     };
+    this.buildSounds();
     
     this.audioContext = null;
     this.oscillators = [];
