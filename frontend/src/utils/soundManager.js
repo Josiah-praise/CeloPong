@@ -21,6 +21,13 @@ class SoundManager {
     if (this.audioBase) {
       console.log('SoundManager audio base:', this.audioBase);
     }
+    this.soundPaths = {
+      hit: '/sounds/hit2.mp3',
+      score: '/sounds/score2.mp3',
+      load: '/sounds/load2.mp3',
+      gameOver: '/sounds/gameover3.mp3',
+      intro: '/sounds/intro2.mp3',
+    };
     
     this.audioContext = null;
     this.oscillators = [];
