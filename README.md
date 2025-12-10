@@ -242,6 +242,7 @@ networks:
     driver: bridge             # Virtual network for inter-container communication
 ```
 MongoDB is pinned to `mongo:7` to align local containers with current tools.
+`depends_on` ensures startup order but does not wait for Mongo to be ready; add healthchecks if needed.
 
 #### How Services Communicate
 
