@@ -504,6 +504,7 @@ class GameHandlers {
       if (Array.isArray(remote) && remote.length) {
         return remote;
       }
+      console.warn('Remote leaderboard empty, using local cache');
     } catch (error) {
       console.error('Falling back to local leaderboard:', error);
     }
