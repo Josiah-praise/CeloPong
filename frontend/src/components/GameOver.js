@@ -85,6 +85,7 @@ const GameOver = () => {
   const handleAcceptRematch = () => {
     if (socketRef.current) {
       socketRef.current.emit(REMATCH_RESPONSE_EVENT, { accepted: true });
+      setWaitingForResponse(true);
     }
   };
 
