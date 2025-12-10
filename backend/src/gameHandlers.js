@@ -20,6 +20,18 @@ class GameHandlers {
     return this.lastRemoteLeaderboardError;
   }
 
+  updateLocalRankingsFromRemote(players = []) {
+    players.forEach(player => {
+      if (player?.name && typeof player.rating === 'number') {
+        this.playerRankings.set(player.name, {
+          name: player.name,
+          rating: player.rating,
+          lastUpdated: Date.now()
+        });
+      }
+    });
+  }
+
   handleConnection(socket) {
     const username = socket.handshake.query.username;
     console.log('New connection details:', {
