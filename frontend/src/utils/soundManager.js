@@ -11,6 +11,7 @@ class SoundManager {
   }
 
   basePath(path) {
+    // Backwards compatibility for callers using instance method
     return SoundManager.buildPath(path);
   }
 
