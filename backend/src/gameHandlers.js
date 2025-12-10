@@ -492,6 +492,7 @@ class GameHandlers {
   }
 
   async getTopPlayers(limit = 10) {
+    console.log('Leaderboard source:', this.leaderboardSource);
     if (!this.playerServiceEnabled) {
       return this.getTopPlayersLocal(limit);
     }
