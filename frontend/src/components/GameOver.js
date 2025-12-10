@@ -56,7 +56,7 @@ const GameOver = () => {
 
     socket.on(GAME_START_EVENT, goToRematch);
 
-    socket.on('rematchDeclined', () => {
+    socket.on(REMATCH_DECLINED_EVENT, () => {
       alert('Opponent declined rematch');
       setWaitingForResponse(false);
       setRematchRequested(false);
