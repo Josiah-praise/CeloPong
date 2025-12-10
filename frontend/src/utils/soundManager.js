@@ -610,6 +610,7 @@ class SoundManager {
   playScoreSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.scoreSound) return;
         this.scoreSound.currentTime = 0;
         return this.scoreSound.play()
           .catch(err => {
