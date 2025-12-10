@@ -1,10 +1,89 @@
+import { PUBLIC_URL } from '../constants';
+
 class SoundManager {
+  static buildPath(path) {
+    if (!path) return '';
+    // Keep audio assets working under subpaths (e.g., /pong-app/sounds/...)
+    const base = PUBLIC_URL || '';
+    if (!base) return path;
+    const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+    return `${base.replace(/\/$/, '')}${normalizedPath}`;
+  }
+
+  basePath(path) {
+    // Backwards compatibility for callers using instance method
+    return SoundManager.buildPath(path);
+  }
+
+  createAudio(path) {
+    const basePath = this.assetBase || PUBLIC_URL || '.'; // '.' keeps relative paths working
+    const url = `${basePath.replace(/\/$/, '')}${path.startsWith('/') ? path : `/${path}`}`;
+    if (!url) return null;
+    try {
+      return new Audio(url);
+    } catch (error) {
+      console.warn('Failed to create audio for', url, 'falling back to raw path');
+      return new Audio(path);
+    }
+  }
+
+  buildSounds() {
+    this.hitSound = this.createAudio(this.soundPaths.hit);
+    this.scoreSound = this.createAudio(this.soundPaths.score);
+    this.loadSound = this.createAudio(this.soundPaths.load);
+    this.gameOverSound = this.createAudio(this.soundPaths.gameOver);
+    this.introSound = this.createAudio(this.soundPaths.intro);
+    if (process?.env?.NODE_ENV !== 'production') {
+      console.log('SoundManager loaded assets:', {
+        hit: this.hitSound?.src,
+        score: this.scoreSound?.src,
+        load: this.loadSound?.src,
+        gameOver: this.gameOverSound?.src,
+        intro: this.introSound?.src,
+      });
+    }
+  }
+
+  getAssetBase() {
+    return this.assetBase || '';
+  }
+
+  setAssetBase(base) {
+    this.assetBase = base || '';
+    this.buildSounds();
+  }
+
+  isAudioAvailable() {
+    return Boolean(this.hitSound || this.scoreSound || this.loadSound || this.gameOverSound || this.introSound);
+  }
+
+  getSoundSources() {
+    return {
+      hit: this.hitSound?.src,
+      score: this.scoreSound?.src,
+      load: this.loadSound?.src,
+      gameOver: this.gameOverSound?.src,
+      intro: this.introSound?.src,
+    };
+  }
+
   constructor() {
-    this.hitSound = new Audio('/sounds/hit2.mp3');
-    this.scoreSound = new Audio('/sounds/score2.mp3');
-    this.loadSound = new Audio('/sounds/load2.mp3');
-    this.gameOverSound = new Audio('/sounds/gameover3.mp3');
-    this.introSound = new Audio('/sounds/intro2.mp3');
+    this.audioBase = PUBLIC_URL || '';
+    if (this.audioBase) {
+      console.log('SoundManager audio base:', this.audioBase);
+    }
+    this.soundPaths = {
+      hit: '/sounds/hit2.mp3',       // relative to PUBLIC_URL
+      score: '/sounds/score2.mp3',   // relative to PUBLIC_URL
+      load: '/sounds/load2.mp3',     // relative to PUBLIC_URL
+      gameOver: '/sounds/gameover3.mp3', // relative to PUBLIC_URL
+      intro: '/sounds/intro2.mp3',   // relative to PUBLIC_URL
+    };
+    this.buildSounds();
+    this.assetBase = SoundManager.buildPath('/sounds').replace(/\/sounds$/, '');
+    if (this.assetBase) {
+      console.log('SoundManager asset base:', this.assetBase);
+    }
     
     this.audioContext = null;
     this.oscillators = [];
@@ -516,11 +595,11 @@ class SoundManager {
     this.isGenomeAudioPlaying = false;
     
     try {
-      this.hitSound.pause();
-      this.scoreSound.pause();
-      this.loadSound.pause();
-      this.gameOverSound.pause();
-      this.introSound.pause();
+      this.hitSound?.pause();
+      this.scoreSound?.pause();
+      this.loadSound?.pause();
+      this.gameOverSound?.pause();
+      this.introSound?.pause();
     } catch (e) {
       console.warn('Error stopping sound effects:', e);
     }
@@ -533,6 +612,7 @@ class SoundManager {
   playHitSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.hitSound) return;
         this.hitSound.currentTime = 0;
         return this.hitSound.play()
           .catch(err => {
@@ -551,6 +631,7 @@ class SoundManager {
   playScoreSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.scoreSound) return;
         this.scoreSound.currentTime = 0;
         return this.scoreSound.play()
           .catch(err => {
@@ -565,6 +646,7 @@ class SoundManager {
   playLoadSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.loadSound) return;
         this.loadSound.currentTime = 0;
         return this.loadSound.play()
           .catch(err => {
@@ -579,6 +661,7 @@ class SoundManager {
   playGameOverSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.gameOverSound) return;
         this.gameOverSound.currentTime = 0;
         return this.gameOverSound.play()
           .catch(err => {
@@ -593,6 +676,7 @@ class SoundManager {
   playIntroSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.introSound) return;
         this.introSound.currentTime = 0;
         return this.introSound.play()
           .catch(err => {

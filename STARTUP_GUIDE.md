@@ -110,6 +110,7 @@ Enter your username and start playing!
 - Multiple people can spectate same game
 - No lag or delays
 - Rematches return you to the game screen (`/game`)
+- Audio uses relative paths so hosting under a subpath still works
 
 ---
 
