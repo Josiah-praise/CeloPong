@@ -623,7 +623,7 @@ try {
   io.engine.on("headers", (headers, req) => {
     if (!ENABLE_SOCKET_HEADER_LOGS) return;
     console.log('Headers being sent:', headers);
-    console.log('Request headers (sanitized):', sanitizeHeaders(req.headers));
+    console.log('Request headers (sanitized):', describeHeaders(req.headers));
   });
 
   // Initial headers at handshake time may include auth/cookies
