@@ -582,7 +582,7 @@ try {
   // Socket.IO engine emits headers; be careful not to leak sensitive values
   io.engine.on("headers", (headers, req) => {
     console.log('Headers being sent:', headers);
-    console.log('Request headers:', req.headers);
+    console.log('Request headers (sanitized):', sanitizeHeaders(req.headers));
   });
 
   // Initial headers at handshake time may include auth/cookies
