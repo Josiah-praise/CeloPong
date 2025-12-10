@@ -14,6 +14,7 @@ const { getCorsOrigins } = require('./utils/corsOrigins');
 
 const app = express();
 
+const ENABLE_SOCKET_HEADER_LOGS = process.env.SOCKET_HEADER_LOGS === 'true';
 const SAFE_HEADER_KEYS = ['origin', 'referer', 'user-agent'];
 const MAX_HEADER_VALUE_LENGTH = 200;
 
