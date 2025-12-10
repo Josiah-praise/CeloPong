@@ -574,6 +574,7 @@ try {
     console.log('Request headers:', req.headers);
   });
 
+  // Initial headers at handshake time may include auth/cookies
   io.engine.on("initial_headers", (headers, req) => {
     console.log('Initial headers being sent:', headers);
     console.log('Initial request headers:', req.headers);
