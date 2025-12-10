@@ -27,3 +27,5 @@ export const SHOW_BACKEND_URL_BANNER =
   readBooleanEnv(process.env.REACT_APP_SHOW_BACKEND_URL_BANNER, true);
 
 export const PRIZE_MULTIPLIER = 2;
+
+export const REMATCH_ROUTE = '/game';
