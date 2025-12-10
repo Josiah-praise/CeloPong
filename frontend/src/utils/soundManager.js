@@ -625,6 +625,7 @@ class SoundManager {
   playLoadSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.loadSound) return;
         this.loadSound.currentTime = 0;
         return this.loadSound.play()
           .catch(err => {
