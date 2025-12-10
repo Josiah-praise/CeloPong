@@ -640,6 +640,7 @@ class SoundManager {
   playGameOverSound() {
     return this.playWithErrorHandling(
       () => {
+        if (!this.gameOverSound) return;
         this.gameOverSound.currentTime = 0;
         return this.gameOverSound.play()
           .catch(err => {
