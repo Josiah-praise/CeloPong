@@ -1,3 +1,4 @@
+# Include MongoDB so the backend can connect to its database
 services:
   frontend:
     build: ./frontend
