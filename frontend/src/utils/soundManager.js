@@ -2,6 +2,7 @@ import { PUBLIC_URL } from '../constants';
 
 class SoundManager {
   static buildPath(path) {
+    if (!path) return '';
     // Keep audio assets working under subpaths (e.g., /pong-app/sounds/...)
     const base = PUBLIC_URL || '';
     if (!base) return path;
