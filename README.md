@@ -276,6 +276,9 @@ Port 5001 → player-service ←─────┘ (internal network)
 Port 27017 → mongodb container
 ```
 
+**MongoDB Service**
+- Stores player/game data at `mongodb://mongo:27017/pong-it` using the `mongo-data` volume.
+
 #### Docker Workflow
 
 **Building Images:**
