@@ -29,6 +29,7 @@ services:
 
   mongodb:
     image: mongo:7
+    container_name: mongo
 
 networks:
   app-network:
