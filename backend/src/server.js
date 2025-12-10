@@ -14,6 +14,64 @@ const { getCorsOrigins } = require('./utils/corsOrigins');
 
 const app = express();
 
+// Enable only when diagnosing handshake issues; off by default to avoid leaking cookies/tokens
+const ENABLE_SOCKET_HEADER_LOGS = process.env.SOCKET_HEADER_LOGS === 'true';
+// Only log these non-sensitive headers
+const SAFE_HEADER_KEYS = ['origin', 'referer', 'user-agent', 'host'];
+const MAX_HEADER_VALUE_LENGTH = 200;
+
+function sanitizeHeaders(input = {}) {
+  return SAFE_HEADER_KEYS.reduce((acc, key) => {
+    const value = input[key] || input[key.toLowerCase()];
+    if (value) {
+      acc[key] = typeof value === 'string'
+        ? value.slice(0, MAX_HEADER_VALUE_LENGTH)
+        : value;
+    }
+    return acc;
+  }, {});
+}
+
+function maskAddress(address) {
+  if (typeof address !== 'string') return address;
+  const parts = address.split('.');
+  if (parts.length === 4) {
+    return ['x', 'x', 'x', parts[3]].join('.');
+  }
+  if (address.includes(':')) {
+    return 'ipv6';
+  }
+  return address;
+}
+
+function truncate(value, max = 50) {
+  if (typeof value !== 'string') return value;
+  return value.length > max ? `${value.slice(0, max)}…` : value;
+}
+
+function logSocketEvent(label, payload) {
+  if (payload === undefined) {
+    console.log(label);
+    return;
+  }
+  console.log(label, payload);
+}
+
+function describeHeaders(input = {}) {
+  return {
+    allowed: sanitizeHeaders(input),
+    total: Object.keys(input).length
+  };
+}
+
+function describeOutgoingHeaders(input = {}) {
+  const keys = Object.keys(input);
+  return {
+    keys: keys.slice(0, 10),
+    total: keys.length
+  };
+}
+
 // MongoDB Connection
 // Default URI matches the docker-compose Mongo service
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pong-it';
@@ -568,30 +626,39 @@ app.get('/games/:roomCode', async (req, res) => {
 });
 
 try {
+  if (!ENABLE_SOCKET_HEADER_LOGS) {
+    console.log('Socket header logging disabled (SOCKET_HEADER_LOGS!=true)');
+  } else {
+    console.warn('Socket header logging ENABLED; sensitive data may appear in logs');
+  }
+  // Socket.IO engine emits headers; be careful not to leak sensitive values
   io.engine.on("headers", (headers, req) => {
-    console.log('Headers being sent:', headers);
-    console.log('Request headers:', req.headers);
+    if (!ENABLE_SOCKET_HEADER_LOGS) return;
+    console.log('Headers being sent (summary):', describeOutgoingHeaders(headers));
+    console.log('Request headers (sanitized):', describeHeaders(req.headers));
   });
 
+  // Initial headers at handshake time may include auth/cookies
   io.engine.on("initial_headers", (headers, req) => {
-    console.log('Initial headers being sent:', headers);
-    console.log('Initial request headers:', req.headers);
+    if (!ENABLE_SOCKET_HEADER_LOGS) return;
+    console.log('Initial headers being sent (summary):', describeOutgoingHeaders(headers));
+    console.log('Initial request headers (sanitized):', describeHeaders(req.headers));
   });
 
   io.on('connection', (socket) => {
-    const username = socket.handshake.query.username;
-    console.log('New connection:', {
+    const username = truncate(socket.handshake.query.username);
+    logSocketEvent('New connection:', {
       socketId: socket.id,
       username,
       transport: socket.conn.transport.name,
-      address: socket.handshake.address
+      address: maskAddress(socket.handshake.address)
     });
 
     const existingSockets = Array.from(io.sockets.sockets.values());
     for (const existingSocket of existingSockets) {
       if (existingSocket.id !== socket.id &&
           existingSocket.handshake.query.username === username) {
-        console.log('Cleaning up old connection for:', username);
+        logSocketEvent('Cleaning up old connection for:', username);
         gameHandlers.handleDisconnect(existingSocket);
         existingSocket.disconnect(true);
       }
