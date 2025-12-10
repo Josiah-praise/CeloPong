@@ -15,7 +15,9 @@ const { getCorsOrigins } = require('./utils/corsOrigins');
 const app = express();
 
 // MongoDB Connection
+// Default URI matches the docker-compose Mongo service
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/pong-it';
+console.log('Using MongoDB URI:', MONGODB_URI);
 
 mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true,

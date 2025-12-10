@@ -6,6 +6,7 @@
 - Docker Desktop installed and running
 - 8GB RAM available
 - Ports 3000, 8080, and 5001 available
+- Port 27017 open for local MongoDB (lock down in production)
 
 ### Starting the Application
 
@@ -25,6 +26,8 @@ This single command will:
 - Build Docker images for all 3 services
 - Start containers in correct order
 - Display logs from all services
+- Start MongoDB on port 27017 with a local volume
+- Allow local MongoDB access at `mongodb://localhost:27017`
 
 **3. Wait for Services to Start**
 
@@ -33,6 +36,7 @@ Watch the logs until you see:
 frontend_1         | webpack compiled successfully
 backend_1          | Server running on port 8080
 player-service_1   | Player ranking service running on port 5001
+mongo_1            | Replica set ready
 ```
 
 **4. Open Your Browser**
@@ -145,6 +149,18 @@ docker-compose up
 docker-compose down -v
 docker system prune -a
 docker-compose up --build
+```
+
+**Reset Mongo data (if needed):**
+```bash
+docker volume rm celo-pong_mongo-data
+```
+
+### "MongoDB connection refused"
+
+**Fix:**
+```bash
+docker-compose restart mongo
 ```
 
 ### "Frontend shows blank screen"

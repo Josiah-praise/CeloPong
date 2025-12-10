@@ -106,6 +106,7 @@ A modern multiplayer Pong game with real-time gameplay, room-based matchmaking, 
 - Game physics calculations
 - ELO rating calculations
 - Communication with Player Service
+- Reads `MONGODB_URI` from environment (defaults to `mongodb://mongo:27017/pong-it`)
 
 **Key Files:**
 - `server.js` - Express + Socket.IO server setup
@@ -224,6 +225,13 @@ services:
     networks: [app-network]
     restart: unless-stopped
 
+  mongodb:
+    image: mongo:7
+    ports: ["27017:27017"]
+    volumes: ["mongo-data:/data/db"]
+    networks: [app-network]
+    restart: unless-stopped
+
   player-service:
     build: ./player-service
     ports: ["5001:5001"]
@@ -234,6 +242,8 @@ networks:
   app-network:
     driver: bridge             # Virtual network for inter-container communication
 ```
+MongoDB is pinned to `mongo:7` to align local containers with current tools.
+`depends_on` ensures startup order but does not wait for Mongo to be ready; add healthchecks if needed.
 
 #### How Services Communicate
 
@@ -247,6 +257,7 @@ networks:
 - Backend counterpart: set `FRONTEND_URL` (preferred) or `FRONTEND_URL_FALLBACK` to restrict allowed origins; otherwise localhost defaults are used for development.
 - Emergency mode: `FRONTEND_URL_ALLOW_ALL=true` sets a wildcard (development only, logs warnings).
 - See `.env.example` for backend environment variables set during development.
+- `MONGODB_URI` defaults to `mongodb://mongo:27017/pong-it` when using Docker Compose.
 - Use `FRONTEND_URL_DEV_ORIGINS` (comma-separated) to customize the default allowlist for local gadgets.
 
 **Backend URL Troubleshooting**
@@ -266,7 +277,19 @@ Host Machine (localhost)
 Port 3000 → frontend container
 Port 8080 → backend container  ──┐
 Port 5001 → player-service ←─────┘ (internal network)
+Port 27017 → mongodb container
 ```
+MongoDB shares the `app-network` so the backend can reach it by hostname `mongo`.
+
+**MongoDB Service**
+- Stores player/game data at `mongodb://mongo:27017/pong-it` using the `mongo-data` volume.
+- Remove the `mongo-data` volume to reset local data.
+- Add connection retries/healthchecks if startup ordering is an issue.
+- You can inspect data with MongoDB Compass at `mongodb://localhost:27017`.
+- Local tools can connect on `localhost:27017` via the compose port mapping.
+- The `mongo-data` volume will grow with matches; prune it if space is tight.
+- Back up `mongo-data` if you need to preserve local progress.
+- In production, enable Mongo auth and avoid exposing port 27017 publicly.
 
 #### Docker Workflow
 
@@ -278,6 +301,11 @@ Creates images from Dockerfiles:
 - `frontend/Dockerfile` → Installs React dependencies, copies code
 - `backend/Dockerfile` → Installs Node.js dependencies
 - `player-service/Dockerfile` → Installs Express dependencies
+- Validate the combined config with `docker-compose config`
+- View Mongo logs: `docker-compose logs mongo`
+- MongoDB data lives in the `mongo-data` volume
+- Reset the volume with `docker volume rm celo-pong_mongo-data` if you need a clean DB
+- Stop and remove containers/volumes with `docker-compose down -v`
 
 **Starting Services:**
 ```bash
