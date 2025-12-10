@@ -285,6 +285,7 @@ MongoDB shares the `app-network` so the backend can reach it by hostname `mongo`
 - Stores player/game data at `mongodb://mongo:27017/pong-it` using the `mongo-data` volume.
 - Remove the `mongo-data` volume to reset local data.
 - Add connection retries/healthchecks if startup ordering is an issue.
+- You can inspect data with MongoDB Compass at `mongodb://localhost:27017`.
 
 #### Docker Workflow
 
