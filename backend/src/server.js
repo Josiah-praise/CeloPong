@@ -17,7 +17,12 @@ const app = express();
 const SAFE_HEADER_KEYS = ['origin', 'referer', 'user-agent'];
 
 function sanitizeHeaders(input = {}) {
-  return input;
+  return SAFE_HEADER_KEYS.reduce((acc, key) => {
+    if (input[key]) {
+      acc[key] = input[key];
+    }
+    return acc;
+  }, {});
 }
 
 // MongoDB Connection
