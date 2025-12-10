@@ -49,6 +49,7 @@ const GameOver = () => {
     });
 
     const goToRematch = () => {
+      // Navigate to existing /game route (no /multiplayer route is registered)
       setWaitingForResponse(false);
       navigate(REMATCH_ROUTE, {
         state: {
