@@ -296,6 +296,7 @@ Creates images from Dockerfiles:
 - `backend/Dockerfile` → Installs Node.js dependencies
 - `player-service/Dockerfile` → Installs Express dependencies
 - View Mongo logs: `docker-compose logs mongo`
+- MongoDB data lives in the `mongo-data` volume
 
 **Starting Services:**
 ```bash
