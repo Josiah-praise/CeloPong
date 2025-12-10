@@ -135,7 +135,7 @@ class GameHandlers {
     if (!this.playerRankings.has(player.name)) {
       this.playerRankings.set(player.name, {
         name: player.name,
-        rating: 1000, // Initial rating
+        rating: DEFAULT_RATING, // Initial rating
         lastUpdated: Date.now()
       });
     }
