@@ -9,6 +9,7 @@
 - [x] **Backend blocks CORS/WebSocket when `FRONTEND_URL` unset** – Express/Socket.IO cors configs deny access if the env variable isn’t provided, breaking local development. _(Label: Bug)_
 - [x] **Frontend cannot connect when `REACT_APP_BACKEND_URL` missing** – `BACKEND_URL` stays undefined and every fetch/socket call fails; add a default or validation. _(Label: Bug)_
 - [ ] **Rematch accept routes to `/multiplayer` which doesn’t exist** – `GameOver` navigates to `/multiplayer` even though the router only defines `/game`, so accept rematch shows a blank screen. _(Label: Bug)_
+  - [ ] Replace rematch navigation target with existing route
 - [ ] **Rematch sockets never reach the server** – The gameplay socket disconnects before `GameOver` opens a new socket, so backend handlers can’t find the room and rematches never start. _(Label: Bug)_
 - [x] **Socket handshake logs leak sensitive data** – `backend/src/server.js` logs entire request headers, exposing cookies/tokens in logs; remove or scrub them. _(Label: Security)_
   - [x] Add env flag to disable header logging by default
