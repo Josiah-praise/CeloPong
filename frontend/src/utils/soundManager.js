@@ -41,7 +41,7 @@ class SoundManager {
   }
 
   constructor() {
-    this.audioBase = process?.env?.PUBLIC_URL || '';
+    this.audioBase = PUBLIC_URL || '';
     if (this.audioBase) {
       console.log('SoundManager audio base:', this.audioBase);
     }
