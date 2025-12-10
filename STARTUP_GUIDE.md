@@ -6,6 +6,7 @@
 - Docker Desktop installed and running
 - 8GB RAM available
 - Ports 3000, 8080, and 5001 available
+- Port 27017 open for local MongoDB (lock down in production)
 
 ### Starting the Application
 
