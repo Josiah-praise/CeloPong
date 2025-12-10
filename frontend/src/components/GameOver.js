@@ -40,14 +40,16 @@ const GameOver = () => {
       setRematchRequested(true);
     });
 
-    socket.on('gameStart', (data) => {
+    const goToRematch = () => {
       navigate(REMATCH_ROUTE, {
         state: {
           gameMode: 'rematch',
           rematch: true
         }
       });
-    });
+    };
+
+    socket.on('gameStart', goToRematch);
 
     socket.on('rematchDeclined', () => {
       alert('Opponent declined rematch');
