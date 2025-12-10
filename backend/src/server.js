@@ -21,8 +21,8 @@ const MAX_HEADER_VALUE_LENGTH = 200;
 
 function sanitizeHeaders(input = {}) {
   return SAFE_HEADER_KEYS.reduce((acc, key) => {
-    if (input[key]) {
-      const value = input[key];
+    const value = input[key] || input[key.toLowerCase()];
+    if (value) {
       acc[key] = typeof value === 'string'
         ? value.slice(0, MAX_HEADER_VALUE_LENGTH)
         : value;
