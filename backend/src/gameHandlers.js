@@ -490,6 +490,13 @@ class GameHandlers {
       .slice(0, limit);
   }
 
+  async getTopPlayers(limit = 10) {
+    if (!this.playerServiceEnabled) {
+      return this.getTopPlayersLocal(limit);
+    }
+    return this.getTopPlayersRemote(limit);
+  }
+
   // Remote fetch lives below; currently overrides this method
 
   // Get player ratings from the player service
