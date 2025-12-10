@@ -20,6 +20,10 @@ class GameHandlers {
     return this.lastRemoteLeaderboardError;
   }
 
+  getLeaderboardSource() {
+    return this.leaderboardSource;
+  }
+
   updateLocalRankingsFromRemote(players = []) {
     players.forEach(player => {
       if (player?.name && typeof player.rating === 'number') {
