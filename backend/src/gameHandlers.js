@@ -591,6 +591,7 @@ class GameHandlers {
     if (!this.playerServiceEnabled) {
       return [];
     }
+    console.log('Fetching leaderboard from player service:', this.playerServiceUrl);
     try {
       const response = await fetch(`${this.playerServiceUrl}/players/top?limit=${limit}`);
       
