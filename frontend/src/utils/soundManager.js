@@ -21,13 +21,15 @@ class SoundManager {
     this.loadSound = this.createAudio(this.soundPaths.load);
     this.gameOverSound = this.createAudio(this.soundPaths.gameOver);
     this.introSound = this.createAudio(this.soundPaths.intro);
-    console.log('SoundManager loaded assets:', {
-      hit: this.hitSound?.src,
-      score: this.scoreSound?.src,
-      load: this.loadSound?.src,
-      gameOver: this.gameOverSound?.src,
-      intro: this.introSound?.src,
-    });
+    if (process?.env?.NODE_ENV !== 'production') {
+      console.log('SoundManager loaded assets:', {
+        hit: this.hitSound?.src,
+        score: this.scoreSound?.src,
+        load: this.loadSound?.src,
+        gameOver: this.gameOverSound?.src,
+        intro: this.introSound?.src,
+      });
+    }
   }
 
   constructor() {
