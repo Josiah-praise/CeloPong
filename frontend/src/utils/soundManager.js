@@ -12,11 +12,11 @@ class SoundManager {
   }
 
   buildSounds() {
-    this.hitSound = new Audio(SoundManager.buildPath(this.soundPaths.hit));
-    this.scoreSound = new Audio(SoundManager.buildPath(this.soundPaths.score));
-    this.loadSound = new Audio(SoundManager.buildPath(this.soundPaths.load));
-    this.gameOverSound = new Audio(SoundManager.buildPath(this.soundPaths.gameOver));
-    this.introSound = new Audio(SoundManager.buildPath(this.soundPaths.intro));
+    this.hitSound = this.createAudio(this.soundPaths.hit);
+    this.scoreSound = this.createAudio(this.soundPaths.score);
+    this.loadSound = this.createAudio(this.soundPaths.load);
+    this.gameOverSound = this.createAudio(this.soundPaths.gameOver);
+    this.introSound = this.createAudio(this.soundPaths.intro);
   }
 
   constructor() {
