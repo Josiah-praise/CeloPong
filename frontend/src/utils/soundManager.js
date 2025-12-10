@@ -52,6 +52,10 @@ class SoundManager {
     this.buildSounds();
   }
 
+  isAudioAvailable() {
+    return Boolean(this.hitSound || this.scoreSound || this.loadSound || this.gameOverSound || this.introSound);
+  }
+
   constructor() {
     this.audioBase = PUBLIC_URL || '';
     if (this.audioBase) {
