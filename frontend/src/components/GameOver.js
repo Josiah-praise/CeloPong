@@ -16,6 +16,7 @@ const GameOver = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const result = location.state;
+  const stats = result?.stats || {};
   const socketRef = useRef(null);
   const [rematchRequested, setRematchRequested] = useState(false);
   const [waitingForResponse, setWaitingForResponse] = useState(false);
