@@ -114,6 +114,7 @@ const GameOver = () => {
     }
     setRematchRequested(false);
     setWaitingForResponse(false);
+    setRematchResponded(false);
     navigate('/');
   };
 
