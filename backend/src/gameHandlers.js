@@ -521,6 +521,9 @@ class GameHandlers {
 
   // Get player ratings from the player service
   async getPlayerRating(playerName) {
+    if (!this.playerServiceEnabled) {
+      return 1000;
+    }
     try {
       const response = await fetch(`${this.playerServiceUrl}/players/${encodeURIComponent(playerName)}`);
       
