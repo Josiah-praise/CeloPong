@@ -75,20 +75,20 @@ const GameOver = () => {
 
   const handleRematch = () => {
     if (socketRef.current) {
-      socketRef.current.emit('requestRematch');
+      socketRef.current.emit(REMATCH_REQUEST_EVENT);
       setWaitingForResponse(true);
     }
   };
 
   const handleAcceptRematch = () => {
     if (socketRef.current) {
-      socketRef.current.emit('rematchResponse', { accepted: true });
+      socketRef.current.emit(REMATCH_RESPONSE_EVENT, { accepted: true });
     }
   };
 
   const handleDeclineRematch = () => {
     if (socketRef.current) {
-      socketRef.current.emit('rematchResponse', { accepted: false });
+      socketRef.current.emit(REMATCH_RESPONSE_EVENT, { accepted: false });
       setRematchRequested(false);
     }
   };
