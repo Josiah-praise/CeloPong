@@ -522,6 +522,7 @@ class GameHandlers {
   // Get player ratings from the player service
   async getPlayerRating(playerName) {
     if (!this.playerServiceEnabled) {
+      console.log('Player service disabled, using default rating for', playerName);
       return 1000;
     }
     try {
