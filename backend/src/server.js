@@ -615,7 +615,7 @@ try {
 
   io.on('connection', (socket) => {
     const username = truncate(socket.handshake.query.username);
-    console.log('New connection:', {
+    logSocketEvent('New connection:', {
       socketId: socket.id,
       username,
       transport: socket.conn.transport.name,
