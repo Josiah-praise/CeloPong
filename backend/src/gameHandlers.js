@@ -520,6 +520,7 @@ class GameHandlers {
     try {
       const remote = await this.getTopPlayersRemote(limit);
       if (Array.isArray(remote) && remote.length) {
+        this.updateLocalRankingsFromRemote(remote);
         this.lastRemoteLeaderboardError = null;
         return remote;
       }
