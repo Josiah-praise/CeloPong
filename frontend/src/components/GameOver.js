@@ -110,7 +110,7 @@ const GameOver = () => {
 
   return (
     <div className="game-over">
-      <h1>{result.message}</h1>
+      <h1>{message}</h1>
       <div className="stats">
         <p>Final Score: {finalScore[0]} - {finalScore[1]}</p>
         <p>New Rating: {result.rating ?? '—'}</p>
