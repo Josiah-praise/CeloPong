@@ -148,6 +148,11 @@ docker system prune -a
 docker-compose up --build
 ```
 
+**Reset Mongo data (if needed):**
+```bash
+docker volume rm celo-pong_mongo-data
+```
+
 ### "Frontend shows blank screen"
 
 **Clear browser cache:**
