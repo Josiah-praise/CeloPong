@@ -29,4 +29,5 @@ export const SHOW_BACKEND_URL_BANNER =
 export const PRIZE_MULTIPLIER = 2;
 
 export const REMATCH_ROUTE = '/game';
+// Base path for static assets (supports subpath hosting)
 export const PUBLIC_URL = process.env.PUBLIC_URL || '';
